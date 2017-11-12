@@ -57,7 +57,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     fileprivate func beginSuccessAnimation() {
-        self.saveButtonCenterX.constant = -70
+        self.saveButtonCenterX.constant = -1 * (self.successLabel.frame.width / 2 + 35) //-70
         UIView.animate(withDuration: 0.5, animations: {
             self.view.layoutIfNeeded()
             self.successLabel.alpha = 1.0
