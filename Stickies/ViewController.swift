@@ -8,11 +8,13 @@
 import UIKit
 import EventKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
     
     var eventStore: EKEventStore!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var saveButtonCenterX: NSLayoutConstraint!
+    @IBOutlet weak var successLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +35,9 @@ class ViewController: UIViewController {
     fileprivate func setupViews() {
         self.view.backgroundColor = UIColor(red: 255/255, green: 145/255, blue: 97/255, alpha: 1.0)
         
+        self.view.sendSubview(toBack: self.successLabel)
+        self.successLabel.alpha = 0
+        
         self.saveButton.setImage(UIImage(named: "SaveButton"), for: .normal)
         self.saveButton.layer.shadowColor = UIColor.black.cgColor
         self.saveButton.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -40,26 +45,37 @@ class ViewController: UIViewController {
         
         self.textField.placeholder = "Remind me of .."
         self.textField.becomeFirstResponder()
+        self.textField.delegate = self
     }
 
-    @IBAction func saveButtonPressed(_ sender: Any) {
-        
-        if textField.text != nil {
-            saveNewReminder(stickyText: textField.text!)
-        }
+    fileprivate func endSuccessAnimation() {
+        self.saveButtonCenterX.constant = 0
+        UIView.animate(withDuration: 0.5, delay: 0.5, animations:{
+            self.view.layoutIfNeeded()
+            self.successLabel.alpha = 0
+        })
+    }
+    
+    fileprivate func beginSuccessAnimation() {
+        self.saveButtonCenterX.constant = -70
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.layoutIfNeeded()
+            self.successLabel.alpha = 1.0
+        }, completion: {(true) in self.endSuccessAnimation()})
+    }
+    
+    fileprivate func saveSticky() {
+        saveNewReminder(stickyText: textField.text!)
         self.textField.text = ""
-        
-        
-//        UIView.animate(withDuration: 1.0, animations:{
-//            self.saveButton.center.x += 100
-//
-//        })
+        beginSuccessAnimation()
+    }
+    
+    @IBAction func saveButtonPressed(_ sender: Any) {
+        saveSticky()
     }
     
     func saveNewReminder(stickyText: String) {
-        
         let reminder = EKReminder(eventStore:self.eventStore)
-        
         var date = Date()
         date.addTimeInterval(5)
         let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .month, .year]
@@ -79,9 +95,13 @@ class ViewController: UIViewController {
         }
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.saveSticky()
+        return true
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
 

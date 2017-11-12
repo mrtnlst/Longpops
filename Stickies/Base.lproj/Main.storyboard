@@ -31,7 +31,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kQn-r2-9pH">
-                                <rect key="frame" x="162" y="146" width="50" height="50"/>
+                                <rect key="frame" x="162.5" y="146" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="bf1-Hq-WKT"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="50" id="fX3-li-8Vs"/>
@@ -41,14 +41,23 @@
                                     <action selector="saveButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YBF-kH-Ew5"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w5v-Gy-2HG">
+                                <rect key="frame" x="157" y="161" width="61" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.56862745098039214" blue="0.38039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="kQn-r2-9pH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="MEL-PT-8Kl"/>
                             <constraint firstItem="kQn-r2-9pH" firstAttribute="top" secondItem="Bg8-LE-pVA" secondAttribute="bottom" constant="20" id="Xjz-kA-6uP"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="w5v-Gy-2HG" secondAttribute="trailing" constant="157" id="b6b-sj-iYz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="inZ-mp-I7d" secondAttribute="trailing" constant="20" id="baq-Yb-WaP"/>
                             <constraint firstItem="Bg8-LE-pVA" firstAttribute="top" secondItem="inZ-mp-I7d" secondAttribute="bottom" constant="20" id="dfl-KT-bee"/>
+                            <constraint firstItem="w5v-Gy-2HG" firstAttribute="top" secondItem="Bg8-LE-pVA" secondAttribute="bottom" constant="35" id="k5i-SE-x8I"/>
                             <constraint firstItem="inZ-mp-I7d" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="lBB-cA-TDZ"/>
+                            <constraint firstItem="w5v-Gy-2HG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="157" id="ttK-n3-Y9o"/>
                             <constraint firstItem="Bg8-LE-pVA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="uRL-zf-MRt"/>
                             <constraint firstItem="inZ-mp-I7d" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="vdn-Lm-psV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Bg8-LE-pVA" secondAttribute="trailing" constant="20" id="zNx-A2-kvY"/>
@@ -57,11 +66,14 @@
                     </view>
                     <connections>
                         <outlet property="saveButton" destination="kQn-r2-9pH" id="yCG-db-MeR"/>
+                        <outlet property="saveButtonCenterX" destination="MEL-PT-8Kl" id="yYt-c7-vNU"/>
+                        <outlet property="successLabel" destination="w5v-Gy-2HG" id="H5e-2X-hFy"/>
                         <outlet property="textField" destination="Bg8-LE-pVA" id="IjU-dJ-8Zg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="36" y="32.833583208395808"/>
         </scene>
     </scenes>
     <resources>
