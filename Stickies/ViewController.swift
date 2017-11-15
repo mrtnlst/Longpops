@@ -28,8 +28,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     self.saveButton.isEnabled = false
                 }
             }
-            
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.textField.becomeFirstResponder()
     }
     
     fileprivate func setupViews() {
@@ -44,7 +47,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.saveButton.layer.shadowOpacity = 0.2
         
         self.textField.placeholder = "Remind me of .."
-        self.textField.becomeFirstResponder()
         self.textField.delegate = self
     }
 
@@ -98,6 +100,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.saveSticky()
         return true
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     override func didReceiveMemoryWarning() {
