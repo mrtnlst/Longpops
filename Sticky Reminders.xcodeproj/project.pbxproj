@@ -40,7 +40,7 @@
 		5BB187C51FB87A6000AB3ABA = {
 			isa = PBXGroup;
 			children = (
-				5BB187D01FB87A6000AB3ABA /* Stickies */,
+				5BB187D01FB87A6000AB3ABA /* Sticky Reminders */,
 				5BB187CF1FB87A6000AB3ABA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,7 +53,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5BB187D01FB87A6000AB3ABA /* Stickies */ = {
+		5BB187D01FB87A6000AB3ABA /* Sticky Reminders */ = {
 			isa = PBXGroup;
 			children = (
 				5BB187D11FB87A6000AB3ABA /* AppDelegate.swift */,
@@ -64,7 +64,7 @@
 				5BB187DA1FB87A6000AB3ABA /* LaunchScreen.storyboard */,
 				5BB187DD1FB87A6000AB3ABA /* Info.plist */,
 			);
-			path = Stickies;
+			path = "Sticky Reminders";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -102,7 +102,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5BB187C91FB87A6000AB3ABA /* Build configuration list for PBXProject "Stickies" */;
+			buildConfigurationList = 5BB187C91FB87A6000AB3ABA /* Build configuration list for PBXProject "Sticky Reminders" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -279,7 +279,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4853CED358;
-				INFOPLIST_FILE = Stickies/Info.plist;
+				INFOPLIST_FILE = "Sticky Reminders/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.martinlist.stickyreminders;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -294,7 +294,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4853CED358;
-				INFOPLIST_FILE = Stickies/Info.plist;
+				INFOPLIST_FILE = "Sticky Reminders/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.martinlist.stickyreminders;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -306,7 +306,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5BB187C91FB87A6000AB3ABA /* Build configuration list for PBXProject "Stickies" */ = {
+		5BB187C91FB87A6000AB3ABA /* Build configuration list for PBXProject "Sticky Reminders" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5BB187DE1FB87A6000AB3ABA /* Debug */,
