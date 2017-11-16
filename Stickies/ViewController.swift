@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  Stickies
+//  Sticky Reminders
 //
 //  Created by martin on 12.11.17.
 //
@@ -15,6 +15,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var saveButtonCenterX: NSLayoutConstraint!
     @IBOutlet weak var successLabel: UILabel!
+    @IBOutlet weak var headingLabel: UILabel!
+    @IBOutlet weak var permissionButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             if !granted{
                 DispatchQueue.main.async {
                     self.saveButton.isEnabled = false
+                    self.textField.isEnabled = false
+                    self.permissionButton.isHidden = false
                 }
             }
         }
@@ -48,6 +52,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         self.textField.placeholder = "Remind me of .."
         self.textField.delegate = self
+        
+        self.permissionButton.isHidden = true
+        
+        if (self.view.frame.size.width == 320){
+            self.headingLabel.font = self.headingLabel.font.withSize(32)
+        }
+        else if (self.view.frame.size.width == 375){
+            self.headingLabel.font = self.headingLabel.font.withSize(40)
+        }
+        else if (self.view.frame.size.width == 414){
+            self.headingLabel.font = self.headingLabel.font.withSize(45)
+        }
     }
 
     fileprivate func endSuccessAnimation() {
@@ -100,6 +116,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.saveSticky()
         return true
+    }
+    
+    @IBAction func permissionButtonPressed(_ sender: Any) {
+        let scheme:String = UIApplicationOpenSettingsURLString
+        if let url = URL(string: scheme) {
+                UIApplication.shared.open(url, options: [:],
+                                          completionHandler: {(success) in
+                                            print("Open \(scheme): \(success)")})
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Stickies
+//  Sticky Reminders
 //
 //  Created by martin on 12.11.17.
 //

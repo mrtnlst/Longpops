@@ -1,6 +1,6 @@
 //
 //  AboutViewController.swift
-//  Stickies
+//  Sticky Reminders
 //
 //  Created by martin on 15.11.17.
 //
