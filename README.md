@@ -1,2 +1,2 @@
-# Stickies
-Creating reminders with an alarm and due date 5s in the future. They will remain on the lockscreen until they are marked as completed. 
+# Sticky Reminders
+Sticky Reminders is meant to be a fast way to create overdue Reminer items, that remain on your lockscreen until they are marked as completed. 
