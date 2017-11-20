@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5BB187CE1FB87A6000AB3ABA /* Sticky Reminders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sticky Reminders.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BB187CE1FB87A6000AB3ABA /* Longpops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Longpops.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BB187D11FB87A6000AB3ABA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BB187D31FB87A6000AB3ABA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5BB187D61FB87A6000AB3ABA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -40,7 +40,7 @@
 		5BB187C51FB87A6000AB3ABA = {
 			isa = PBXGroup;
 			children = (
-				5BB187D01FB87A6000AB3ABA /* Sticky Reminders */,
+				5BB187D01FB87A6000AB3ABA /* Longpops */,
 				5BB187CF1FB87A6000AB3ABA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,12 +48,12 @@
 		5BB187CF1FB87A6000AB3ABA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5BB187CE1FB87A6000AB3ABA /* Sticky Reminders.app */,
+				5BB187CE1FB87A6000AB3ABA /* Longpops.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5BB187D01FB87A6000AB3ABA /* Sticky Reminders */ = {
+		5BB187D01FB87A6000AB3ABA /* Longpops */ = {
 			isa = PBXGroup;
 			children = (
 				5BB187D11FB87A6000AB3ABA /* AppDelegate.swift */,
@@ -64,15 +64,15 @@
 				5BB187DA1FB87A6000AB3ABA /* LaunchScreen.storyboard */,
 				5BB187DD1FB87A6000AB3ABA /* Info.plist */,
 			);
-			path = "Sticky Reminders";
+			path = Longpops;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5BB187CD1FB87A6000AB3ABA /* Sticky Reminders */ = {
+		5BB187CD1FB87A6000AB3ABA /* Longpops */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5BB187E01FB87A6000AB3ABA /* Build configuration list for PBXNativeTarget "Sticky Reminders" */;
+			buildConfigurationList = 5BB187E01FB87A6000AB3ABA /* Build configuration list for PBXNativeTarget "Longpops" */;
 			buildPhases = (
 				5BB187CA1FB87A6000AB3ABA /* Sources */,
 				5BB187CB1FB87A6000AB3ABA /* Frameworks */,
@@ -82,9 +82,9 @@
 			);
 			dependencies = (
 			);
-			name = "Sticky Reminders";
+			name = Longpops;
 			productName = Stickies;
-			productReference = 5BB187CE1FB87A6000AB3ABA /* Sticky Reminders.app */;
+			productReference = 5BB187CE1FB87A6000AB3ABA /* Longpops.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -102,7 +102,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5BB187C91FB87A6000AB3ABA /* Build configuration list for PBXProject "Sticky Reminders" */;
+			buildConfigurationList = 5BB187C91FB87A6000AB3ABA /* Build configuration list for PBXProject "Longpops" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -115,7 +115,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5BB187CD1FB87A6000AB3ABA /* Sticky Reminders */,
+				5BB187CD1FB87A6000AB3ABA /* Longpops */,
 			);
 		};
 /* End PBXProject section */
@@ -279,7 +279,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4853CED358;
-				INFOPLIST_FILE = "Sticky Reminders/Info.plist";
+				INFOPLIST_FILE = Longpops/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.martinlist.longpops;
@@ -295,7 +295,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4853CED358;
-				INFOPLIST_FILE = "Sticky Reminders/Info.plist";
+				INFOPLIST_FILE = Longpops/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.martinlist.longpops;
@@ -308,7 +308,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5BB187C91FB87A6000AB3ABA /* Build configuration list for PBXProject "Sticky Reminders" */ = {
+		5BB187C91FB87A6000AB3ABA /* Build configuration list for PBXProject "Longpops" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5BB187DE1FB87A6000AB3ABA /* Debug */,
@@ -317,7 +317,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5BB187E01FB87A6000AB3ABA /* Build configuration list for PBXNativeTarget "Sticky Reminders" */ = {
+		5BB187E01FB87A6000AB3ABA /* Build configuration list for PBXNativeTarget "Longpops" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5BB187E11FB87A6000AB3ABA /* Debug */,

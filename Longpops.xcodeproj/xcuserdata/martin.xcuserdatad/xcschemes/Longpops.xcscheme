@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5BB187CD1FB87A6000AB3ABA"
-               BuildableName = "Sticky Reminders.app"
-               BlueprintName = "Sticky Reminders"
-               ReferencedContainer = "container:Sticky Reminders.xcodeproj">
+               BuildableName = "Longpops.app"
+               BlueprintName = "Longpops"
+               ReferencedContainer = "container:Longpops.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,9 +34,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5BB187CD1FB87A6000AB3ABA"
-            BuildableName = "Sticky Reminders.app"
-            BlueprintName = "Sticky Reminders"
-            ReferencedContainer = "container:Sticky Reminders.xcodeproj">
+            BuildableName = "Longpops.app"
+            BlueprintName = "Longpops"
+            ReferencedContainer = "container:Longpops.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,9 +58,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5BB187CD1FB87A6000AB3ABA"
-            BuildableName = "Sticky Reminders.app"
-            BlueprintName = "Sticky Reminders"
-            ReferencedContainer = "container:Sticky Reminders.xcodeproj">
+            BuildableName = "Longpops.app"
+            BlueprintName = "Longpops"
+            ReferencedContainer = "container:Longpops.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -77,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5BB187CD1FB87A6000AB3ABA"
-            BuildableName = "Sticky Reminders.app"
-            BlueprintName = "Sticky Reminders"
-            ReferencedContainer = "container:Sticky Reminders.xcodeproj">
+            BuildableName = "Longpops.app"
+            BlueprintName = "Longpops"
+            ReferencedContainer = "container:Longpops.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
