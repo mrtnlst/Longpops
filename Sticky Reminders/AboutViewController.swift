@@ -31,13 +31,23 @@ class AboutViewController: UIViewController {
     }
 
     @IBAction func twitterButtonPressed(_ sender: Any) {
-        let options = [UIApplicationOpenURLOptionUniversalLinksOnly : false]
-        UIApplication.shared.open(twitterURL!, options: options, completionHandler: nil)
+        if #available(iOS 10.0, *) {
+            let options = [UIApplicationOpenURLOptionUniversalLinksOnly : false]
+            UIApplication.shared.open(twitterURL!, options: options, completionHandler: nil)
+        }
+        else {
+            _ = UIApplication.shared.openURL(twitterURL!)
+        }
     }
     
     @IBAction func websiteButtonPressed(_ sender: Any) {
+        if #available(iOS 10.0, *) {
         let options = [UIApplicationOpenURLOptionUniversalLinksOnly : false]
         UIApplication.shared.open(websiteURL!, options: options, completionHandler: nil)
+        }
+        else {
+            _ = UIApplication.shared.openURL(websiteURL!)
+        }
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {

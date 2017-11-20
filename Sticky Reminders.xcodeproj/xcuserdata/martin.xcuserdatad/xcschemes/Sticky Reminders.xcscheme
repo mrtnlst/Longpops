@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5BB187CD1FB87A6000AB3ABA"
-               BuildableName = "Stickies.app"
-               BlueprintName = "Stickies"
+               BuildableName = "Sticky Reminders.app"
+               BlueprintName = "Sticky Reminders"
                ReferencedContainer = "container:Sticky Reminders.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,8 +34,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5BB187CD1FB87A6000AB3ABA"
-            BuildableName = "Stickies.app"
-            BlueprintName = "Stickies"
+            BuildableName = "Sticky Reminders.app"
+            BlueprintName = "Sticky Reminders"
             ReferencedContainer = "container:Sticky Reminders.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -58,8 +58,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5BB187CD1FB87A6000AB3ABA"
-            BuildableName = "Stickies.app"
-            BlueprintName = "Stickies"
+            BuildableName = "Sticky Reminders.app"
+            BlueprintName = "Sticky Reminders"
             ReferencedContainer = "container:Sticky Reminders.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -77,8 +77,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5BB187CD1FB87A6000AB3ABA"
-            BuildableName = "Stickies.app"
-            BlueprintName = "Stickies"
+            BuildableName = "Sticky Reminders.app"
+            BlueprintName = "Sticky Reminders"
             ReferencedContainer = "container:Sticky Reminders.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

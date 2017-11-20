@@ -121,9 +121,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func permissionButtonPressed(_ sender: Any) {
         let scheme:String = UIApplicationOpenSettingsURLString
         if let url = URL(string: scheme) {
-                UIApplication.shared.open(url, options: [:],
-                                          completionHandler: {(success) in
-                                            print("Open \(scheme): \(success)")})
+            if #available(iOS 10.0, *) {
+                 DispatchQueue.main.async {
+                    UIApplication.shared.open(url, options: [:],
+                                              completionHandler: {(success) in
+                                                print("Open \(scheme): \(success)")})
+                }
+            }
+            else {
+                  DispatchQueue.main.async {
+                    let success = UIApplication.shared.openURL(url)
+                    print("Open \(scheme): \(success)")
+                }
+            }
         }
     }
     

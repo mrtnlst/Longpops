@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
+    <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -13,19 +13,19 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Stickies" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Sticky_Reminders" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bg8-LE-pVA">
-                                <rect key="frame" x="20" y="169" width="335" height="30"/>
+                                <rect key="frame" x="150" y="160.5" width="468" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kQn-r2-9pH">
-                                <rect key="frame" x="163" y="219" width="50" height="50"/>
+                                <rect key="frame" x="359" y="210.5" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="bf1-Hq-WKT"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="50" id="fX3-li-8Vs"/>
@@ -36,28 +36,31 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w5v-Gy-2HG">
-                                <rect key="frame" x="162" y="234" width="52" height="20.5"/>
+                                <rect key="frame" x="358" y="225.5" width="52" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create overdue Reminders, that stay on your lock screen." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JoJ-cj-nZC">
-                                <rect key="frame" x="20" y="103" width="335" height="41"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create overdue Reminders, that stay on your lock screen." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JoJ-cj-nZC">
+                                <rect key="frame" x="100" y="115" width="568" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="bs4-cH-FfV">
-                                <rect key="frame" x="19.5" y="40" width="336" height="48"/>
+                                <rect key="frame" x="261.5" y="40" width="246.5" height="60"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sticky Reminders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inZ-mp-I7d">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="48"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Longpops" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inZ-mp-I7d">
+                                        <rect key="frame" x="0.0" y="0.0" width="224.5" height="60"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="40"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="50"/>
+                                        </variation>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tpq-UG-AsR">
-                                        <rect key="frame" x="314" y="0.0" width="22" height="22"/>
+                                        <rect key="frame" x="224.5" y="0.0" width="22" height="22"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <segue destination="kqm-yc-M83" kind="presentation" modalTransitionStyle="coverVertical" id="51y-95-Ywq"/>
@@ -66,7 +69,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="2lm-fS-4eP">
-                                <rect key="frame" x="20" y="309" width="335" height="60"/>
+                                <rect key="frame" x="20" y="300.5" width="728" height="60"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                 <state key="normal">
                                     <string key="title">Open Settings to enable
@@ -85,15 +88,23 @@
                             <constraint firstItem="bs4-cH-FfV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="En9-rg-eVf"/>
                             <constraint firstItem="Bg8-LE-pVA" firstAttribute="top" secondItem="JoJ-cj-nZC" secondAttribute="bottom" constant="25" id="GbC-2d-M98"/>
                             <constraint firstItem="kQn-r2-9pH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="MEL-PT-8Kl"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JoJ-cj-nZC" secondAttribute="trailing" constant="20" id="MQJ-6I-q0l"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JoJ-cj-nZC" secondAttribute="trailing" constant="20" id="MQJ-6I-q0l">
+                                <variation key="heightClass=regular-widthClass=regular" constant="100"/>
+                            </constraint>
                             <constraint firstItem="w5v-Gy-2HG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="PH5-Kz-n4Z"/>
-                            <constraint firstItem="JoJ-cj-nZC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="RoO-bL-g3H"/>
+                            <constraint firstItem="JoJ-cj-nZC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="RoO-bL-g3H">
+                                <variation key="heightClass=regular-widthClass=regular" constant="100"/>
+                            </constraint>
                             <constraint firstItem="2lm-fS-4eP" firstAttribute="top" secondItem="kQn-r2-9pH" secondAttribute="bottom" constant="40" id="Rqu-RJ-0j7"/>
                             <constraint firstItem="kQn-r2-9pH" firstAttribute="top" secondItem="Bg8-LE-pVA" secondAttribute="bottom" constant="20" id="Xjz-kA-6uP"/>
                             <constraint firstItem="w5v-Gy-2HG" firstAttribute="top" secondItem="Bg8-LE-pVA" secondAttribute="bottom" constant="35" id="k5i-SE-x8I"/>
                             <constraint firstItem="2lm-fS-4eP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="lVE-9M-zA1"/>
-                            <constraint firstItem="Bg8-LE-pVA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="uRL-zf-MRt"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Bg8-LE-pVA" secondAttribute="trailing" constant="20" id="zNx-A2-kvY"/>
+                            <constraint firstItem="Bg8-LE-pVA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="uRL-zf-MRt">
+                                <variation key="heightClass=regular-widthClass=regular" constant="150"/>
+                            </constraint>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Bg8-LE-pVA" secondAttribute="trailing" constant="20" id="zNx-A2-kvY">
+                                <variation key="heightClass=regular-widthClass=regular" constant="150"/>
+                            </constraint>
                             <constraint firstItem="JoJ-cj-nZC" firstAttribute="top" secondItem="bs4-cH-FfV" secondAttribute="bottom" constant="15" id="zWk-GU-MUJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -114,27 +125,30 @@
         <!--About View Controller-->
         <scene sceneID="mXN-fV-rIt">
             <objects>
-                <viewController id="kqm-yc-M83" customClass="AboutViewController" customModule="Stickies" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="kqm-yc-M83" customClass="AboutViewController" customModule="Sticky_Reminders" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rf0-uv-5em">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZeS-Hb-bKg">
-                                <rect key="frame" x="20" y="40" width="335" height="36"/>
+                                <rect key="frame" x="20" y="40" width="728" height="60"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="50"/>
+                                </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WNs-HL-EaW">
-                                <rect key="frame" x="20" y="91" width="335" height="122"/>
-                                <string key="text">Sticky Reminders brings the concept of sticky notes to iOS. It's meant to be a fast way to create overdue Reminder items, that stay on your lock screen until they are marked as completed. 
+                                <rect key="frame" x="150" y="115" width="468" height="101.5"/>
+                                <string key="text">Longpops brings the concept of sticky notes to iOS. It's meant to be a fast way to create overdue Reminder items, that stay on your lock screen until they are marked as completed. 
 Developed and designed by Martin List. </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="mEc-xI-KQf">
-                                <rect key="frame" x="20" y="233" width="100" height="30"/>
+                                <rect key="frame" x="150" y="236.5" width="100" height="30"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Twitter-Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Rvl-U7-iLb">
                                         <rect key="frame" x="0.0" y="2.5" width="25" height="25"/>
@@ -156,7 +170,7 @@ Developed and designed by Martin List. </string>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="kzh-Ip-U0i">
-                                <rect key="frame" x="20" y="273" width="132" height="30"/>
+                                <rect key="frame" x="150" y="276.5" width="132" height="30"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Browser" translatesAutoresizingMaskIntoConstraints="NO" id="TRk-un-tYT">
                                         <rect key="frame" x="0.0" y="2.5" width="25" height="25"/>
@@ -178,7 +192,7 @@ Developed and designed by Martin List. </string>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nAy-Y8-qtL">
-                                <rect key="frame" x="162.5" y="331" width="50" height="50"/>
+                                <rect key="frame" x="359" y="334.5" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="3W7-1e-vh0"/>
                                     <constraint firstAttribute="width" constant="50" id="vFD-CF-15s"/>
@@ -189,7 +203,7 @@ Developed and designed by Martin List. </string>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mga-VL-epm">
-                                <rect key="frame" x="20" y="626.5" width="335" height="20.5"/>
+                                <rect key="frame" x="20" y="983.5" width="728" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -198,7 +212,9 @@ Developed and designed by Martin List. </string>
                         <color key="backgroundColor" red="1" green="0.56862745100000001" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="nAy-Y8-qtL" firstAttribute="centerX" secondItem="rf0-uv-5em" secondAttribute="centerX" id="5tM-48-Z1d"/>
-                            <constraint firstItem="WNs-HL-EaW" firstAttribute="leading" secondItem="Bzi-cp-Lss" secondAttribute="leading" constant="20" id="8U0-jE-6yd"/>
+                            <constraint firstItem="WNs-HL-EaW" firstAttribute="leading" secondItem="Bzi-cp-Lss" secondAttribute="leading" constant="20" id="8U0-jE-6yd">
+                                <variation key="heightClass=regular-widthClass=regular" constant="150"/>
+                            </constraint>
                             <constraint firstItem="Bzi-cp-Lss" firstAttribute="trailing" secondItem="Mga-VL-epm" secondAttribute="trailing" constant="20" id="F9l-dx-J3z"/>
                             <constraint firstItem="Bzi-cp-Lss" firstAttribute="bottom" secondItem="Mga-VL-epm" secondAttribute="bottom" constant="20" id="TMt-mn-1ht"/>
                             <constraint firstItem="nAy-Y8-qtL" firstAttribute="top" secondItem="kzh-Ip-U0i" secondAttribute="bottom" constant="28" id="Wtp-v5-Cwc"/>
@@ -207,10 +223,16 @@ Developed and designed by Martin List. </string>
                             <constraint firstItem="mEc-xI-KQf" firstAttribute="top" secondItem="WNs-HL-EaW" secondAttribute="bottom" constant="20" id="aOW-Jd-lUE"/>
                             <constraint firstItem="kzh-Ip-U0i" firstAttribute="top" secondItem="mEc-xI-KQf" secondAttribute="bottom" constant="10" id="ahD-za-PSc"/>
                             <constraint firstItem="ZeS-Hb-bKg" firstAttribute="top" secondItem="Bzi-cp-Lss" secondAttribute="top" constant="20" id="gZa-FD-o3l"/>
-                            <constraint firstItem="mEc-xI-KQf" firstAttribute="leading" secondItem="Bzi-cp-Lss" secondAttribute="leading" constant="20" id="hWe-7i-7u0"/>
-                            <constraint firstItem="kzh-Ip-U0i" firstAttribute="leading" secondItem="Bzi-cp-Lss" secondAttribute="leading" constant="20" id="idA-ik-qYh"/>
+                            <constraint firstItem="mEc-xI-KQf" firstAttribute="leading" secondItem="Bzi-cp-Lss" secondAttribute="leading" constant="20" id="hWe-7i-7u0">
+                                <variation key="heightClass=regular-widthClass=regular" constant="150"/>
+                            </constraint>
+                            <constraint firstItem="kzh-Ip-U0i" firstAttribute="leading" secondItem="Bzi-cp-Lss" secondAttribute="leading" constant="20" id="idA-ik-qYh">
+                                <variation key="heightClass=regular-widthClass=regular" constant="150"/>
+                            </constraint>
                             <constraint firstItem="Mga-VL-epm" firstAttribute="leading" secondItem="Bzi-cp-Lss" secondAttribute="leading" constant="20" id="jo9-7H-XQ2"/>
-                            <constraint firstItem="Bzi-cp-Lss" firstAttribute="trailing" secondItem="WNs-HL-EaW" secondAttribute="trailing" constant="20" id="kmf-BW-4xX"/>
+                            <constraint firstItem="Bzi-cp-Lss" firstAttribute="trailing" secondItem="WNs-HL-EaW" secondAttribute="trailing" constant="20" id="kmf-BW-4xX">
+                                <variation key="heightClass=regular-widthClass=regular" constant="150"/>
+                            </constraint>
                             <constraint firstItem="Bzi-cp-Lss" firstAttribute="trailing" secondItem="ZeS-Hb-bKg" secondAttribute="trailing" constant="20" id="oJR-xP-Kk7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Bzi-cp-Lss"/>
