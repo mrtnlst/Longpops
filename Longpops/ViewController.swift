@@ -122,11 +122,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let scheme:String = UIApplicationOpenSettingsURLString
         if let url = URL(string: scheme) {
             if #available(iOS 10.0, *) {
-//                 DispatchQueue.main.async {
+                 DispatchQueue.main.async {
                     UIApplication.shared.open(url, options: [:],
                                               completionHandler: {(success) in
                                                 print("Open \(scheme): \(success)")})
-//                }
+                }
             }
             else {
                   DispatchQueue.main.async {
