@@ -1,6 +1,6 @@
 ## Longpops for iOS
 
-Longpops is meant to be a fast way to create overdue Reminer items, that remain on your lockscreen until they are marked as completed. 
+Longpops is meant to be a fast way to create overdue Reminder items, that remain on your lockscreen until they are marked as completed. 
 
 <img src="Longpops.png" width="400">
 
