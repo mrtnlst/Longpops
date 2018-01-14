@@ -24,6 +24,8 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
     var createReminderButtonCenterX: NSLayoutConstraint
     var successLabel: UILabel
     var permissionButton: UIButton
+    var infoButton: UIButton
+    var settingsButton: UIButton
     var eventStore: EKEventStore!
     
     init() {
@@ -40,7 +42,8 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
         self.createReminderButtonCenterX = NSLayoutConstraint()
         self.successLabel = UILabel()
         self.permissionButton = UIButton()
-        
+        self.infoButton = UIButton(type: .infoLight)
+        self.settingsButton = UIButton()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -133,6 +136,15 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
         self.permissionButton.titleLabel?.numberOfLines = 2
         self.permissionButton.isHidden = true
         self.permissionButtonContainerView.addSubview(self.permissionButton)
+        
+        self.infoButton.translatesAutoresizingMaskIntoConstraints = false
+        self.infoButton.addTarget(self, action: #selector(TemplateViewController.infoButtonPressed), for: .touchUpInside)
+        self.headingContainerView.addSubview(self.infoButton)
+        
+        self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
+        self.settingsButton.setImage(UIImage(named: "Browser"), for: .normal)
+        self.settingsButton.addTarget(self, action: #selector(TemplateViewController.settingsButtonPressed), for: .touchUpInside)
+        self.headingContainerView.addSubview(self.settingsButton)
     }
     
     fileprivate func setupConstraints() {
@@ -147,12 +159,15 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
             "titleTextField": self.titleTextField,
             "createReminderButton": self.createReminderButton,
             "successLabel": self.successLabel,
-            "permissionButton": self.permissionButton
+            "permissionButton": self.permissionButton,
+            "infoButton": self.infoButton,
+            "settingsButton": self.settingsButton,
             ]
         
         let metricsDictionary: [String: Any] = [
             "createReminderButtonHeight": 50,
             "createReminderButtonWidth": 50,
+            "menuButton": 25
             ]
         
         let margins = view.layoutMarginsGuide
@@ -199,8 +214,8 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
                                                                    multiplier: 1.0,
                                                                    constant: 0.0))
         
-        self.headingContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[headingLabel]-(>=1)-|",
-                                                                                options: [],
+        self.headingContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[settingsButton(menuButton)]-(>=1)-[headingLabel]-(>=1)-[infoButton(menuButton)]-|",
+                                                                                options: .alignAllLastBaseline,
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
         
@@ -347,6 +362,14 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
                 }
             }
         }
+    }
+    
+    @objc func infoButtonPressed() {
+        print("Info")
+    }
+    
+    @objc func settingsButtonPressed() {
+        print("Settings")
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

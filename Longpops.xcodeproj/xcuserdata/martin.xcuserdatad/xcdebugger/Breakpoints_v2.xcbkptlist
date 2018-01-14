@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Longpops/TemplateViewController.swift"
-            timestampString = "537633597.951836"
+            timestampString = "537634732.540697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
             landmarkName = "setupConstraints()"
             landmarkType = "7">
          </BreakpointContent>
