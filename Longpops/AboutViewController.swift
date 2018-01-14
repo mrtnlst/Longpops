@@ -59,15 +59,12 @@ class AboutViewController: UIViewController {
     
     fileprivate func setupViews() {
         self.headingContainerView.translatesAutoresizingMaskIntoConstraints = false
-//        self.headingContainerView.backgroundColor = .blue
         self.view.addSubview(self.headingContainerView)
         
         self.descriptionContainerView.translatesAutoresizingMaskIntoConstraints = false
-//        self.descriptionContainerView.backgroundColor = .orange
         self.view.addSubview(self.descriptionContainerView)
         
         self.twitterContainerView.translatesAutoresizingMaskIntoConstraints = false
-//        self.twitterContainerView.backgroundColor = .green
         self.view.addSubview(self.twitterContainerView)
         
         self.websiteContainerView.translatesAutoresizingMaskIntoConstraints = false
