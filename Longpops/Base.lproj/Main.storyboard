@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="ipad9_7" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,17 +15,17 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Longpops" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bg8-LE-pVA">
-                                <rect key="frame" x="150" y="254" width="468" height="30"/>
+                                <rect key="frame" x="20" y="192.66666666666666" width="335" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kQn-r2-9pH">
-                                <rect key="frame" x="349" y="314" width="70" height="70"/>
+                                <rect key="frame" x="162.66666666666666" y="242.66666666666663" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="bf1-Hq-WKT">
                                         <variation key="heightClass=regular-widthClass=regular" constant="70"/>
@@ -40,13 +40,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w5v-Gy-2HG">
-                                <rect key="frame" x="359.5" y="339" width="49.5" height="19.5"/>
+                                <rect key="frame" x="163" y="257.66666666666669" width="49.333333333333343" height="19.333333333333314"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create overdue Reminders, that stay on your lock screen." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JoJ-cj-nZC">
-                                <rect key="frame" x="100" y="154" width="568" height="60"/>
+                                <rect key="frame" x="20" y="127.00000000000001" width="335" height="40.666666666666671"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -55,10 +55,10 @@
                                 </variation>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="bs4-cH-FfV">
-                                <rect key="frame" x="217.5" y="40" width="333" height="84"/>
+                                <rect key="frame" x="86.333333333333329" y="64" width="202.33333333333337" height="48"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Longpops" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inZ-mp-I7d">
-                                        <rect key="frame" x="0.0" y="0.0" width="311" height="84"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="180.33333333333334" height="48"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="40"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -67,7 +67,7 @@
                                         </variation>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tpq-UG-AsR">
-                                        <rect key="frame" x="311" y="0.0" width="22" height="22"/>
+                                        <rect key="frame" x="180.33333333333337" y="0.0" width="22" height="22"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <segue destination="kqm-yc-M83" kind="presentation" modalTransitionStyle="coverVertical" id="51y-95-Ywq"/>
@@ -76,7 +76,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="2lm-fS-4eP">
-                                <rect key="frame" x="20" y="454" width="728" height="72"/>
+                                <rect key="frame" x="20" y="332.66666666666669" width="335" height="60"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                 <state key="normal">
                                     <string key="title">Open Settings to enable
@@ -147,11 +147,11 @@
             <objects>
                 <viewController id="kqm-yc-M83" customClass="AboutViewController" customModule="Longpops" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rf0-uv-5em">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZeS-Hb-bKg">
-                                <rect key="frame" x="20" y="40" width="728" height="60"/>
+                                <rect key="frame" x="20" y="64" width="335" height="36"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -160,7 +160,7 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WNs-HL-EaW">
-                                <rect key="frame" x="150" y="130" width="468" height="101.5"/>
+                                <rect key="frame" x="20" y="115" width="335" height="122"/>
                                 <string key="text">Longpops brings the concept of sticky notes to iOS. It's meant to be a fast way to create overdue Reminder items, that stay on your lock screen until they are marked as completed. 
 Developed and designed by Martin List. </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -168,10 +168,10 @@ Developed and designed by Martin List. </string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="mEc-xI-KQf">
-                                <rect key="frame" x="150" y="271.5" width="122" height="36"/>
+                                <rect key="frame" x="20" y="257" width="100" height="30"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Twitter-Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Rvl-U7-iLb">
-                                        <rect key="frame" x="0.0" y="3" width="30" height="30"/>
+                                        <rect key="frame" x="0.0" y="2.6666666666666856" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="25" id="BDA-Py-uVJ">
                                                 <variation key="heightClass=regular-widthClass=regular" constant="30"/>
@@ -182,7 +182,7 @@ Developed and designed by Martin List. </string>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KpK-wa-Kq7">
-                                        <rect key="frame" x="40" y="0.0" width="82" height="36"/>
+                                        <rect key="frame" x="35" y="0.0" width="65" height="30"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <state key="normal" title="@mrtnlst">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -197,10 +197,10 @@ Developed and designed by Martin List. </string>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="kzh-Ip-U0i">
-                                <rect key="frame" x="150" y="317.5" width="161" height="36"/>
+                                <rect key="frame" x="20" y="297" width="132" height="30"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Browser" translatesAutoresizingMaskIntoConstraints="NO" id="TRk-un-tYT">
-                                        <rect key="frame" x="0.0" y="3" width="30" height="30"/>
+                                        <rect key="frame" x="0.0" y="2.6666666666666856" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="FlI-YW-xFf">
                                                 <variation key="heightClass=regular-widthClass=regular" constant="30"/>
@@ -211,7 +211,7 @@ Developed and designed by Martin List. </string>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wDx-mR-8Qt">
-                                        <rect key="frame" x="43" y="0.0" width="118" height="36"/>
+                                        <rect key="frame" x="38" y="0.0" width="94" height="30"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <state key="normal" title="martinlist.org">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -226,7 +226,7 @@ Developed and designed by Martin List. </string>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nAy-Y8-qtL">
-                                <rect key="frame" x="349" y="381.5" width="70" height="70"/>
+                                <rect key="frame" x="162.66666666666666" y="355" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="3W7-1e-vh0">
                                         <variation key="heightClass=regular-widthClass=regular" constant="70"/>
@@ -241,7 +241,7 @@ Developed and designed by Martin List. </string>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mga-VL-epm">
-                                <rect key="frame" x="20" y="983.5" width="728" height="20.5"/>
+                                <rect key="frame" x="20" y="737.66666666666663" width="335" height="20.333333333333371"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
