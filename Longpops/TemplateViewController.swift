@@ -41,7 +41,7 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
         self.createReminderButton = UIButton()
         self.createReminderButtonCenterX = NSLayoutConstraint()
         self.successLabel = UILabel()
-        self.permissionButton = UIButton()
+        self.permissionButton = UIButton(type: .system)
         self.infoButton = UIButton(type: .infoLight)
         self.settingsButton = UIButton()
         super.init(nibName: nil, bundle: nil)
@@ -130,6 +130,7 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
         
         self.permissionButton.setTitle("Open Settings to enable access to Reminders!", for: .normal)
         self.permissionButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        self.permissionButton.setTitleColor(.white, for: .normal)
         self.permissionButton.translatesAutoresizingMaskIntoConstraints = false
         self.permissionButton.addTarget(self, action: #selector(TemplateViewController.permissionButtonPressed), for: .touchUpInside)
         self.permissionButton.titleLabel?.textAlignment = .center
@@ -139,6 +140,7 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
         
         self.infoButton.translatesAutoresizingMaskIntoConstraints = false
         self.infoButton.addTarget(self, action: #selector(TemplateViewController.infoButtonPressed), for: .touchUpInside)
+        self.infoButton.tintColor = .white
         self.headingContainerView.addSubview(self.infoButton)
         
         self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
@@ -365,7 +367,8 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func infoButtonPressed() {
-        print("Info")
+        let aboutViewController = AboutViewController()
+        self.present(aboutViewController, animated: true, completion: nil)
     }
     
     @objc func settingsButtonPressed() {
