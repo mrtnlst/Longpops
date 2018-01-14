@@ -55,7 +55,7 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor(red: 255/255, green: 145/255, blue: 97/255, alpha: 1.0)
-        self.setupViewController()
+        self.setupViews()
         self.setupConstraints()
         
         self.eventStore = EKEventStore()
@@ -74,7 +74,7 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
         self.titleTextField.becomeFirstResponder()
     }
     
-    fileprivate func setupViewController() {
+    func setupViews() {
         
         self.headingContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.headingContainerView)
