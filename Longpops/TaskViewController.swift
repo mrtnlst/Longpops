@@ -313,17 +313,20 @@ class TaskViewController: TemplateViewController {
     // MARK: Button Animations
     
     fileprivate func beginSuccessAnimation() {
+        self.createReminderButtonCenterX.constant = -1 * (self.successLabel.frame.width / 2 + 35)
+        self.view.layoutIfNeeded()
+        
         UIView.animate(withDuration: 0.5, animations: {
-            self.createReminderButtonCenterX.constant = -1 * (self.successLabel.frame.width / 2 + 35)
             self.view.layoutIfNeeded()
             self.successLabel.alpha = 1.0
         }, completion: {(true) in self.endSuccessAnimation()})
     }
     
     fileprivate func endSuccessAnimation() {
+        self.createReminderButtonCenterX.constant = 0
+        self.view.layoutIfNeeded()
+        
         UIView.animate(withDuration: 0.5, delay: 0.5, animations:{
-            self.createReminderButtonCenterX.constant = 0
-
             self.view.layoutIfNeeded()
             self.successLabel.alpha = 0
         })

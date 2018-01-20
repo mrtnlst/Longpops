@@ -7,10 +7,8 @@
 
 import UIKit
 
-class AboutViewController: UIViewController {
+class AboutViewController: TemplateViewController {
     
-    private var headingContainerView: UIView
-    private var descriptionContainerView: UIView
     private var twitterContainerView: UIView
     private var websiteContainerView: UIView
     private var backButtonContainerView: UIView
@@ -20,14 +18,10 @@ class AboutViewController: UIViewController {
     var websiteButton: UIButton
     var websiteImage: UIImageView
     var backButton: UIButton
-    var headingLabel: UILabel
-    var descriptionLabel: UILabel
     var twitterURL: URL
     var websiteURL: URL
     
-    init() {
-        self.headingContainerView = UIView()
-        self.descriptionContainerView = UIView()
+    override init() {
         self.twitterContainerView = UIView()
         self.websiteContainerView = UIView()
         self.backButtonContainerView = UIView()
@@ -37,12 +31,10 @@ class AboutViewController: UIViewController {
         self.websiteImage = UIImageView()
         self.websiteButton = UIButton(type: .system)
         self.backButton = UIButton()
-        self.headingLabel = UILabel()
-        self.descriptionLabel = UILabel()
         self.twitterURL = URL(string: "https://twitter.com/mrtnlst")!
         self.websiteURL = URL(string: "https://martinlist.org")!
         
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -57,12 +49,8 @@ class AboutViewController: UIViewController {
         setupConstraints()
     }
     
-    fileprivate func setupViews() {
-        self.headingContainerView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.headingContainerView)
-        
-        self.descriptionContainerView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.descriptionContainerView)
+    override func setupViews() {
+        super.setupViews()
         
         self.twitterContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.twitterContainerView)
@@ -73,20 +61,9 @@ class AboutViewController: UIViewController {
         self.backButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.backButtonContainerView)
         
-        self.headingLabel.translatesAutoresizingMaskIntoConstraints = false;
         self.headingLabel.text = "About"
-        self.headingLabel.textColor = .white
-        self.headingLabel.font = UIFont.systemFont(ofSize: 30, weight: .semibold)
-        self.headingContainerView.addSubview(self.headingLabel)
         
-        self.descriptionLabel.translatesAutoresizingMaskIntoConstraints = false;
         self.descriptionLabel.text = "Longpops brings the concept of sticky notes to iOS. It's meant to be a fast way to create overdue Reminder items, that stay on your lock screen until they are marked as completed. \nDeveloped and designed by Martin List."
-        self.descriptionLabel.textColor = .white
-        self.descriptionLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        self.descriptionLabel.lineBreakMode = .byWordWrapping
-        self.descriptionLabel.numberOfLines = 6
-        self.descriptionLabel.textAlignment = .left
-        self.descriptionContainerView.addSubview(self.descriptionLabel)
         
         self.twitterImage.image = UIImage(named: "Twitter-Logo")
         self.twitterImage.translatesAutoresizingMaskIntoConstraints = false
@@ -119,7 +96,9 @@ class AboutViewController: UIViewController {
         self.backButtonContainerView.addSubview(self.backButton)
     }
 
-    func setupConstraints() {
+    override func setupConstraints() {
+        super.setupConstraints()
+        
         let viewsDictionary: [String: Any] = [
             "headingContainerView": self.headingContainerView,
             "descriptionContainerView": self.descriptionContainerView,
@@ -142,12 +121,6 @@ class AboutViewController: UIViewController {
         
         let margins = view.layoutMarginsGuide
         NSLayoutConstraint.activate([
-            self.headingContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            self.headingContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
-            
-            self.descriptionContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            self.descriptionContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
-            
             self.twitterContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.twitterContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
@@ -159,60 +132,15 @@ class AboutViewController: UIViewController {
             ])
         
         if #available(iOS 11, *) {
-            let guide = view.safeAreaLayoutGuide
             NSLayoutConstraint.activate([
-                self.headingContainerView.topAnchor.constraintEqualToSystemSpacingBelow(guide.topAnchor, multiplier: 1.0),
-                
-                self.descriptionContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: 1.0),
-                
                 self.twitterContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: 1.0),
                 
                 self.websiteContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.twitterContainerView.bottomAnchor, multiplier: 1.0),
-//
+
                 self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.websiteContainerView.bottomAnchor, multiplier: 1.0),
                 ])
             
         }
-        
-        // MARK: Heading Constraints
-        
-        self.headingContainerView.addConstraint(NSLayoutConstraint(item: self.headingLabel,
-                                                                   attribute: .centerX,
-                                                                   relatedBy: .equal,
-                                                                   toItem: self.headingContainerView,
-                                                                   attribute: .centerX,
-                                                                   multiplier: 1.0,
-                                                                   constant: 0.0))
-        
-        self.headingContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[headingLabel]-(>=1)-|",
-                                                                                options: [],
-                                                                                metrics: metricsDictionary,
-                                                                                views: viewsDictionary))
-        
-        self.headingContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[headingLabel]-|",
-                                                                                options: [],
-                                                                                metrics: metricsDictionary,
-                                                                                views: viewsDictionary))
-        
-        // MARK: Description Constraints
-        
-        self.descriptionContainerView.addConstraint(NSLayoutConstraint(item: self.descriptionLabel,
-                                                                       attribute: .centerX,
-                                                                       relatedBy: .equal,
-                                                                       toItem: self.descriptionContainerView,
-                                                                       attribute: .centerX,
-                                                                       multiplier: 1.0,
-                                                                       constant: 0.0))
-        
-        self.descriptionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[descriptionLabel]-(>=1)-|",
-                                                                                    options: [],
-                                                                                    metrics: metricsDictionary,
-                                                                                    views: viewsDictionary))
-        
-        self.descriptionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[descriptionLabel]-|",
-                                                                                    options: [],
-                                                                                    metrics: metricsDictionary,
-                                                                                    views: viewsDictionary))
         
         // MARK: Twitter Button Constraints
 
@@ -289,13 +217,5 @@ class AboutViewController: UIViewController {
     
     @objc func backButtonPressed() {
         dismiss(animated: true, completion: nil)
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 }
