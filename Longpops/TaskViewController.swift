@@ -35,7 +35,7 @@ class TaskViewController: TemplateViewController {
         self.successLabel = UILabel()
         self.permissionButton = UIButton(type: .system)
         self.infoButton = UIButton(type: .infoLight)
-        self.settingsButton = UIButton()
+        self.settingsButton = UIButton(type: .system)
         super.init()
     }
     
@@ -118,6 +118,7 @@ class TaskViewController: TemplateViewController {
         self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
         self.settingsButton.setImage(UIImage(named: "Browser"), for: .normal)
         self.settingsButton.addTarget(self, action: #selector(TaskViewController.settingsButtonPressed), for: .touchUpInside)
+        self.settingsButton.tintColor = .white
         self.headingContainerView.addSubview(self.settingsButton)
     }
     
@@ -302,7 +303,8 @@ class TaskViewController: TemplateViewController {
     }
     
     @objc func settingsButtonPressed() {
-        print("Settings")
+        let settingsViewController = SettingsViewController()
+        self.present(settingsViewController, animated: true, completion: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

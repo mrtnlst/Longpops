@@ -12,7 +12,6 @@ class SimpleTaskViewController: TaskViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.setupViews()
     }
     

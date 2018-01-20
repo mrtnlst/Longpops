@@ -94,6 +94,7 @@ class AboutViewController: TemplateViewController {
         self.backButton.translatesAutoresizingMaskIntoConstraints = false
         self.backButton.addTarget(self, action: #selector(AboutViewController.backButtonPressed), for: .touchUpInside)
         self.backButtonContainerView.addSubview(self.backButton)
+        
     }
 
     override func setupConstraints() {
