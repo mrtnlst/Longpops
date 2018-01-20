@@ -34,7 +34,7 @@ class TaskViewController: TemplateViewController {
         self.createReminderButtonCenterX = NSLayoutConstraint()
         self.successLabel = UILabel()
         self.permissionButton = UIButton(type: .system)
-        self.infoButton = UIButton(type: .infoLight)
+        self.infoButton = UIButton(type: .system)
         self.settingsButton = UIButton(type: .system)
         super.init()
     }
@@ -111,12 +111,13 @@ class TaskViewController: TemplateViewController {
         self.permissionButtonContainerView.addSubview(self.permissionButton)
         
         self.infoButton.translatesAutoresizingMaskIntoConstraints = false
+        self.infoButton.setImage(UIImage(named: "InfoButton"), for: .normal)
         self.infoButton.addTarget(self, action: #selector(TaskViewController.infoButtonPressed), for: .touchUpInside)
         self.infoButton.tintColor = .white
         self.headingContainerView.addSubview(self.infoButton)
         
         self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
-        self.settingsButton.setImage(UIImage(named: "Browser"), for: .normal)
+        self.settingsButton.setImage(UIImage(named: "SettingsButton"), for: .normal)
         self.settingsButton.addTarget(self, action: #selector(TaskViewController.settingsButtonPressed), for: .touchUpInside)
         self.settingsButton.tintColor = .white
         self.headingContainerView.addSubview(self.settingsButton)
