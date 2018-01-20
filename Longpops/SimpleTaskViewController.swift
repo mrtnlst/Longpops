@@ -8,7 +8,7 @@
 import UIKit
 import EventKit
 
-class SimpleTaskViewController: TemplateViewController {
+class SimpleTaskViewController: TaskViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
