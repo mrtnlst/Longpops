@@ -137,7 +137,7 @@ class AdvancedTaskViewController: TaskViewController {
             "smallFieldWidth": 38,
             "bigFieldWidth": 58]
         
-        // MARK: Textfields Constraints
+        // Textfields Constraints
         
         self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[titleTextField]-|",
                                                                                   options: [],
@@ -190,12 +190,15 @@ class AdvancedTaskViewController: TaskViewController {
 
     }
     
+    // MARK: TextField Actions
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
+        // Allow backspace.
         if string.count == 0 {
             return true
         }
         
+        // Check input characters.
         switch textField {
         case self.titleTextField:
             return true
@@ -203,33 +206,41 @@ class AdvancedTaskViewController: TaskViewController {
             if TextInputHandler.isStringAnInt(string: string) {
                 return true
             }
-            else {
-                return false
-            }
         default:
             if TextInputHandler.isStringAnInt(string: string) {
                 return true
             }
-            else {
-                return false
-            }
         }
+        return false
     }
     
     @objc func textFieldEditingDidChange(textField: UITextField) {
-        if TextInputHandler.shouldSkipToNextTextField(textField: textField) {
-            let nextField = TextInputHandler.jumpToTextField(tag: textField.tag)
+        
+        // Check whether the date component is valid, otherwise select text.
+        if TextInputHandler.isDateComponentCorrect(textField: textField) {
             
-            if nextField == 0 {
-                self.titleTextField.becomeFirstResponder()
-            }
-            else {
-                self.view.viewWithTag(nextField)?.becomeFirstResponder()
+            // Skip to next textField, if maximum digits are reached.
+            if TextInputHandler.shouldSkipToNextTextField(textField: textField) {
+                let nextField = TextInputHandler.jumpToTextField(tag: textField.tag)
+                
+                if nextField == 0 {
+                    self.titleTextField.becomeFirstResponder()
+                }
+                else {
+                    self.view.viewWithTag(nextField)?.becomeFirstResponder()
+                }
             }
         }
+        else {
+            textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+        }
+        
+        
     }
     
     override func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        // Hitting return in titleTextField should jump first time textField.
         self.hoursTextField.becomeFirstResponder()
         return true
     }
