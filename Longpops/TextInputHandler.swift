@@ -47,11 +47,7 @@ class TextInputHandler {
     
     static func isDateComponentCorrect(textField: UITextField) -> Bool {
         
-        // Only check yearTextField, if it's fully typed in.
-        if textField.tag == 5 && getNumberOfDigits(string: textField.text!) < 4 {
-            return true
-        }
-        
+        // Validity check os only executed if required digits are reached.
         if let input = Int(textField.text!) {
             switch textField.tag {
             case 1:
@@ -63,15 +59,25 @@ class TextInputHandler {
                     return false
                 }
             case 3:
-                if input > 31 || input < 1 {
+                if getNumberOfDigits(string: textField.text!) < 2 {
+                    return true
+                }
+                else if input > 31 || input < 1 {
                     return false
                 }
             case 4:
-                if input > 12 || input < 1 {
+                if getNumberOfDigits(string: textField.text!) < 2 {
+                    return true
+                }
+                else if input > 12 || input < 1 {
                     return false
                 }
-            case 5: if input < 2017 {
-                return false
+            case 5:
+                if getNumberOfDigits(string: textField.text!) < 4 {
+                    return true
+                }
+                else if input < 2017 {
+                    return false
                 }
             default:
                 break
