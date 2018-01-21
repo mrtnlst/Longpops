@@ -83,6 +83,7 @@ class TaskViewController: TemplateViewController {
         self.titleTextField.borderStyle = .roundedRect
         self.titleTextField.placeholder = "Remind me of .."
         self.titleTextField.delegate = self
+        self.titleTextField.tag = 0
         self.textFieldContainerView.addSubview(self.titleTextField)
         
         self.successLabel.translatesAutoresizingMaskIntoConstraints = false
