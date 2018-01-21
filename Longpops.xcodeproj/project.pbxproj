@@ -14,6 +14,7 @@
 		5BB187E41FBCD2E300AB3ABA /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB187E31FBCD2E300AB3ABA /* AboutViewController.swift */; };
 		5BB7A7642013C6F400EF2A54 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB7A7632013C6F400EF2A54 /* TaskViewController.swift */; };
 		5BB7A7662013E25C00EF2A54 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB7A7652013E25C00EF2A54 /* SettingsViewController.swift */; };
+		5BB7A76A2014BEDB00EF2A54 /* AdvancedTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB7A7692014BEDB00EF2A54 /* AdvancedTaskViewController.swift */; };
 		5BE6EF30200B676700AE14F2 /* TemplateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE6EF2F200B676700AE14F2 /* TemplateViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		5BB187E31FBCD2E300AB3ABA /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		5BB7A7632013C6F400EF2A54 /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		5BB7A7652013E25C00EF2A54 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		5BB7A7692014BEDB00EF2A54 /* AdvancedTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedTaskViewController.swift; sourceTree = "<group>"; };
 		5BE6EF2F200B676700AE14F2 /* TemplateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,6 +77,7 @@
 				5BE6EF2F200B676700AE14F2 /* TemplateViewController.swift */,
 				5BB7A7632013C6F400EF2A54 /* TaskViewController.swift */,
 				5BB187D31FB87A6000AB3ABA /* SimpleTaskViewController.swift */,
+				5BB7A7692014BEDB00EF2A54 /* AdvancedTaskViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -163,6 +166,7 @@
 				5BB187D41FB87A6000AB3ABA /* SimpleTaskViewController.swift in Sources */,
 				5BB7A7642013C6F400EF2A54 /* TaskViewController.swift in Sources */,
 				5BE6EF30200B676700AE14F2 /* TemplateViewController.swift in Sources */,
+				5BB7A76A2014BEDB00EF2A54 /* AdvancedTaskViewController.swift in Sources */,
 				5BB187D21FB87A6000AB3ABA /* AppDelegate.swift in Sources */,
 				5BB7A7662013E25C00EF2A54 /* SettingsViewController.swift in Sources */,
 			);

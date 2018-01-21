@@ -178,26 +178,6 @@ class TaskViewController: TemplateViewController {
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
         
-        // MARK: Textfields Constraints
-        
-        self.textFieldContainerView.addConstraint(NSLayoutConstraint(item: self.titleTextField,
-                                                                     attribute: .centerX,
-                                                                     relatedBy: .equal,
-                                                                     toItem: self.textFieldContainerView,
-                                                                     attribute: .centerX,
-                                                                     multiplier: 1.0,
-                                                                     constant: 0.0))
-        
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[titleTextField]-|",
-                                                                                  options: [],
-                                                                                  metrics: metricsDictionary,
-                                                                                  views: viewsDictionary))
-        
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-|",
-                                                                                  options: [],
-                                                                                  metrics: metricsDictionary,
-                                                                                  views: viewsDictionary))
-        
         // MARK: Reminder Button Constraints
         
         self.buttonContainerView.addConstraint(NSLayoutConstraint(item: self.createReminderButton,
@@ -317,7 +297,6 @@ class TaskViewController: TemplateViewController {
     
     fileprivate func beginSuccessAnimation() {
         self.createReminderButtonCenterX.constant = -1 * (self.successLabel.frame.width / 2 + 35)
-        self.view.layoutIfNeeded()
         
         UIView.animate(withDuration: 0.5, animations: {
             self.view.layoutIfNeeded()
@@ -327,7 +306,6 @@ class TaskViewController: TemplateViewController {
     
     fileprivate func endSuccessAnimation() {
         self.createReminderButtonCenterX.constant = 0
-        self.view.layoutIfNeeded()
         
         UIView.animate(withDuration: 0.5, delay: 0.5, animations:{
             self.view.layoutIfNeeded()

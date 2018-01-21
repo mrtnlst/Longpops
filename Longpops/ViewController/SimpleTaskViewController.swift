@@ -13,6 +13,7 @@ class SimpleTaskViewController: TaskViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupViews()
+        self.setupConstraints()
     }
     
     override func setupViews() {
@@ -21,6 +22,39 @@ class SimpleTaskViewController: TaskViewController {
         self.headingLabel.text = "Longpops"
         
         self.descriptionLabel.text = "Create overdue Reminders, that stay on your lock screen."
+    }
+    
+    override func setupConstraints() {
+        super.setupConstraints()
+        
+        let viewsDictionary: [String: Any] = [
+            "titleTextField": self.titleTextField,
+            ]
+        
+        let metricsDictionary: [String: Any] = [
+            "createReminderButtonHeight": 50,
+            "createReminderButtonWidth": 50,
+            "menuButton": 25
+        ]
+        
+        self.textFieldContainerView.addConstraint(NSLayoutConstraint(item: self.titleTextField,
+                                                                     attribute: .centerX,
+                                                                     relatedBy: .equal,
+                                                                     toItem: self.textFieldContainerView,
+                                                                     attribute: .centerX,
+                                                                     multiplier: 1.0,
+                                                                     constant: 0.0))
+
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[titleTextField]-|",
+                                                                                  options: [],
+                                                                                  metrics: metricsDictionary,
+                                                                                  views: viewsDictionary))
+
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-|",
+                                                                                  options: [],
+                                                                                  metrics: metricsDictionary,
+                                                                                  views: viewsDictionary))
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
