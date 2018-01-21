@@ -229,6 +229,11 @@ class AdvancedTaskViewController: TaskViewController {
         }
     }
     
+    override func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.hoursTextField.becomeFirstResponder()
+        return true
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
