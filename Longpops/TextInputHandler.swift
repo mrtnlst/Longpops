@@ -76,7 +76,7 @@ class TextInputHandler {
                 if getNumberOfDigits(string: textField.text!) < 4 {
                     return true
                 }
-                else if input < 2017 {
+                else if input < DateTimeHandler.getCurrentDate().2 {
                     return false
                 }
             default:

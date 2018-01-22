@@ -52,9 +52,9 @@ class AdvancedTaskViewController: TaskViewController {
         self.hoursTextField.translatesAutoresizingMaskIntoConstraints = false
         self.hoursTextField.backgroundColor = .white
         self.hoursTextField.borderStyle = .roundedRect
-        self.hoursTextField.placeholder = "10"
+        self.hoursTextField.placeholder = DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0)
         self.hoursTextField.delegate = self
-        self.hoursTextField.keyboardType = .decimalPad
+        self.hoursTextField.keyboardType = .numberPad
         self.hoursTextField.tag = 1
         self.hoursTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
         self.textFieldContainerView.addSubview(self.hoursTextField)
@@ -62,9 +62,9 @@ class AdvancedTaskViewController: TaskViewController {
         self.minutesTextField.translatesAutoresizingMaskIntoConstraints = false
         self.minutesTextField.backgroundColor = .white
         self.minutesTextField.borderStyle = .roundedRect
-        self.minutesTextField.placeholder = "09"
+        self.minutesTextField.placeholder = DateTimeHandler.getMinuteString(minute: DateTimeHandler.getCurrentTime().1)
         self.minutesTextField.delegate = self
-        self.minutesTextField.keyboardType = .decimalPad
+        self.minutesTextField.keyboardType = .numberPad
         self.minutesTextField.tag = 2
         self.minutesTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
         self.textFieldContainerView.addSubview(self.minutesTextField)
@@ -72,9 +72,9 @@ class AdvancedTaskViewController: TaskViewController {
         self.dayTextField.translatesAutoresizingMaskIntoConstraints = false
         self.dayTextField.backgroundColor = .white
         self.dayTextField.borderStyle = .roundedRect
-        self.dayTextField.placeholder = "05"
+        self.dayTextField.placeholder = DateTimeHandler.getDayString(day: DateTimeHandler.getCurrentDate().0)
         self.dayTextField.delegate = self
-        self.dayTextField.keyboardType = .decimalPad
+        self.dayTextField.keyboardType = .numberPad
         self.dayTextField.tag = 3
         self.dayTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
         self.textFieldContainerView.addSubview(self.dayTextField)
@@ -82,9 +82,9 @@ class AdvancedTaskViewController: TaskViewController {
         self.monthTextField.translatesAutoresizingMaskIntoConstraints = false
         self.monthTextField.backgroundColor = .white
         self.monthTextField.borderStyle = .roundedRect
-        self.monthTextField.placeholder = "01"
+        self.monthTextField.placeholder = DateTimeHandler.getMonthString(month: DateTimeHandler.getCurrentDate().1)
         self.monthTextField.delegate = self
-        self.monthTextField.keyboardType = .decimalPad
+        self.monthTextField.keyboardType = .numberPad
         self.monthTextField.tag = 4
         self.monthTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
         self.textFieldContainerView.addSubview(self.monthTextField)
@@ -92,9 +92,9 @@ class AdvancedTaskViewController: TaskViewController {
         self.yearTextField.translatesAutoresizingMaskIntoConstraints = false
         self.yearTextField.backgroundColor = .white
         self.yearTextField.borderStyle = .roundedRect
-        self.yearTextField.placeholder = "2017"
+        self.yearTextField.placeholder = String(format: "%d", DateTimeHandler.getCurrentDate().2)
         self.yearTextField.delegate = self
-        self.yearTextField.keyboardType = .decimalPad
+        self.yearTextField.keyboardType = .numberPad
         self.yearTextField.tag = 5
         self.yearTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
         self.textFieldContainerView.addSubview(self.yearTextField)
