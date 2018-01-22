@@ -36,12 +36,21 @@ class TextInputHandler {
         return false
     }
     
-    static func jumpToTextField(tag: Int) -> Int {
+    static func jumpToNextTextField(tag: Int) -> Int {
         if tag > 4 {
             return 0
         }
         else {
             return tag + 1
+        }
+    }
+    
+    static func jumpToPreviousTextField(tag: Int) -> Int {
+        if tag < 1 {
+            return 5
+        }
+        else {
+            return tag - 1
         }
     }
     
