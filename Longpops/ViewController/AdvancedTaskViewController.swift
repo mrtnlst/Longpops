@@ -22,17 +22,22 @@ class AdvancedTaskViewController: TaskViewController {
     lazy var inputToolbar: UIToolbar = {
         var toolbar = UIToolbar()
         toolbar.barStyle = .default
-        toolbar.isTranslucent = true
         toolbar.sizeToFit()
         
         var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+
+        var doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(AdvancedTaskViewController.saveSticky))
+        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .normal)
+        doneButton.tintColor = UIColor.gray
         
         var forwardButton  = UIBarButtonItem(image: UIImage(named: "ForwardButton"), style: .plain, target: self, action: #selector(self.keyboardForwardButton))
-        forwardButton.width = 50.0
+        forwardButton.tintColor = UIColor.gray
+
         var backwardButton  = UIBarButtonItem(image: UIImage(named: "BackwardButton"), style: .plain, target: self, action: #selector(self.keyboardBackwardButton))
+        backwardButton.tintColor = UIColor.gray
         
-        toolbar.setItems([fixedSpaceButton, fixedSpaceButton, flexibleSpaceButton, backwardButton, forwardButton], animated: false)
+        toolbar.setItems([fixedSpaceButton, fixedSpaceButton, flexibleSpaceButton, backwardButton, forwardButton, doneButton], animated: false)
         toolbar.isUserInteractionEnabled = true
         
         return toolbar
@@ -59,7 +64,6 @@ class AdvancedTaskViewController: TaskViewController {
         super.viewDidLoad()
         self.setupViews()
         self.setupConstraints()
-        
     }
     
     override func setupViews() {
