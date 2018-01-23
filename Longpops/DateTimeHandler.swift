@@ -82,4 +82,31 @@ class DateTimeHandler {
         
         return monthString
     }
+    
+    // MARK: Validation.
+    static func validateDate(component: Int, value: String) -> Bool {
+        switch component {
+        case 3:
+            return validateDay(day: value)
+        case 4:
+            return validateMonth(month: value)
+        default:
+            break
+        }
+        return true
+    }
+    
+    static func validateDay(day: String) -> Bool {
+        if day == "0" || day == "00" {
+            return false
+        }
+        return true
+    }
+    
+    static func validateMonth(month: String) -> Bool {
+        if month == "0" || month == "00" {
+            return false
+        }
+        return true
+    }
 }

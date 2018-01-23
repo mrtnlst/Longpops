@@ -94,4 +94,48 @@ class TextInputHandler {
         }
         return true
     }
+    
+    static func formatTextField(_ textField: UITextField) -> String {
+        
+        if let number = textField.text {
+        
+            switch textField.tag {
+            case 1, 2:
+                return formatTime(number: number)
+            case 3, 4:
+                return formatTime(number: number)
+            case 5:
+                return formatYear(number: number)
+            default:
+                break
+            }
+        }
+        return "00"
+    }
+    static func formatTime(number: String) -> String {
+
+        if getNumberOfDigits(string: number) > 1 {
+            return number
+        }
+        
+        return "0" + number
+    }
+    
+    static func formatDate(number: String) -> String {
+        
+        if getNumberOfDigits(string: number) > 1 {
+            return number
+        }
+        
+        return "0" + number
+    }
+    
+    static func formatYear(number: String) -> String {
+        
+        if getNumberOfDigits(string: number) > 3 {
+            return number
+        }
+        
+        return String(DateTimeHandler.getCurrentDate().2)
+    }
 }

@@ -73,6 +73,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.descriptionLabel.text = "Create overdue Reminders, that stay on your lock screen."
         
         self.titleTextField.inputAccessoryView = inputToolbar
+        self.titleTextField.autocorrectionType = .no
         
         self.hoursTextField.translatesAutoresizingMaskIntoConstraints = false
         self.hoursTextField.backgroundColor = .white
@@ -251,6 +252,7 @@ class AdvancedTaskViewController: TaskViewController {
             
             // Skip to next textField, if maximum digits are reached.
             if TextInputHandler.shouldSkipToNextTextField(textField: textField) {
+                
                 let nextField = TextInputHandler.jumpToNextTextField(tag: textField.tag)
                 
                 if nextField == 0 {
@@ -276,21 +278,46 @@ class AdvancedTaskViewController: TaskViewController {
     }
     
     @objc func keyboardForwardButton() {
-
-        let nextField = TextInputHandler.jumpToNextTextField(tag: self.getActiveTextField().tag)
-
+        
+        let textField = self.getActiveTextField()
+        
+        // Format date and time TextFields.
+        if textField.tag != 0 {
+            if !TextInputHandler.isDateComponentCorrect(textField: textField) {
+                textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                return
+            }
+            else {
+                self.getActiveTextField().text = TextInputHandler.formatTextField(textField)
+            }
+        }
+        // Determine the next TextField to become active.
+        let nextField = TextInputHandler.jumpToNextTextField(tag: textField.tag)
+        
         if nextField == 0 {
             self.titleTextField.becomeFirstResponder()
         }
         else {
             self.view.viewWithTag(nextField)?.becomeFirstResponder()
         }
-
     }
     
     @objc func keyboardBackwardButton(_ textField: UITextField) {
         
-        let nextField = TextInputHandler.jumpToPreviousTextField(tag: self.getActiveTextField().tag)
+        let textField = self.getActiveTextField()
+        
+        // Format date and time TextFields.
+        if textField.tag != 0 {
+            if !TextInputHandler.isDateComponentCorrect(textField: textField) {
+                textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                return
+            }
+            else {
+                self.getActiveTextField().text = TextInputHandler.formatTextField(textField)
+            }
+        }
+        // Determine the next TextField to become active.
+        let nextField = TextInputHandler.jumpToPreviousTextField(tag: textField.tag)
         
         if nextField == 0 {
             self.titleTextField.becomeFirstResponder()
