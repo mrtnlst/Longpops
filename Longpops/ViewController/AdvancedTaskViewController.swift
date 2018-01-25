@@ -18,30 +18,7 @@ class AdvancedTaskViewController: TaskViewController {
     var colonLabel: UILabel
     var dotLabel1: UILabel
     var dotLabel2: UILabel
-    
-    lazy var inputToolbar: UIToolbar = {
-        var toolbar = UIToolbar()
-        toolbar.barStyle = .default
-        toolbar.sizeToFit()
-        
-        var flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        var fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-
-        var doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(AdvancedTaskViewController.saveSticky))
-        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .normal)
-        doneButton.tintColor = UIColor.gray
-        
-        var forwardButton  = UIBarButtonItem(image: UIImage(named: "ForwardButton"), style: .plain, target: self, action: #selector(self.keyboardForwardButton))
-        forwardButton.tintColor = UIColor.gray
-
-        var backwardButton  = UIBarButtonItem(image: UIImage(named: "BackwardButton"), style: .plain, target: self, action: #selector(self.keyboardBackwardButton))
-        backwardButton.tintColor = UIColor.gray
-        
-        toolbar.setItems([fixedSpaceButton, fixedSpaceButton, flexibleSpaceButton, backwardButton, forwardButton, doneButton], animated: false)
-        toolbar.isUserInteractionEnabled = true
-        
-        return toolbar
-    }()
+    var inputToolbar: UIToolbar
     
     override init() {
         self.hoursTextField = UITextField()
@@ -52,6 +29,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.colonLabel = UILabel()
         self.dotLabel1 = UILabel()
         self.dotLabel2 = UILabel()
+        self.inputToolbar = UIToolbar()
         
         super.init()
     }
@@ -66,8 +44,14 @@ class AdvancedTaskViewController: TaskViewController {
         self.setupConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     override func setupViews() {
         super.setupViews()
+        
+        self.setupInputToolbar()
         
         self.headingLabel.text = "Longpops"
         self.descriptionLabel.text = "Create overdue Reminders, that stay on your lock screen."
@@ -147,6 +131,28 @@ class AdvancedTaskViewController: TaskViewController {
         self.dotLabel2.textColor = .white
         self.dotLabel2.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         self.textFieldContainerView.addSubview(self.dotLabel2)
+    }
+    
+    fileprivate func setupInputToolbar() {
+        self.inputToolbar.barStyle = .default
+        self.inputToolbar.sizeToFit()
+        
+        let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(AdvancedTaskViewController.saveSticky))
+        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .normal)
+        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .highlighted)
+        doneButton.tintColor = UIColor.gray
+        
+        let forwardButton  = UIBarButtonItem(image: UIImage(named: "ForwardButton"), style: .plain, target: self, action: #selector(self.keyboardForwardButton))
+        forwardButton.tintColor = UIColor.gray
+        
+        let backwardButton  = UIBarButtonItem(image: UIImage(named: "BackwardButton"), style: .plain, target: self, action: #selector(self.keyboardBackwardButton))
+        backwardButton.tintColor = UIColor.gray
+        
+        self.inputToolbar.setItems([fixedSpaceButton, fixedSpaceButton, flexibleSpaceButton, backwardButton, forwardButton, doneButton], animated: false)
+        self.inputToolbar.isUserInteractionEnabled = true
     }
     
     override func setupConstraints() {
@@ -253,6 +259,14 @@ class AdvancedTaskViewController: TaskViewController {
             // Skip to next textField, if maximum digits are reached.
             if TextInputHandler.shouldSkipToNextTextField(textField: textField) {
                 
+                if textField.tag == 4 || textField.tag == 5 {
+                    if DateTimeHandler.validateDate(day: Int(self.dayTextField.text!)!, month: Int(self.monthTextField.text!)!, year: (Int(self.yearTextField.text!)!), activeTextField: textField.tag) > 0 {
+                        self.dayTextField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                        self.dayTextField.becomeFirstResponder()
+                        return
+                    }
+                }
+                
                 let nextField = TextInputHandler.jumpToNextTextField(tag: textField.tag)
                 
                 if nextField == 0 {
@@ -277,6 +291,13 @@ class AdvancedTaskViewController: TaskViewController {
         }
     }
     
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        textField.inputAccessoryView = inputToolbar
+        return true
+    }
+    
+    // MARK: Keyboard Actions
+    
     @objc func keyboardForwardButton() {
         
         let textField = self.getActiveTextField()
@@ -288,6 +309,13 @@ class AdvancedTaskViewController: TaskViewController {
                 return
             }
             else {
+                if textField.tag == 4 || textField.tag == 5 {
+                    if DateTimeHandler.validateDate(day: Int(self.dayTextField.text!)!, month: Int(self.monthTextField.text!)!, year: (Int(self.yearTextField.text!)!), activeTextField: textField.tag) > 0 {
+                        self.dayTextField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                        self.dayTextField.becomeFirstResponder()
+                        return
+                    }
+                }
                 self.getActiveTextField().text = TextInputHandler.formatTextField(textField)
             }
         }
@@ -313,6 +341,13 @@ class AdvancedTaskViewController: TaskViewController {
                 return
             }
             else {
+                if textField.tag == 4 || textField.tag == 5 {
+                    if DateTimeHandler.validateDate(day: Int(self.dayTextField.text!)!, month: Int(self.monthTextField.text!)!, year: (Int(self.yearTextField.text!)!), activeTextField: textField.tag) > 0 {
+                        self.dayTextField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                        self.dayTextField.becomeFirstResponder()
+                        return
+                    }
+                }
                 self.getActiveTextField().text = TextInputHandler.formatTextField(textField)
             }
         }
@@ -326,6 +361,15 @@ class AdvancedTaskViewController: TaskViewController {
             self.view.viewWithTag(nextField)?.becomeFirstResponder()
         }
     }
+    
+    override func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        // Hitting return in titleTextField should jump first time textField.
+        self.hoursTextField.becomeFirstResponder()
+        return true
+    }
+    
+    // MARK: Helper Methods
     
     func getActiveTextField() -> UITextField {
 
@@ -342,22 +386,99 @@ class AdvancedTaskViewController: TaskViewController {
         return activeTextField
     }
     
-    override func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func getTextFieldValues() -> [Int]{
+        var values = [Int]()
+        let textFields = [self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
         
-        // Hitting return in titleTextField should jump first time textField.
-        self.hoursTextField.becomeFirstResponder()
-        return true
+        for textField in textFields {
+            if let value = Int(textField.text!) {
+                values.append(value)
+            }
+            else {
+                return [-1, textField.tag]
+            }
+        }
+        return values
     }
     
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        textField.inputAccessoryView = inputToolbar
-        return true
+    // Save Reminder
+    override func saveSticky() {
+        
+        // Format last active textField if necessary.
+        let activeTextField = self.getActiveTextField()
+        
+        if activeTextField.tag != 0 {
+            if !TextInputHandler.isDateComponentCorrect(textField: activeTextField) {
+                activeTextField.becomeFirstResponder()
+            }
+            activeTextField.text = TextInputHandler.formatTextField(activeTextField)
+        }
+        
+        // Check if all textFields are set.
+        let textFieldValues = self.getTextFieldValues()
+        
+        if textFieldValues[0] < 0 {
+            self.view.viewWithTag(textFieldValues[1])?.becomeFirstResponder()
+        }
+        
+        // Compare with current date and time.
+        let isTimeAndDateValid = DateTimeHandler.compareDateAndTime(hour: textFieldValues[0], minute: textFieldValues[1], day: textFieldValues[2], month: textFieldValues[3], year: textFieldValues[4])
+        
+        if isTimeAndDateValid < 0 {
+            self.view.viewWithTag(isTimeAndDateValid)?.becomeFirstResponder()
+        }
+        
+        saveAdvancedReminder(components: textFieldValues)
+        
+        // Get reference for createReminderButton centerX constraint in superView.
+        for constraint in self.createReminderButton.superview!.constraints {
+            if let button = constraint.firstItem as? UIButton {
+                if button == self.createReminderButton {
+                    if constraint.firstAttribute == .centerX {
+                        self.createReminderButtonCenterX = constraint
+                    }
+                }
+            }
+        }
+        
+        self.titleTextField.text = ""
+        self.titleTextField.becomeFirstResponder()
+        self.beginSuccessAnimation()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    func saveAdvancedReminder(components: [Int]) {
+        let reminder = EKReminder(eventStore:self.eventStore)
+        
+        // Create custom due and alarm date.
+        var dateTimeComponents = DateComponents()
+        dateTimeComponents.year = components[4]
+        dateTimeComponents.month = components[3]
+        dateTimeComponents.day = components[2]
+        dateTimeComponents.minute = components[1]
+        dateTimeComponents.hour = components[0]
+        
+        // If the reminder is set in the current minute, add 5 seconds.
+        if DateTimeHandler.isReminderInCurrentMinute(textFieldMinute: components[1]) {
+            dateTimeComponents.second = DateTimeHandler.getCurrentSecond() + 5
+        }
+    
+        let calender = Calendar.current
+        let date = calender.date(from: dateTimeComponents)
+        
+        reminder.title = self.titleTextField.text!
+        reminder.dueDateComponents = dateTimeComponents
+        reminder.addAlarm(EKAlarm.init(absoluteDate: date!))
+        reminder.calendar = self.eventStore.defaultCalendarForNewReminders()
+        
+        do {
+            try self.eventStore.save(reminder, commit: true)
+            print("Saved")
+        }
+        catch {
+            print("Error creating and saving new reminder : \(error)")
+        }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
