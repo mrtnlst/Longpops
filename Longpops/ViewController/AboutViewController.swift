@@ -12,6 +12,7 @@ class AboutViewController: TemplateViewController {
     private var twitterContainerView: UIView
     private var websiteContainerView: UIView
     private var backButtonContainerView: UIView
+    private var versionContainerView: UIView
     
     var twitterButton: UIButton
     var twitterImage: UIImageView
@@ -20,11 +21,13 @@ class AboutViewController: TemplateViewController {
     var backButton: UIButton
     var twitterURL: URL
     var websiteURL: URL
+    var versionLabel: UILabel
     
     override init() {
         self.twitterContainerView = UIView()
         self.websiteContainerView = UIView()
         self.backButtonContainerView = UIView()
+        self.versionContainerView = UIView()
         
         self.twitterButton = UIButton(type: .system)
         self.twitterImage = UIImageView()
@@ -33,6 +36,7 @@ class AboutViewController: TemplateViewController {
         self.backButton = UIButton()
         self.twitterURL = URL(string: "https://twitter.com/mrtnlst")!
         self.websiteURL = URL(string: "https://martinlist.org")!
+        self.versionLabel = UILabel()
         
         super.init()
     }
@@ -60,6 +64,9 @@ class AboutViewController: TemplateViewController {
         
         self.backButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.backButtonContainerView)
+        
+        self.versionContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.versionContainerView)
         
         self.headingLabel.text = "About"
         
@@ -95,6 +102,12 @@ class AboutViewController: TemplateViewController {
         self.backButton.addTarget(self, action: #selector(AboutViewController.backButtonPressed), for: .touchUpInside)
         self.backButtonContainerView.addSubview(self.backButton)
         
+        self.versionLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.versionLabel.text = "Version 1.1"
+        self.versionLabel.textColor = .white
+        self.versionLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        self.descriptionLabel.textAlignment = .center
+        self.versionContainerView.addSubview(self.versionLabel)
     }
 
     override func setupConstraints() {
@@ -105,9 +118,11 @@ class AboutViewController: TemplateViewController {
             "descriptionContainerView": self.descriptionContainerView,
             "twitterContainerView": self.twitterContainerView,
             "websiteContainerView": self.websiteContainerView,
+            "versionContainerView": self.versionContainerView,
             "backButtonContainerView": self.backButtonContainerView,
             "headingLabel": self.headingLabel,
             "descriptionLabel": self.descriptionLabel,
+            "versionLabel": self.versionLabel,
             "twitterButton": self.twitterButton,
             "websiteButton": self.websiteButton,
             "backButton": self.backButton,
@@ -129,16 +144,22 @@ class AboutViewController: TemplateViewController {
             self.websiteContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
 
             self.backButtonContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            self.backButtonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
+            self.backButtonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            
+            self.versionContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.versionContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
             ])
         
         if #available(iOS 11, *) {
+            let guide = view.safeAreaLayoutGuide
             NSLayoutConstraint.activate([
                 self.twitterContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: 1.0),
                 
                 self.websiteContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.twitterContainerView.bottomAnchor, multiplier: 1.0),
 
                 self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.websiteContainerView.bottomAnchor, multiplier: 1.0),
+                
+                self.versionContainerView.bottomAnchor.constraintEqualToSystemSpacingBelow(guide.bottomAnchor, multiplier: 0.5),
                 ])
             
         }
@@ -194,6 +215,24 @@ class AboutViewController: TemplateViewController {
                                                                                metrics: metricsDictionary,
                                                                                views: viewsDictionary))
         
+        // MARK: Version Label Constraints
+        self.versionContainerView.addConstraint(NSLayoutConstraint(item: self.versionLabel,
+                                                                      attribute: .centerX,
+                                                                      relatedBy: .equal,
+                                                                      toItem: self.versionContainerView,
+                                                                      attribute: .centerX,
+                                                                      multiplier: 1.0,
+                                                                      constant: 0.0))
+        
+        self.versionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[versionLabel]-(>=1)-|",
+                                                                                   options: [],
+                                                                                   metrics: metricsDictionary,
+                                                                                   views: viewsDictionary))
+        
+        self.versionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[versionLabel]-|",
+                                                                                   options: [],
+                                                                                   metrics: metricsDictionary,
+                                                                                   views: viewsDictionary))
     }
     
     @objc func twitterButtonPressed() {
