@@ -20,6 +20,11 @@ class AdvancedTaskViewController: TaskViewController {
     var dotLabel2: UILabel
     var inputToolbar: UIToolbar
     
+    enum jumpDirection {
+        case jumpForward
+        case jumpBackward
+    }
+    
     override init() {
         self.hoursTextField = UITextField()
         self.dayTextField = UITextField()
@@ -42,6 +47,7 @@ class AdvancedTaskViewController: TaskViewController {
         super.viewDidLoad()
         self.setupViews()
         self.setupConstraints()
+        self.getCreateReminderButtonCenterX()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,7 +68,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.hoursTextField.translatesAutoresizingMaskIntoConstraints = false
         self.hoursTextField.backgroundColor = .white
         self.hoursTextField.borderStyle = .roundedRect
-        self.hoursTextField.text = DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0)
+        self.hoursTextField.placeholder = DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0)
         self.hoursTextField.delegate = self
         self.hoursTextField.keyboardType = .numberPad
         self.hoursTextField.tag = 1
@@ -73,7 +79,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.minutesTextField.translatesAutoresizingMaskIntoConstraints = false
         self.minutesTextField.backgroundColor = .white
         self.minutesTextField.borderStyle = .roundedRect
-        self.minutesTextField.text = DateTimeHandler.getMinuteString(minute: DateTimeHandler.getCurrentTime().1)
+        self.minutesTextField.placeholder = DateTimeHandler.getMinuteString(minute: DateTimeHandler.getCurrentTime().1)
         self.minutesTextField.delegate = self
         self.minutesTextField.keyboardType = .numberPad
         self.minutesTextField.tag = 2
@@ -84,7 +90,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.dayTextField.translatesAutoresizingMaskIntoConstraints = false
         self.dayTextField.backgroundColor = .white
         self.dayTextField.borderStyle = .roundedRect
-        self.dayTextField.text = DateTimeHandler.getDayString(day: DateTimeHandler.getCurrentDate().0)
+        self.dayTextField.placeholder = DateTimeHandler.getDayString(day: DateTimeHandler.getCurrentDate().0)
         self.dayTextField.delegate = self
         self.dayTextField.keyboardType = .numberPad
         self.dayTextField.tag = 3
@@ -95,7 +101,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.monthTextField.translatesAutoresizingMaskIntoConstraints = false
         self.monthTextField.backgroundColor = .white
         self.monthTextField.borderStyle = .roundedRect
-        self.monthTextField.text = DateTimeHandler.getMonthString(month: DateTimeHandler.getCurrentDate().1)
+        self.monthTextField.placeholder = DateTimeHandler.getMonthString(month: DateTimeHandler.getCurrentDate().1)
         self.monthTextField.delegate = self
         self.monthTextField.keyboardType = .numberPad
         self.monthTextField.tag = 4
@@ -106,7 +112,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.yearTextField.translatesAutoresizingMaskIntoConstraints = false
         self.yearTextField.backgroundColor = .white
         self.yearTextField.borderStyle = .roundedRect
-        self.yearTextField.text = String(format: "%d", DateTimeHandler.getCurrentDate().2)
+        self.yearTextField.placeholder = String(format: "%d", DateTimeHandler.getCurrentDate().2)
         self.yearTextField.delegate = self
         self.yearTextField.keyboardType = .numberPad
         self.yearTextField.tag = 5
@@ -302,57 +308,81 @@ class AdvancedTaskViewController: TaskViewController {
         
         let textField = self.getActiveTextField()
         
-        // Format date and time TextFields.
-        if textField.tag != 0 {
-            if !TextInputHandler.isDateComponentCorrect(textField: textField) {
-                textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
-                return
-            }
-            else {
-                if textField.tag == 4 || textField.tag == 5 {
-                    if DateTimeHandler.validateDate(day: Int(self.dayTextField.text!)!, month: Int(self.monthTextField.text!)!, year: (Int(self.yearTextField.text!)!), activeTextField: textField.tag) > 0 {
-                        self.dayTextField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
-                        self.dayTextField.becomeFirstResponder()
-                        return
-                    }
-                }
-                self.getActiveTextField().text = TextInputHandler.formatTextField(textField)
-            }
+        // The titleTextField doesn't need formatting.
+        if textField.tag == 0 {
+            self.jumpToTextField(textField, direction: jumpDirection.jumpForward)
+            return
         }
-        // Determine the next TextField to become active.
-        let nextField = TextInputHandler.jumpToNextTextField(tag: textField.tag)
         
-        if nextField == 0 {
-            self.titleTextField.becomeFirstResponder()
+        // If textField is empty, jump to the next.
+        if TextInputHandler.isTextFieldEmtpy(textField: textField) {
+            self.jumpToTextField(textField, direction: jumpDirection.jumpForward)
+            return
+        }
+
+        // Format textFields if necessary.
+        if !TextInputHandler.isDateComponentCorrect(textField: textField) {
+            textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+            return
         }
         else {
-            self.view.viewWithTag(nextField)?.becomeFirstResponder()
+            if textField.tag == 4 || textField.tag == 5 {
+                if DateTimeHandler.validateDate(day: Int(self.dayTextField.text!)!, month: Int(self.monthTextField.text!)!, year: (Int(self.yearTextField.text!)!), activeTextField: textField.tag) > 0 {
+                    self.dayTextField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                    self.dayTextField.becomeFirstResponder()
+                    return
+                }
+            }
+            self.getActiveTextField().text = TextInputHandler.formatTextField(textField)
         }
+        self.jumpToTextField(textField, direction: jumpDirection.jumpForward)
     }
     
     @objc func keyboardBackwardButton(_ textField: UITextField) {
         
         let textField = self.getActiveTextField()
         
-        // Format date and time TextFields.
-        if textField.tag != 0 {
-            if !TextInputHandler.isDateComponentCorrect(textField: textField) {
-                textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
-                return
-            }
-            else {
-                if textField.tag == 4 || textField.tag == 5 {
-                    if DateTimeHandler.validateDate(day: Int(self.dayTextField.text!)!, month: Int(self.monthTextField.text!)!, year: (Int(self.yearTextField.text!)!), activeTextField: textField.tag) > 0 {
-                        self.dayTextField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
-                        self.dayTextField.becomeFirstResponder()
-                        return
-                    }
-                }
-                self.getActiveTextField().text = TextInputHandler.formatTextField(textField)
-            }
+        // The titleTextField doesn't need formatting.
+        if textField.tag == 0 {
+            self.jumpToTextField(textField, direction: jumpDirection.jumpBackward)
+            return
         }
+        
+        // If textField is empty, jump to the next.
+        if TextInputHandler.isTextFieldEmtpy(textField: textField) {
+            self.jumpToTextField(textField, direction: jumpDirection.jumpBackward)
+            return
+        }
+        
+        // Format textFields if necessary.
+        if !TextInputHandler.isDateComponentCorrect(textField: textField) {
+            textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+            return
+        }
+        else {
+            if textField.tag == 4 || textField.tag == 5 {
+                if DateTimeHandler.validateDate(day: Int(self.dayTextField.text!)!, month: Int(self.monthTextField.text!)!, year: (Int(self.yearTextField.text!)!), activeTextField: textField.tag) > 0 {
+                    self.dayTextField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                    self.dayTextField.becomeFirstResponder()
+                    return
+                }
+            }
+            self.getActiveTextField().text = TextInputHandler.formatTextField(textField)
+        }
+        self.jumpToTextField(textField, direction: jumpDirection.jumpBackward)
+    }
+    
+    fileprivate func jumpToTextField(_ textField: UITextField, direction: jumpDirection) {
+        
         // Determine the next TextField to become active.
-        let nextField = TextInputHandler.jumpToPreviousTextField(tag: textField.tag)
+        var nextField: Int
+        
+        if direction == jumpDirection.jumpForward {
+            nextField = TextInputHandler.jumpToNextTextField(tag: textField.tag)
+        }
+        else {
+            nextField = TextInputHandler.jumpToPreviousTextField(tag: textField.tag)
+        }
         
         if nextField == 0 {
             self.titleTextField.becomeFirstResponder()
@@ -395,33 +425,53 @@ class AdvancedTaskViewController: TaskViewController {
                 values.append(value)
             }
             else {
-                return [-1, textField.tag]
+                values.append(Int(textField.placeholder!)!)
             }
         }
         return values
     }
     
+    func resetTextFields() {
+        let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
+        
+        for textField in textFields {
+            textField.text = ""
+        }
+    }
+    
+    fileprivate func getCreateReminderButtonCenterX() {
+        
+        // Get reference for createReminderButton centerX constraint in superView.
+        for constraint in self.createReminderButton.superview!.constraints {
+            if let button = constraint.firstItem as? UIButton {
+                if button == self.createReminderButton {
+                    if constraint.firstAttribute == .centerX {
+                        self.createReminderButtonCenterX = constraint
+                    }
+                }
+            }
+        }
+    }
+    
     // Save Reminder
+
     override func saveSticky() {
         
         // Format last active textField if necessary.
         let activeTextField = self.getActiveTextField()
         
         if activeTextField.tag != 0 {
-            if !TextInputHandler.isDateComponentCorrect(textField: activeTextField) {
-                activeTextField.becomeFirstResponder()
-                return
+            if !TextInputHandler.isTextFieldEmtpy(textField: activeTextField) {
+                if !TextInputHandler.isDateComponentCorrect(textField: activeTextField) {
+                    activeTextField.becomeFirstResponder()
+                    return
+                }
+                activeTextField.text = TextInputHandler.formatTextField(activeTextField)
             }
-            activeTextField.text = TextInputHandler.formatTextField(activeTextField)
         }
         
-        // Check if all textFields are set.
+        // Get textField values from .text or .placeholder.
         let textFieldValues = self.getTextFieldValues()
-        
-        if textFieldValues[0] < 0 {
-            self.view.viewWithTag(textFieldValues[1])?.becomeFirstResponder()
-            return
-        }
         
         // Compare with current date and time.
         let isDateTimeValid = DateTimeHandler.compareDateAndTime(hour: textFieldValues[0], minute: textFieldValues[1], day: textFieldValues[2], month: textFieldValues[3], year: textFieldValues[4])
@@ -441,20 +491,8 @@ class AdvancedTaskViewController: TaskViewController {
             return
         }
         
-        saveAdvancedReminder(date: isDateTimeValid.1)
-        
-        // Get reference for createReminderButton centerX constraint in superView.
-        for constraint in self.createReminderButton.superview!.constraints {
-            if let button = constraint.firstItem as? UIButton {
-                if button == self.createReminderButton {
-                    if constraint.firstAttribute == .centerX {
-                        self.createReminderButtonCenterX = constraint
-                    }
-                }
-            }
-        }
-        
-        self.titleTextField.text = ""
+        self.saveAdvancedReminder(date: isDateTimeValid.1)
+        self.resetTextFields()
         self.titleTextField.becomeFirstResponder()
         self.beginSuccessAnimation()
     }

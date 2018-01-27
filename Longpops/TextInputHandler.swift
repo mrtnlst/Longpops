@@ -138,4 +138,14 @@ class TextInputHandler {
         
         return String(DateTimeHandler.getCurrentDate().2)
     }
+    
+    static func isTextFieldEmtpy(textField: UITextField) -> Bool {
+    
+        if textField.text == "" {
+            return true
+        }
+        else {
+            return false
+        }
+    }
 }
