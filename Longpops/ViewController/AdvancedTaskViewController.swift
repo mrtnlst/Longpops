@@ -47,7 +47,6 @@ class AdvancedTaskViewController: TaskViewController {
         super.viewDidLoad()
         self.setupViews()
         self.setupConstraints()
-        self.getCreateReminderButtonCenterX()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -436,20 +435,6 @@ class AdvancedTaskViewController: TaskViewController {
         
         for textField in textFields {
             textField.text = ""
-        }
-    }
-    
-    fileprivate func getCreateReminderButtonCenterX() {
-        
-        // Get reference for createReminderButton centerX constraint in superView.
-        for constraint in self.createReminderButton.superview!.constraints {
-            if let button = constraint.firstItem as? UIButton {
-                if button == self.createReminderButton {
-                    if constraint.firstAttribute == .centerX {
-                        self.createReminderButtonCenterX = constraint
-                    }
-                }
-            }
         }
     }
     

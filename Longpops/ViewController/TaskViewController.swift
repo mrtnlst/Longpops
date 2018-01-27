@@ -49,7 +49,8 @@ class TaskViewController: TemplateViewController {
         self.view.backgroundColor = UIColor(red: 255/255, green: 145/255, blue: 97/255, alpha: 1.0)
         self.setupViews()
         self.setupConstraints()
-        
+        self.getCreateReminderButtonCenterX()
+
         self.eventStore = EKEventStore()
         self.eventStore.requestAccess(to: EKEntityType.reminder) { (granted, error) -> Void in
             if !granted{
@@ -245,17 +246,6 @@ class TaskViewController: TemplateViewController {
         // Create new Reminders item.
         saveNewReminder(stickyText: self.titleTextField.text!)
         
-        // Get reference for createReminderButton centerX constraint in superView.
-        for constraint in self.createReminderButton.superview!.constraints {
-            if let button = constraint.firstItem as? UIButton {
-                if button == self.createReminderButton {
-                    if constraint.firstAttribute == .centerX {
-                        self.createReminderButtonCenterX = constraint
-                    }
-                }
-            }
-        }
-        
         self.titleTextField.text = ""
         beginSuccessAnimation()
     }
@@ -312,6 +302,20 @@ class TaskViewController: TemplateViewController {
             self.view.layoutIfNeeded()
             self.successLabel.alpha = 0
         })
+    }
+    
+    func getCreateReminderButtonCenterX() {
+        
+        // Get reference for createReminderButton centerX constraint in superView.
+        for constraint in self.createReminderButton.superview!.constraints {
+            if let button = constraint.firstItem as? UIButton {
+                if button == self.createReminderButton {
+                    if constraint.firstAttribute == .centerX {
+                        self.createReminderButtonCenterX = constraint
+                    }
+                }
+            }
+        }
     }
     
     // MARK: Create Reminder
