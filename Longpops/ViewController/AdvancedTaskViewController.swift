@@ -410,6 +410,7 @@ class AdvancedTaskViewController: TaskViewController {
         if activeTextField.tag != 0 {
             if !TextInputHandler.isDateComponentCorrect(textField: activeTextField) {
                 activeTextField.becomeFirstResponder()
+                return
             }
             activeTextField.text = TextInputHandler.formatTextField(activeTextField)
         }
@@ -419,16 +420,28 @@ class AdvancedTaskViewController: TaskViewController {
         
         if textFieldValues[0] < 0 {
             self.view.viewWithTag(textFieldValues[1])?.becomeFirstResponder()
+            return
         }
         
         // Compare with current date and time.
-        let isTimeAndDateValid = DateTimeHandler.compareDateAndTime(hour: textFieldValues[0], minute: textFieldValues[1], day: textFieldValues[2], month: textFieldValues[3], year: textFieldValues[4])
+        let isDateTimeValid = DateTimeHandler.compareDateAndTime(hour: textFieldValues[0], minute: textFieldValues[1], day: textFieldValues[2], month: textFieldValues[3], year: textFieldValues[4])
         
-        if isTimeAndDateValid < 0 {
-            self.view.viewWithTag(isTimeAndDateValid)?.becomeFirstResponder()
+        if  !isDateTimeValid.0 {
+            
+            // Create an alert.
+            let alert = UIAlertController(title: "Ooops … I can't do that!", message: "Your date lies in the past. Please enter a valid date!", preferredStyle: .alert)
+            
+            let continueAction = UIAlertAction(title: "Let me try again", style: .default)
+            
+            alert.addAction(continueAction)
+            
+            // Send user back to hourTextField.
+            self.hoursTextField.becomeFirstResponder()
+            self.present(alert, animated: true, completion: nil)
+            return
         }
         
-        saveAdvancedReminder(components: textFieldValues)
+        saveAdvancedReminder(date: isDateTimeValid.1)
         
         // Get reference for createReminderButton centerX constraint in superView.
         for constraint in self.createReminderButton.superview!.constraints {
@@ -446,28 +459,15 @@ class AdvancedTaskViewController: TaskViewController {
         self.beginSuccessAnimation()
     }
     
-    func saveAdvancedReminder(components: [Int]) {
+    func saveAdvancedReminder(date: Date) {
         let reminder = EKReminder(eventStore:self.eventStore)
         
-        // Create custom due and alarm date.
-        var dateTimeComponents = DateComponents()
-        dateTimeComponents.year = components[4]
-        dateTimeComponents.month = components[3]
-        dateTimeComponents.day = components[2]
-        dateTimeComponents.minute = components[1]
-        dateTimeComponents.hour = components[0]
-        
-        // If the reminder is set in the current minute, add 5 seconds.
-        if DateTimeHandler.isReminderInCurrentMinute(textFieldMinute: components[1]) {
-            dateTimeComponents.second = DateTimeHandler.getCurrentSecond() + 5
-        }
-    
-        let calender = Calendar.current
-        let date = calender.date(from: dateTimeComponents)
-        
+        let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .month, .year]
+        let components = Calendar.current.dateComponents(unitFlags, from: date)
+
         reminder.title = self.titleTextField.text!
-        reminder.dueDateComponents = dateTimeComponents
-        reminder.addAlarm(EKAlarm.init(absoluteDate: date!))
+        reminder.dueDateComponents = components
+        reminder.addAlarm(EKAlarm.init(absoluteDate: date))
         reminder.calendar = self.eventStore.defaultCalendarForNewReminders()
         
         do {

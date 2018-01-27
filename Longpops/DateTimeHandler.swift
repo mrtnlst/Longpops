@@ -138,30 +138,28 @@ class DateTimeHandler {
         return false
     }
     
-    static func compareDateAndTime(hour: Int, minute: Int, day: Int, month: Int, year: Int) -> Int {
-        let time = getCurrentTime()
-        let date = getCurrentDate()
+    static func compareDateAndTime(hour: Int, minute: Int, day: Int, month: Int, year: Int) -> (Bool, Date) {
+        let currentDate = Date()
+        let calender = Calendar.current
         
-        if year < date.2 {
-            return 5
+        var dateTimeComponents = DateComponents()
+        dateTimeComponents.year = year
+        dateTimeComponents.month = month
+        dateTimeComponents.day = day
+        dateTimeComponents.minute = minute
+        dateTimeComponents.hour = hour
+        
+        if isReminderInCurrentMinute(textFieldMinute: minute) {
+            dateTimeComponents.second = DateTimeHandler.getCurrentSecond() + 5
         }
         
-        if month < date.1 {
-            return 4
+        let newDate = calender.date(from: dateTimeComponents)
+        
+        if newDate! < currentDate {
+            print ("older date")
+            return (false, newDate!)
         }
         
-        if day < date.0 {
-            return 3
-        }
-        
-        if hour < time.1 {
-            return 2
-        }
-        
-        if minute < time.0 {
-            return 1
-        }
-        
-        return -1
+        return (true, newDate!)
     }
 }
