@@ -105,6 +105,15 @@ class SettingsViewController: TemplateViewController {
             
         }
 
+        // MARK: Switch Constraints.
+        self.switchContainerView.addConstraint(NSLayoutConstraint(item: self.advancedTaskSwitch,
+                                                                      attribute: .centerY,
+                                                                      relatedBy: .equal,
+                                                                      toItem: self.switchContainerView,
+                                                                      attribute: .centerY,
+                                                                      multiplier: 1.0,
+                                                                      constant: 0.0))
+        
         self.switchContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[advancedTaskLabel]-[advancedTaskSwitch]-|",
                                                                                    options: [],
                                                                                    metrics: metricsDictionary,
@@ -115,7 +124,7 @@ class SettingsViewController: TemplateViewController {
                                                                                    metrics: metricsDictionary,
                                                                                    views: viewsDictionary))
         
-        self.switchContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[advancedTaskSwitch]-|",
+        self.switchContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[advancedTaskSwitch]-(>=1)-|",
                                                                                options: [],
                                                                                metrics: metricsDictionary,
                                                                                views: viewsDictionary))

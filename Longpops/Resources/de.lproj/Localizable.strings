@@ -1,12 +1,12 @@
 /* 
-  File.strings
+  Localizable.strings
   Longpops
 
   Created by martin on 28.01.18.
   
 */
 
-"description-label-about" = "Longpops bringt das Konzept von Sticky Notes auf iOS. Es ermöglicht einen schnellen Weg, um Erinnerungen zu erstellen, die solange auf deinem Sperrbildschirm angezeigt werden, bis du sie als erledigt markiert hast. \nEntwickelt und designt von Martin List.";
+"description-label-about" = "Longpops bringt das Konzept von Sticky Notes auf iOS.\nEs ermöglicht einen schnellen Weg, um Erinnerungen zu erstellen, die solange auf deinem Sperrbildschirm angezeigt werden, bis du sie als erledigt markiert hast.\n\nEntwickelt und designt von Martin List.";
 "description-label-settings" = "Konfiguriere den Startbildschirm.";
 "description-label-simpletask" = "Erzeuge Erinnerungen, die auf deinem Lockscreen bleiben.";
 "description-label-advancedtask" = "Konfiguriere zeitbasierte Erinnerungen.";
