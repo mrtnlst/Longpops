@@ -136,9 +136,12 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
         if UIScreen.main.bounds.size.height == 568 {
             multiplier = 0.0
         }
-//        if UIScreen.main.bounds.size.height == 812 {
-//
-//        }
+        if UIScreen.main.bounds.size.height == 736 {
+            multiplier = 3.0
+        }
+        if UIScreen.main.bounds.size.height == 812 {
+            multiplier = 2.0
+        }
         return multiplier
     }
     
