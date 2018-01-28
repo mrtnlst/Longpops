@@ -57,7 +57,7 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
         self.descriptionLabel.textColor = .white
         self.descriptionLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         self.descriptionLabel.lineBreakMode = .byWordWrapping
-        self.descriptionLabel.numberOfLines = 3
+        self.descriptionLabel.numberOfLines = 0
         self.descriptionLabel.textAlignment = .center
         self.descriptionContainerView.addSubview(self.descriptionLabel)
     }
@@ -82,9 +82,9 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
         if #available(iOS 11, *) {
             let guide = view.safeAreaLayoutGuide
             NSLayoutConstraint.activate([
-                self.headingContainerView.topAnchor.constraintEqualToSystemSpacingBelow(guide.topAnchor, multiplier: 1.0),
-
-                self.descriptionContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: 1.0),
+                self.headingContainerView.topAnchor.constraintEqualToSystemSpacingBelow(guide.topAnchor, multiplier: self.getMultiplierForDevice()),
+    
+                self.descriptionContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: self.getMultiplierForDevice()),
                 ])
 
         }
@@ -128,6 +128,18 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
                                                                                     options: [],
                                                                                     metrics: [:],
                                                                                     views: viewsDictionary))
+    }
+    
+    func getMultiplierForDevice() -> CGFloat {
+        var multiplier: CGFloat = 1.0
+        
+        if UIScreen.main.bounds.size.height == 568 {
+            multiplier = 0.0
+        }
+//        if UIScreen.main.bounds.size.height == 812 {
+//
+//        }
+        return multiplier
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

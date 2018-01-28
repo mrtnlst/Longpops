@@ -68,9 +68,10 @@ class AboutViewController: TemplateViewController {
         self.versionContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.versionContainerView)
         
-        self.headingLabel.text = "About"
+        self.headingLabel.text = NSLocalizedString("heading-label-about", comment: "Heading label.")
         
-        self.descriptionLabel.text = "Longpops brings the concept of sticky notes to iOS. It's meant to be a fast way to create overdue Reminder items, that stay on your lock screen until they are marked as completed. \nDeveloped and designed by Martin List."
+        self.descriptionLabel.textAlignment = .left
+        self.descriptionLabel.text = NSLocalizedString("description-label-about", comment: "Description label.")
         
         self.twitterImage.image = UIImage(named: "Twitter-Logo")
         self.twitterImage.translatesAutoresizingMaskIntoConstraints = false
@@ -106,7 +107,7 @@ class AboutViewController: TemplateViewController {
         self.versionLabel.text = "Version 1.1"
         self.versionLabel.textColor = .white
         self.versionLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        self.descriptionLabel.textAlignment = .center
+        self.versionLabel.textAlignment = .center
         self.versionContainerView.addSubview(self.versionLabel)
     }
 

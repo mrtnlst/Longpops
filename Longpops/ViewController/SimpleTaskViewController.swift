@@ -21,7 +21,7 @@ class SimpleTaskViewController: TaskViewController {
         
         self.headingLabel.text = "Longpops"
         
-        self.descriptionLabel.text = "Create overdue Reminders, that stay on your lock screen."
+        self.descriptionLabel.text = NSLocalizedString("description-label-simpletask", comment: "Description label")
     }
     
     override func setupConstraints() {

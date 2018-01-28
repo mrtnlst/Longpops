@@ -38,8 +38,8 @@ class SettingsViewController: TemplateViewController {
     override func setupViews() {
         super.setupViews()
         
-        self.headingLabel.text = "Settings"
-        self.descriptionLabel.text = "Configure the startup screen."
+        self.headingLabel.text = NSLocalizedString("heading-label-settings", comment: "Heading label.")
+        self.descriptionLabel.text = NSLocalizedString("description-label-settings", comment: "Description label.")
         
         self.backButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.backButtonContainerView)
@@ -56,11 +56,11 @@ class SettingsViewController: TemplateViewController {
         self.backButtonContainerView.addSubview(self.backButton)
         
         self.advancedTaskLabel.translatesAutoresizingMaskIntoConstraints = false;
-        self.advancedTaskLabel.text = "Add advanced task"
+        self.advancedTaskLabel.text = NSLocalizedString("settings-label-startup-screen", comment: "Settings label.")
         self.advancedTaskLabel.textColor = .white
         self.advancedTaskLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         self.advancedTaskLabel.lineBreakMode = .byWordWrapping
-        self.advancedTaskLabel.numberOfLines = 1
+        self.advancedTaskLabel.numberOfLines = 0
         self.advancedTaskLabel.textAlignment = .left
         self.switchContainerView.addSubview(self.advancedTaskLabel)
         

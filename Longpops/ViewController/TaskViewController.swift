@@ -102,7 +102,7 @@ class TaskViewController: TemplateViewController {
         self.createReminderButton.addTarget(self, action: #selector(TaskViewController.saveSticky), for: .touchUpInside)
         self.buttonContainerView.addSubview(self.createReminderButton)
         
-        self.permissionButton.setTitle("Open Settings to enable access to Reminders!", for: .normal)
+        self.permissionButton.setTitle(NSLocalizedString("permission-button-title", comment: "Permission button."), for: .normal)
         self.permissionButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         self.permissionButton.setTitleColor(.white, for: .normal)
         self.permissionButton.translatesAutoresizingMaskIntoConstraints = false
@@ -165,11 +165,11 @@ class TaskViewController: TemplateViewController {
         
         if #available(iOS 11, *) {
             NSLayoutConstraint.activate([
-                self.textFieldContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: 1.0),
+                self.textFieldContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: self.getMultiplierForDevice()),
                 
-                self.buttonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.bottomAnchor, multiplier: 1.0),
+                self.buttonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.bottomAnchor, multiplier: self.getMultiplierForDevice()),
                 
-                self.permissionButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.buttonContainerView.bottomAnchor, multiplier: 1.0),
+                self.permissionButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.buttonContainerView.bottomAnchor, multiplier: self.getMultiplierForDevice()),
                 ])
         }
         

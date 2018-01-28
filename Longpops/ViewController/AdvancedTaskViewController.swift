@@ -59,7 +59,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.setupInputToolbar()
         
         self.headingLabel.text = "Longpops"
-        self.descriptionLabel.text = "Create overdue Reminders, that stay on your lock screen."
+        self.descriptionLabel.text =  NSLocalizedString("description-label-advancedtask", comment: "Description label")
         
         self.titleTextField.inputAccessoryView = inputToolbar
         self.titleTextField.autocorrectionType = .no
@@ -337,7 +337,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.jumpToTextField(textField, direction: jumpDirection.jumpForward)
     }
     
-    @objc func keyboardBackwardButton(_ textField: UITextField) {
+    @objc func keyboardBackwardButton() {
         
         let textField = self.getActiveTextField()
         
@@ -464,9 +464,9 @@ class AdvancedTaskViewController: TaskViewController {
         if  !isDateTimeValid.0 {
             
             // Create an alert.
-            let alert = UIAlertController(title: "Ooops … I can't do that!", message: "Your date lies in the past. Please enter a valid date!", preferredStyle: .alert)
+            let alert = UIAlertController(title: NSLocalizedString("alert-title", comment: "Alert title."), message: NSLocalizedString("alert-message", comment: "Alert message."), preferredStyle: .alert)
             
-            let continueAction = UIAlertAction(title: "Let me try again", style: .default)
+            let continueAction = UIAlertAction(title: NSLocalizedString("alert-button", comment: "Alert button."), style: .default)
             
             alert.addAction(continueAction)
             
