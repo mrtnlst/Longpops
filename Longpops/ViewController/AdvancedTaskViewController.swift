@@ -265,7 +265,9 @@ class AdvancedTaskViewController: TaskViewController {
             if TextInputHandler.shouldSkipToNextTextField(textField: textField) {
                 
                 if textField.tag == 4 || textField.tag == 5 {
-                    if DateTimeHandler.validateDate(day: Int(self.dayTextField.text!)!, month: Int(self.monthTextField.text!)!, year: (Int(self.yearTextField.text!)!), activeTextField: textField.tag) > 0 {
+                    let values = self.getTextFieldValues()
+                    
+                    if DateTimeHandler.validateDate(day: values[2], month: values[3], year: values[4], activeTextField: textField.tag) > 0  {
                         self.dayTextField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
                         self.dayTextField.becomeFirstResponder()
                         return
@@ -326,7 +328,9 @@ class AdvancedTaskViewController: TaskViewController {
         }
         else {
             if textField.tag == 4 || textField.tag == 5 {
-                if DateTimeHandler.validateDate(day: Int(self.dayTextField.text!)!, month: Int(self.monthTextField.text!)!, year: (Int(self.yearTextField.text!)!), activeTextField: textField.tag) > 0 {
+                let values = self.getTextFieldValues()
+                
+                if DateTimeHandler.validateDate(day: values[2], month: values[3], year: values[4], activeTextField: textField.tag) > 0  {
                     self.dayTextField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
                     self.dayTextField.becomeFirstResponder()
                     return
@@ -360,7 +364,9 @@ class AdvancedTaskViewController: TaskViewController {
         }
         else {
             if textField.tag == 4 || textField.tag == 5 {
-                if DateTimeHandler.validateDate(day: Int(self.dayTextField.text!)!, month: Int(self.monthTextField.text!)!, year: (Int(self.yearTextField.text!)!), activeTextField: textField.tag) > 0 {
+                let values = self.getTextFieldValues()
+                
+                if DateTimeHandler.validateDate(day: values[2], month: values[3], year: values[4], activeTextField: textField.tag) > 0 {
                     self.dayTextField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
                     self.dayTextField.becomeFirstResponder()
                     return
