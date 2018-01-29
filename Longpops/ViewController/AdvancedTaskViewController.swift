@@ -19,6 +19,8 @@ class AdvancedTaskViewController: TaskViewController {
     var dotLabel1: UILabel
     var dotLabel2: UILabel
     var inputToolbar: UIToolbar
+    var dateTimer: Timer
+    var countdownTimer: Timer
     
     enum jumpDirection {
         case jumpForward
@@ -35,6 +37,8 @@ class AdvancedTaskViewController: TaskViewController {
         self.dotLabel1 = UILabel()
         self.dotLabel2 = UILabel()
         self.inputToolbar = UIToolbar()
+        self.dateTimer = Timer()
+        self.countdownTimer = Timer()
         
         super.init()
     }
@@ -47,10 +51,22 @@ class AdvancedTaskViewController: TaskViewController {
         super.viewDidLoad()
         self.setupViews()
         self.setupConstraints()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackground), name: .UIApplicationDidEnterBackground, object: nil)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.updateDateTimePlaceHolder()
+        self.startCountdownTimer()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.dateTimer.invalidate()
+        self.countdownTimer.invalidate()
     }
     
     override func setupViews() {
@@ -67,7 +83,6 @@ class AdvancedTaskViewController: TaskViewController {
         self.hoursTextField.translatesAutoresizingMaskIntoConstraints = false
         self.hoursTextField.backgroundColor = .white
         self.hoursTextField.borderStyle = .roundedRect
-        self.hoursTextField.placeholder = DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0)
         self.hoursTextField.delegate = self
         self.hoursTextField.keyboardType = .numberPad
         self.hoursTextField.tag = 1
@@ -78,7 +93,6 @@ class AdvancedTaskViewController: TaskViewController {
         self.minutesTextField.translatesAutoresizingMaskIntoConstraints = false
         self.minutesTextField.backgroundColor = .white
         self.minutesTextField.borderStyle = .roundedRect
-        self.minutesTextField.placeholder = DateTimeHandler.getMinuteString(minute: DateTimeHandler.getCurrentTime().1)
         self.minutesTextField.delegate = self
         self.minutesTextField.keyboardType = .numberPad
         self.minutesTextField.tag = 2
@@ -89,7 +103,6 @@ class AdvancedTaskViewController: TaskViewController {
         self.dayTextField.translatesAutoresizingMaskIntoConstraints = false
         self.dayTextField.backgroundColor = .white
         self.dayTextField.borderStyle = .roundedRect
-        self.dayTextField.placeholder = DateTimeHandler.getDayString(day: DateTimeHandler.getCurrentDate().0)
         self.dayTextField.delegate = self
         self.dayTextField.keyboardType = .numberPad
         self.dayTextField.tag = 3
@@ -100,7 +113,6 @@ class AdvancedTaskViewController: TaskViewController {
         self.monthTextField.translatesAutoresizingMaskIntoConstraints = false
         self.monthTextField.backgroundColor = .white
         self.monthTextField.borderStyle = .roundedRect
-        self.monthTextField.placeholder = DateTimeHandler.getMonthString(month: DateTimeHandler.getCurrentDate().1)
         self.monthTextField.delegate = self
         self.monthTextField.keyboardType = .numberPad
         self.monthTextField.tag = 4
@@ -111,7 +123,6 @@ class AdvancedTaskViewController: TaskViewController {
         self.yearTextField.translatesAutoresizingMaskIntoConstraints = false
         self.yearTextField.backgroundColor = .white
         self.yearTextField.borderStyle = .roundedRect
-        self.yearTextField.placeholder = String(format: "%d", DateTimeHandler.getCurrentDate().2)
         self.yearTextField.delegate = self
         self.yearTextField.keyboardType = .numberPad
         self.yearTextField.tag = 5
@@ -442,6 +453,41 @@ class AdvancedTaskViewController: TaskViewController {
         for textField in textFields {
             textField.text = ""
         }
+    }
+    
+    @objc func updateDateTimePlaceHolder() {
+        self.hoursTextField.placeholder = DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0)
+        self.minutesTextField.placeholder = DateTimeHandler.getMinuteString(minute: DateTimeHandler.getCurrentTime().1)
+        self.dayTextField.placeholder = DateTimeHandler.getDayString(day: DateTimeHandler.getCurrentDate().0)
+        self.monthTextField.placeholder = DateTimeHandler.getMonthString(month: DateTimeHandler.getCurrentDate().1)
+        self.yearTextField.placeholder = String(format: "%d", DateTimeHandler.getCurrentDate().2)
+    }
+    
+    @objc func willEnterForeground() {
+        self.updateDateTimePlaceHolder()
+        self.startCountdownTimer()
+        print("Timers activated.")
+    }
+    
+    @objc func didEnterBackground() {
+        self.dateTimer.invalidate()
+        self.countdownTimer.invalidate()
+        print("Timers invalidated.")
+    }
+    
+    // MARK: Timers
+    func startCountdownTimer() {
+        
+        // Caclulate seconds to full minute.
+        let remainingSeconds = 60 - DateTimeHandler.getCurrentSecond()
+        self.countdownTimer = Timer.scheduledTimer(timeInterval: TimeInterval(remainingSeconds), target: self, selector: #selector(self.startDateTimer), userInfo: nil, repeats: false)
+    }
+    
+    @objc func startDateTimer() {
+        
+        // Update labels every minute.
+        self.dateTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.updateDateTimePlaceHolder), userInfo: nil, repeats: true)
+        self.dateTimer.fire()
     }
     
     // Save Reminder
