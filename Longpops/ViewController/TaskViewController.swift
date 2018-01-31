@@ -46,7 +46,6 @@ class TaskViewController: TemplateViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(red: 255/255, green: 145/255, blue: 97/255, alpha: 1.0)
         self.setupViews()
         self.setupConstraints()
         self.getCreateReminderButtonCenterX()
@@ -80,6 +79,7 @@ class TaskViewController: TemplateViewController {
         self.view.addSubview(self.permissionButtonContainerView)
         
         self.titleTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.titleTextField.keyboardAppearance = .dark
         self.titleTextField.backgroundColor = .white
         self.titleTextField.borderStyle = .roundedRect
         self.titleTextField.placeholder = NSLocalizedString("title-textfield-placeholder", comment: "Permission button.")

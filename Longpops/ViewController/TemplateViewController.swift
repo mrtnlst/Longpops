@@ -32,8 +32,7 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.backgroundColor = UIColor(red: 255/255, green: 145/255, blue: 97/255, alpha: 1.0)
+        self.createBackgroundGradient()
         self.setupViews()
         self.setupConstraints()
     }
@@ -128,6 +127,16 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
                                                                                     options: [],
                                                                                     metrics: [:],
                                                                                     views: viewsDictionary))
+    }
+    
+    func createBackgroundGradient() {
+        let bottomColor = UIColor(red: 212/255, green: 20/255, blue: 19/255, alpha: 1.0).cgColor
+        let topColor = UIColor(red: 251/255, green: 176/255, blue: 56/255, alpha: 1.0).cgColor
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.view.frame
+        gradientLayer.colors = [topColor, bottomColor]
+        gradientLayer.locations = [0.1,1.0]
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     func getMultiplierForDevice() -> CGFloat {

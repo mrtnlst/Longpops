@@ -46,9 +46,7 @@ class AboutViewController: TemplateViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = UIColor(red: 255/255, green: 145/255, blue: 97/255, alpha: 1.0)
-        
+        super.viewDidLoad()        
         setupViews()
         setupConstraints()
     }

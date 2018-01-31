@@ -85,6 +85,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.hoursTextField.borderStyle = .roundedRect
         self.hoursTextField.delegate = self
         self.hoursTextField.keyboardType = .numberPad
+        self.hoursTextField.keyboardAppearance = .dark
         self.hoursTextField.tag = 1
         self.hoursTextField.inputAccessoryView = inputToolbar
         self.hoursTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
@@ -95,6 +96,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.minutesTextField.borderStyle = .roundedRect
         self.minutesTextField.delegate = self
         self.minutesTextField.keyboardType = .numberPad
+        self.minutesTextField.keyboardAppearance = .dark
         self.minutesTextField.tag = 2
         self.minutesTextField.inputAccessoryView = inputToolbar
         self.minutesTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
@@ -105,6 +107,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.dayTextField.borderStyle = .roundedRect
         self.dayTextField.delegate = self
         self.dayTextField.keyboardType = .numberPad
+        self.dayTextField.keyboardAppearance = .dark
         self.dayTextField.tag = 3
         self.dayTextField.inputAccessoryView = inputToolbar
         self.dayTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
@@ -115,6 +118,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.monthTextField.borderStyle = .roundedRect
         self.monthTextField.delegate = self
         self.monthTextField.keyboardType = .numberPad
+        self.monthTextField.keyboardAppearance = .dark
         self.monthTextField.tag = 4
         self.monthTextField.inputAccessoryView = inputToolbar
         self.monthTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
@@ -125,6 +129,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.yearTextField.borderStyle = .roundedRect
         self.yearTextField.delegate = self
         self.yearTextField.keyboardType = .numberPad
+        self.yearTextField.keyboardAppearance = .dark
         self.yearTextField.tag = 5
         self.yearTextField.inputAccessoryView = inputToolbar
         self.yearTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
@@ -150,7 +155,7 @@ class AdvancedTaskViewController: TaskViewController {
     }
     
     fileprivate func setupInputToolbar() {
-        self.inputToolbar.barStyle = .default
+        self.inputToolbar.barStyle = .blackTranslucent
         self.inputToolbar.sizeToFit()
         
         let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -159,13 +164,13 @@ class AdvancedTaskViewController: TaskViewController {
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(AdvancedTaskViewController.saveSticky))
         doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .normal)
         doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .highlighted)
-        doneButton.tintColor = UIColor.gray
+        doneButton.tintColor = UIColor.white
         
         let forwardButton  = UIBarButtonItem(image: UIImage(named: "ForwardButton"), style: .plain, target: self, action: #selector(self.keyboardForwardButton))
-        forwardButton.tintColor = UIColor.gray
+        forwardButton.tintColor = UIColor.white
         
         let backwardButton  = UIBarButtonItem(image: UIImage(named: "BackwardButton"), style: .plain, target: self, action: #selector(self.keyboardBackwardButton))
-        backwardButton.tintColor = UIColor.gray
+        backwardButton.tintColor = UIColor.white
         
         self.inputToolbar.setItems([fixedSpaceButton, fixedSpaceButton, flexibleSpaceButton, backwardButton, forwardButton, doneButton], animated: false)
         self.inputToolbar.isUserInteractionEnabled = true
@@ -420,10 +425,91 @@ class AdvancedTaskViewController: TaskViewController {
         return true
     }
     
+    // MARK: Timers
+    func startCountdownTimer() {
+        
+        // Caclulate seconds to full minute.
+        let remainingSeconds = 60 - DateTimeHandler.getCurrentSecond()
+        self.countdownTimer = Timer.scheduledTimer(timeInterval: TimeInterval(remainingSeconds), target: self, selector: #selector(self.startDateTimer), userInfo: nil, repeats: false)
+    }
+    
+    @objc func startDateTimer() {
+        
+        // Update labels every minute.
+        self.dateTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.updateDateTimePlaceHolder), userInfo: nil, repeats: true)
+        self.dateTimer.fire()
+    }
+    
+    // Save Reminder
+    
+    override func saveSticky() {
+        
+        // Format last active textField if necessary.
+        let activeTextField = self.getActiveTextField()
+        
+        if activeTextField.tag != 0 {
+            if !TextInputHandler.isTextFieldEmtpy(textField: activeTextField) {
+                if !TextInputHandler.isDateComponentCorrect(textField: activeTextField) {
+                    activeTextField.becomeFirstResponder()
+                    return
+                }
+                activeTextField.text = TextInputHandler.formatTextField(activeTextField)
+            }
+        }
+        
+        // Get textField values from .text or .placeholder.
+        let textFieldValues = self.getTextFieldValues()
+        
+        // Compare with current date and time.
+        let isDateTimeValid = DateTimeHandler.compareDateAndTime(hour: textFieldValues[0], minute: textFieldValues[1], day: textFieldValues[2], month: textFieldValues[3], year: textFieldValues[4])
+        
+        if  !isDateTimeValid.0 {
+            
+            // Create an alert.
+            let alert = UIAlertController(title: NSLocalizedString("alert-title", comment: "Alert title."), message: NSLocalizedString("alert-message", comment: "Alert message."), preferredStyle: .alert)
+            
+            let continueAction = UIAlertAction(title: NSLocalizedString("alert-button", comment: "Alert button."), style: .default)
+            
+            alert.addAction(continueAction)
+            
+            // Send user back to hourTextField.
+            self.hoursTextField.becomeFirstResponder()
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        self.saveAdvancedReminder(date: isDateTimeValid.1)
+        self.resetTextFields()
+        self.titleTextField.becomeFirstResponder()
+        self.beginSuccessAnimation()
+        
+        self.giveHapticFeedbackOnSave()
+    }
+    
+    func saveAdvancedReminder(date: Date) {
+        let reminder = EKReminder(eventStore:self.eventStore)
+        
+        let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .month, .year]
+        let components = Calendar.current.dateComponents(unitFlags, from: date)
+
+        reminder.title = self.titleTextField.text!
+        reminder.dueDateComponents = components
+        reminder.addAlarm(EKAlarm.init(absoluteDate: date))
+        reminder.calendar = self.eventStore.defaultCalendarForNewReminders()
+        
+        do {
+            try self.eventStore.save(reminder, commit: true)
+            print("Saved")
+        }
+        catch {
+            print("Error creating and saving new reminder : \(error)")
+        }
+    }
+    
     // MARK: Helper Methods
     
     func getActiveTextField() -> UITextField {
-
+        
         let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
         
         var activeTextField = UITextField()
@@ -506,87 +592,6 @@ class AdvancedTaskViewController: TaskViewController {
             } else {
                 // Fallback on earlier versions
             }
-        }
-    }
-    
-    // MARK: Timers
-    func startCountdownTimer() {
-        
-        // Caclulate seconds to full minute.
-        let remainingSeconds = 60 - DateTimeHandler.getCurrentSecond()
-        self.countdownTimer = Timer.scheduledTimer(timeInterval: TimeInterval(remainingSeconds), target: self, selector: #selector(self.startDateTimer), userInfo: nil, repeats: false)
-    }
-    
-    @objc func startDateTimer() {
-        
-        // Update labels every minute.
-        self.dateTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.updateDateTimePlaceHolder), userInfo: nil, repeats: true)
-        self.dateTimer.fire()
-    }
-    
-    // Save Reminder
-    
-    override func saveSticky() {
-        
-        // Format last active textField if necessary.
-        let activeTextField = self.getActiveTextField()
-        
-        if activeTextField.tag != 0 {
-            if !TextInputHandler.isTextFieldEmtpy(textField: activeTextField) {
-                if !TextInputHandler.isDateComponentCorrect(textField: activeTextField) {
-                    activeTextField.becomeFirstResponder()
-                    return
-                }
-                activeTextField.text = TextInputHandler.formatTextField(activeTextField)
-            }
-        }
-        
-        // Get textField values from .text or .placeholder.
-        let textFieldValues = self.getTextFieldValues()
-        
-        // Compare with current date and time.
-        let isDateTimeValid = DateTimeHandler.compareDateAndTime(hour: textFieldValues[0], minute: textFieldValues[1], day: textFieldValues[2], month: textFieldValues[3], year: textFieldValues[4])
-        
-        if  !isDateTimeValid.0 {
-            
-            // Create an alert.
-            let alert = UIAlertController(title: NSLocalizedString("alert-title", comment: "Alert title."), message: NSLocalizedString("alert-message", comment: "Alert message."), preferredStyle: .alert)
-            
-            let continueAction = UIAlertAction(title: NSLocalizedString("alert-button", comment: "Alert button."), style: .default)
-            
-            alert.addAction(continueAction)
-            
-            // Send user back to hourTextField.
-            self.hoursTextField.becomeFirstResponder()
-            self.present(alert, animated: true, completion: nil)
-            return
-        }
-        
-        self.saveAdvancedReminder(date: isDateTimeValid.1)
-        self.resetTextFields()
-        self.titleTextField.becomeFirstResponder()
-        self.beginSuccessAnimation()
-        
-        self.giveHapticFeedbackOnSave()
-    }
-    
-    func saveAdvancedReminder(date: Date) {
-        let reminder = EKReminder(eventStore:self.eventStore)
-        
-        let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .month, .year]
-        let components = Calendar.current.dateComponents(unitFlags, from: date)
-
-        reminder.title = self.titleTextField.text!
-        reminder.dueDateComponents = components
-        reminder.addAlarm(EKAlarm.init(absoluteDate: date))
-        reminder.calendar = self.eventStore.defaultCalendarForNewReminders()
-        
-        do {
-            try self.eventStore.save(reminder, commit: true)
-            print("Saved")
-        }
-        catch {
-            print("Error creating and saving new reminder : \(error)")
         }
     }
     
