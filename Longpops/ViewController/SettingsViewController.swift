@@ -10,17 +10,23 @@ import UIKit
 class SettingsViewController: TemplateViewController {
     
     private var backButtonContainerView: UIView
-    private var switchContainerView: UIView
+    private var startupContainerView: UIView
+    private var hapticFeedBackOnJumpContainerView: UIView
     var backButton: UIButton
     var advancedTaskSwitch: UISwitch
     var advancedTaskLabel: UILabel
+    var hapticFeedBackOnJumpLabel: UILabel
+    var hapticFeedBackOnJumpSwitch: UISwitch
     
     override init() {
         self.backButtonContainerView = UIView()
-        self.switchContainerView = UIView()
+        self.startupContainerView = UIView()
+        self.hapticFeedBackOnJumpContainerView = UIView()
         self.backButton = UIButton()
         self.advancedTaskLabel = UILabel()
         self.advancedTaskSwitch = UISwitch()
+        self.hapticFeedBackOnJumpLabel = UILabel()
+        self.hapticFeedBackOnJumpSwitch = UISwitch()
         
         super.init()
     }
@@ -44,8 +50,11 @@ class SettingsViewController: TemplateViewController {
         self.backButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.backButtonContainerView)
         
-        self.switchContainerView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.switchContainerView)
+        self.startupContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.startupContainerView)
+        
+        self.hapticFeedBackOnJumpContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.hapticFeedBackOnJumpContainerView)
         
         self.backButton.setImage(UIImage(named: "BackButton"), for: .normal)
         self.backButton.layer.shadowColor = UIColor.black.cgColor
@@ -62,15 +71,30 @@ class SettingsViewController: TemplateViewController {
         self.advancedTaskLabel.lineBreakMode = .byWordWrapping
         self.advancedTaskLabel.numberOfLines = 0
         self.advancedTaskLabel.textAlignment = .left
-        self.switchContainerView.addSubview(self.advancedTaskLabel)
+        self.startupContainerView.addSubview(self.advancedTaskLabel)
         
         self.advancedTaskSwitch.translatesAutoresizingMaskIntoConstraints = false
         self.advancedTaskSwitch.onTintColor = UIColor(red: 97.0/255, green: 208.0/255, blue: 255.0/255, alpha: 1.0)
         self.advancedTaskSwitch.addTarget(self, action: #selector(advancedTaskSwitchToggled), for: .valueChanged)
-        self.switchContainerView.addSubview(self.advancedTaskSwitch)
+        self.startupContainerView.addSubview(self.advancedTaskSwitch)
+        
+        self.hapticFeedBackOnJumpLabel.translatesAutoresizingMaskIntoConstraints = false;
+        self.hapticFeedBackOnJumpLabel.text = NSLocalizedString("settings-label-haptic-jump", comment: "Haptic Feedback label.")
+        self.hapticFeedBackOnJumpLabel.textColor = .white
+        self.hapticFeedBackOnJumpLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        self.hapticFeedBackOnJumpLabel.lineBreakMode = .byWordWrapping
+        self.hapticFeedBackOnJumpLabel.numberOfLines = 0
+        self.hapticFeedBackOnJumpLabel.textAlignment = .left
+        self.hapticFeedBackOnJumpContainerView.addSubview(self.hapticFeedBackOnJumpLabel)
+        
+        self.hapticFeedBackOnJumpSwitch.translatesAutoresizingMaskIntoConstraints = false
+        self.hapticFeedBackOnJumpSwitch.onTintColor = UIColor(red: 97.0/255, green: 208.0/255, blue: 255.0/255, alpha: 1.0)
+        self.hapticFeedBackOnJumpSwitch.addTarget(self, action: #selector(self.hapticFeedbackOnJumpSwitchToggled), for: .valueChanged)
+        self.hapticFeedBackOnJumpContainerView.addSubview(self.hapticFeedBackOnJumpSwitch)
         
         let defaults = UserDefaults.standard
         self.advancedTaskSwitch.isOn = defaults.bool(forKey: "advancedTask")
+        self.hapticFeedBackOnJumpSwitch.isOn = defaults.bool(forKey: "feedbackOnJump")
 
     }
     
@@ -82,6 +106,9 @@ class SettingsViewController: TemplateViewController {
             "backButton": self.backButton,
             "advancedTaskSwitch": self.advancedTaskSwitch,
             "advancedTaskLabel": self.advancedTaskLabel,
+            "hapticFeedBackOnJumpSwitch": self.hapticFeedBackOnJumpSwitch,
+            "hapticFeedBackOnJumpLabel": self.hapticFeedBackOnJumpLabel,
+            "hapticFeedBackOnJumpContainerView": self.hapticFeedBackOnJumpContainerView,
             ]
         
         let metricsDictionary: [String: Any] = [
@@ -93,42 +120,69 @@ class SettingsViewController: TemplateViewController {
             self.backButtonContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.backButtonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
-            self.switchContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            self.switchContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
+            self.startupContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.startupContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            
+            self.hapticFeedBackOnJumpContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.hapticFeedBackOnJumpContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
             ])
         
         if #available(iOS 11, *) {
             NSLayoutConstraint.activate([
-                self.switchContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: 1.0),
-                self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.switchContainerView.bottomAnchor, multiplier: 1.0),
+                self.startupContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: 1.0),
+                self.hapticFeedBackOnJumpContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.startupContainerView.bottomAnchor, multiplier: 1.0),
+                self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.hapticFeedBackOnJumpContainerView.bottomAnchor, multiplier: 1.0),
                 ])
             
         }
 
         // MARK: Switch Constraints.
-        self.switchContainerView.addConstraint(NSLayoutConstraint(item: self.advancedTaskSwitch,
+        self.startupContainerView.addConstraint(NSLayoutConstraint(item: self.advancedTaskSwitch,
                                                                       attribute: .centerY,
                                                                       relatedBy: .equal,
-                                                                      toItem: self.switchContainerView,
+                                                                      toItem: self.startupContainerView,
                                                                       attribute: .centerY,
                                                                       multiplier: 1.0,
                                                                       constant: 0.0))
         
-        self.switchContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[advancedTaskLabel]-[advancedTaskSwitch]-|",
+        self.startupContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[advancedTaskLabel]-[advancedTaskSwitch]-|",
                                                                                    options: [],
                                                                                    metrics: metricsDictionary,
                                                                                    views: viewsDictionary))
         
-        self.switchContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[advancedTaskLabel]-|",
+        self.startupContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[advancedTaskLabel]-|",
                                                                                    options: [],
                                                                                    metrics: metricsDictionary,
                                                                                    views: viewsDictionary))
         
-        self.switchContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[advancedTaskSwitch]-(>=1)-|",
+        self.startupContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[advancedTaskSwitch]-(>=1)-|",
+                                                                               options: [],
+                                                                               metrics: metricsDictionary,
+                                                                               views: viewsDictionary))
+       
+        // Haptic Feedback on jump.
+        self.hapticFeedBackOnJumpContainerView.addConstraint(NSLayoutConstraint(item: self.hapticFeedBackOnJumpSwitch,
+                                                                  attribute: .centerY,
+                                                                  relatedBy: .equal,
+                                                                  toItem: self.hapticFeedBackOnJumpContainerView,
+                                                                  attribute: .centerY,
+                                                                  multiplier: 1.0,
+                                                                  constant: 0.0))
+        
+        self.hapticFeedBackOnJumpContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[hapticFeedBackOnJumpLabel]-[hapticFeedBackOnJumpSwitch]-|",
                                                                                options: [],
                                                                                metrics: metricsDictionary,
                                                                                views: viewsDictionary))
         
+        self.hapticFeedBackOnJumpContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[hapticFeedBackOnJumpLabel]-|",
+                                                                               options: [],
+                                                                               metrics: metricsDictionary,
+                                                                               views: viewsDictionary))
+        
+        self.hapticFeedBackOnJumpContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[hapticFeedBackOnJumpSwitch]-(>=1)-|",
+                                                                               options: [],
+                                                                               metrics: metricsDictionary,
+                                                                               views: viewsDictionary))
         // MARK: Back Button Constraints
         self.backButtonContainerView.addConstraint(NSLayoutConstraint(item: self.backButton,
                                                                       attribute: .centerX,
@@ -163,5 +217,10 @@ class SettingsViewController: TemplateViewController {
     @objc func advancedTaskSwitchToggled() {
         let defaults = UserDefaults.standard
         defaults.set(self.advancedTaskSwitch.isOn, forKey: "advancedTask")
+    }
+    
+    @objc func hapticFeedbackOnJumpSwitchToggled() {
+        let defaults = UserDefaults.standard
+        defaults.set(self.hapticFeedBackOnJumpSwitch.isOn, forKey: "feedbackOnJump")
     }
 }

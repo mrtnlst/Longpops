@@ -279,7 +279,6 @@ class AdvancedTaskViewController: TaskViewController {
                     let values = self.getTextFieldValues()
                     
                     if DateTimeHandler.validateDate(day: values[2], month: values[3], year: values[4], activeTextField: textField.tag) > 0  {
-                        self.dayTextField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
                         self.dayTextField.becomeFirstResponder()
                         return
                     }
@@ -307,6 +306,8 @@ class AdvancedTaskViewController: TaskViewController {
                 textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
             }
         }
+        
+        self.giveHapticFeedbackOnJump()
     }
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
@@ -475,6 +476,24 @@ class AdvancedTaskViewController: TaskViewController {
         print("Timers invalidated.")
     }
     
+    func giveHapticFeedbackOnSave() {
+        if #available(iOS 10.0, *) {
+            let impact = UIImpactFeedbackGenerator(style: .medium)
+            impact.impactOccurred()
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    func giveHapticFeedbackOnJump() {
+        if #available(iOS 10.0, *) {
+            let impact = UIImpactFeedbackGenerator(style: .light)
+            impact.impactOccurred()
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
     // MARK: Timers
     func startCountdownTimer() {
         
@@ -491,7 +510,7 @@ class AdvancedTaskViewController: TaskViewController {
     }
     
     // Save Reminder
-
+    
     override func saveSticky() {
         
         // Format last active textField if necessary.
@@ -532,6 +551,8 @@ class AdvancedTaskViewController: TaskViewController {
         self.resetTextFields()
         self.titleTextField.becomeFirstResponder()
         self.beginSuccessAnimation()
+        
+        self.giveHapticFeedbackOnSave()
     }
     
     func saveAdvancedReminder(date: Date) {

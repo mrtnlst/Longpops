@@ -15,6 +15,8 @@
 "heading-label-about" = "About";
 
 "settings-label-startup-screen" = "Create time-based\nReminders";
+"settings-label-haptic-jump" = "Enable haptic\nfeedback on jump\nbetween textfields";
+"settings-label-haptic-save" = "Enable haptic\nfeedback on save";
 
 "permission-button-title" = "Open Settings to enable access to Reminders!";
 
@@ -24,3 +26,5 @@
 
 "success-label" = "Saved!";
 "title-textfield-placeholder" = "Remind me of ..";
+
+
