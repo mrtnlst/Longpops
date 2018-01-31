@@ -21,3 +21,6 @@
 "alert-title" =  "Ups … das geht nicht!";
 "alert-message" = "Das Datum liegt in der Vergangenheit. Bitte gib ein gültiges Datum ein!";
 "alert-button" = "Ich probier's noch mal.";
+
+"success-label" = "Gespeichert!";
+"title-textfield-placeholder" = "Erinnere mich an ..";

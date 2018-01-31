@@ -82,13 +82,13 @@ class TaskViewController: TemplateViewController {
         self.titleTextField.translatesAutoresizingMaskIntoConstraints = false
         self.titleTextField.backgroundColor = .white
         self.titleTextField.borderStyle = .roundedRect
-        self.titleTextField.placeholder = "Remind me of .."
+        self.titleTextField.placeholder = NSLocalizedString("title-textfield-placeholder", comment: "Permission button.")
         self.titleTextField.delegate = self
         self.titleTextField.tag = 0
         self.textFieldContainerView.addSubview(self.titleTextField)
         
         self.successLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.successLabel.text = "Saved!"
+        self.successLabel.text = NSLocalizedString("success-label", comment: "Permission button.")
         self.successLabel.textColor = .white
         self.successLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         self.successLabel.alpha = 0

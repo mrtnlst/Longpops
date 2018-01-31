@@ -21,3 +21,6 @@
 "alert-title" =  "Ooops … I can't do that!";
 "alert-message" = "Your date lies in the past. Please enter a valid date!";
 "alert-button" = "Let me try again";
+
+"success-label" = "Saved!";
+"title-textfield-placeholder" = "Remind me of ..";
