@@ -130,8 +130,8 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
     }
     
     func createBackgroundGradient() {
-        let bottomColor = UIColor(red: 212/255, green: 20/255, blue: 19/255, alpha: 1.0).cgColor
-        let topColor = UIColor(red: 251/255, green: 176/255, blue: 56/255, alpha: 1.0).cgColor
+        let bottomColor = UIColor(red:0.83, green:0.08, blue:0.35, alpha:1.0).cgColor
+        let topColor = UIColor(red:0.98, green:0.69, blue:0.23, alpha:1.0).cgColor
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.view.frame
         gradientLayer.colors = [topColor, bottomColor]

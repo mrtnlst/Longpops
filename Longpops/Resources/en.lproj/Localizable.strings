@@ -14,9 +14,9 @@
 "heading-label-settings" = "Settings";
 "heading-label-about" = "About";
 
-"settings-label-startup-screen" = "Create time-based\nReminders";
-"settings-label-haptic-jump" = "Enable haptic\nfeedback when switching\nbetween text fields.";
-"settings-label-haptic-save" = "Enable haptic\nfeedback when hitting\n save";
+"settings-label-startup-screen" = "Create time-based\nreminders";
+"settings-label-haptic-jump" = "Enable haptic\nfeedback when switching\nbetween text fields";
+"settings-label-haptic-save" = "Enable haptic\nfeedback when hitting\nsave";
 
 "permission-button-title" = "Open Settings to enable access to Reminders!";
 
