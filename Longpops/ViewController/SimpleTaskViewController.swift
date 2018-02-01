@@ -34,7 +34,8 @@ class SimpleTaskViewController: TaskViewController {
         let metricsDictionary: [String: Any] = [
             "createReminderButtonHeight": 50,
             "createReminderButtonWidth": 50,
-            "menuButton": 25
+            "menuButton": 25,
+            "textFieldMargin": LayoutHandler.getMarginForDevice(),
         ]
         
         self.textFieldContainerView.addConstraint(NSLayoutConstraint(item: self.titleTextField,
@@ -45,7 +46,7 @@ class SimpleTaskViewController: TaskViewController {
                                                                      multiplier: 1.0,
                                                                      constant: 0.0))
 
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[titleTextField]-|",
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(textFieldMargin)-[titleTextField]-(textFieldMargin)-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))

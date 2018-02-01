@@ -12,6 +12,7 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
     
     var headingContainerView: UIView
     var descriptionContainerView: UIView
+    var gradientLayer: CAGradientLayer
     
     var headingLabel: UILabel
     var descriptionLabel: UILabel
@@ -19,7 +20,7 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
     init() {
         self.headingContainerView = UIView()
         self.descriptionContainerView = UIView()
-       
+        self.gradientLayer = CAGradientLayer()
         self.headingLabel = UILabel()
         self.descriptionLabel = UILabel()
 
@@ -48,13 +49,13 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
         self.headingLabel.translatesAutoresizingMaskIntoConstraints = false;
         self.headingLabel.text = "Template"
         self.headingLabel.textColor = .white
-        self.headingLabel.font = UIFont.systemFont(ofSize: 40, weight: .semibold)
+        self.headingLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getHeadingFontSizeForDevice(), weight: .semibold)
         self.headingContainerView.addSubview(self.headingLabel)
 
         self.descriptionLabel.translatesAutoresizingMaskIntoConstraints = false;
         self.descriptionLabel.text = "This is a template."
         self.descriptionLabel.textColor = .white
-        self.descriptionLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        self.descriptionLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .regular)
         self.descriptionLabel.lineBreakMode = .byWordWrapping
         self.descriptionLabel.numberOfLines = 0
         self.descriptionLabel.textAlignment = .center
@@ -69,6 +70,10 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
             "descriptionLabel": self.descriptionLabel,
             ]
         
+        let metricsDictionary: [String: Any] = [
+            "margin": LayoutHandler.getMarginForDevice(),
+            ]
+        
         let margins = view.layoutMarginsGuide
         NSLayoutConstraint.activate([
             self.headingContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
@@ -81,9 +86,9 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
         if #available(iOS 11, *) {
             let guide = view.safeAreaLayoutGuide
             NSLayoutConstraint.activate([
-                self.headingContainerView.topAnchor.constraintEqualToSystemSpacingBelow(guide.topAnchor, multiplier: self.getMultiplierForDevice()),
+                self.headingContainerView.topAnchor.constraintEqualToSystemSpacingBelow(guide.topAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
     
-                self.descriptionContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: self.getMultiplierForDevice()),
+                self.descriptionContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 ])
 
         }
@@ -118,9 +123,9 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
                                                                        multiplier: 1.0,
                                                                        constant: 0.0))
 
-        self.descriptionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[descriptionLabel]-(>=1)-|",
+        self.descriptionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[descriptionLabel]-(margin)-|",
                                                                                     options: [],
-                                                                                    metrics: [:],
+                                                                                    metrics: metricsDictionary,
                                                                                     views: viewsDictionary))
 
         self.descriptionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[descriptionLabel]-|",
@@ -132,30 +137,20 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
     func createBackgroundGradient() {
         let bottomColor = UIColor(red:0.83, green:0.08, blue:0.35, alpha:1.0).cgColor
         let topColor = UIColor(red:0.98, green:0.69, blue:0.23, alpha:1.0).cgColor
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.view.frame
-        gradientLayer.colors = [topColor, bottomColor]
-        gradientLayer.locations = [0.1,1.0]
-        self.view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        self.gradientLayer.frame = self.view.frame
+        self.gradientLayer.colors = [topColor, bottomColor]
+        self.gradientLayer.locations = [0.1,1.0]
+        self.view.layer.insertSublayer(self.gradientLayer, at: 0)
     }
     
-    func getMultiplierForDevice() -> CGFloat {
-        var multiplier: CGFloat = 1.0
-        
-        if UIScreen.main.bounds.size.height == 568 {
-            multiplier = 0.0
-        }
-        if UIScreen.main.bounds.size.height == 736 {
-            multiplier = 3.0
-        }
-        if UIScreen.main.bounds.size.height == 812 {
-            multiplier = 2.0
-        }
-        return multiplier
-    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    override func viewDidLayoutSubviews() {
+        self.gradientLayer.frame = self.view.bounds
     }
     
     override func didReceiveMemoryWarning() {

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5B18861B201E3BEE00CC7669 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B18861D201E3BEE00CC7669 /* Localizable.strings */; };
+		5B61547620237BC100F65E5B /* LayoutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B61547520237BC100F65E5B /* LayoutHandler.swift */; };
 		5BB187D21FB87A6000AB3ABA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB187D11FB87A6000AB3ABA /* AppDelegate.swift */; };
 		5BB187D41FB87A6000AB3ABA /* SimpleTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB187D31FB87A6000AB3ABA /* SimpleTaskViewController.swift */; };
 		5BB187D91FB87A6000AB3ABA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BB187D81FB87A6000AB3ABA /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 		5B18861C201E3BEE00CC7669 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5B18861E201E3C3100CC7669 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5B18861F201E3C3100CC7669 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5B61547520237BC100F65E5B /* LayoutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LayoutHandler.swift; path = Longpops/Handler/LayoutHandler.swift; sourceTree = SOURCE_ROOT; };
 		5BB187CE1FB87A6000AB3ABA /* Longpops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Longpops.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BB187D11FB87A6000AB3ABA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BB187D31FB87A6000AB3ABA /* SimpleTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTaskViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				5BB7A76B201518CE00EF2A54 /* TextInputHandler.swift */,
 				5BB7A76D2016527200EF2A54 /* DateTimeHandler.swift */,
+				5B61547520237BC100F65E5B /* LayoutHandler.swift */,
 			);
 			path = Handler;
 			sourceTree = "<group>";
@@ -185,6 +188,7 @@
 			files = (
 				5BB187E41FBCD2E300AB3ABA /* AboutViewController.swift in Sources */,
 				5BB187D41FB87A6000AB3ABA /* SimpleTaskViewController.swift in Sources */,
+				5B61547620237BC100F65E5B /* LayoutHandler.swift in Sources */,
 				5BB7A76E2016527200EF2A54 /* DateTimeHandler.swift in Sources */,
 				5BB7A7642013C6F400EF2A54 /* TaskViewController.swift in Sources */,
 				5BE6EF30200B676700AE14F2 /* TemplateViewController.swift in Sources */,
@@ -335,12 +339,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4853CED358;
 				INFOPLIST_FILE = Longpops/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.martinlist.longpops;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -351,12 +355,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4853CED358;
 				INFOPLIST_FILE = Longpops/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.martinlist.longpops;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

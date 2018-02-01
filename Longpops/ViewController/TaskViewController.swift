@@ -146,9 +146,9 @@ class TaskViewController: TemplateViewController {
             ]
         
         let metricsDictionary: [String: Any] = [
-            "createReminderButtonHeight": 50,
-            "createReminderButtonWidth": 50,
-            "menuButton": 25
+            "createReminderButtonHeight": LayoutHandler.getSaveButtonSizeForDevice(),
+            "createReminderButtonWidth": LayoutHandler.getSaveButtonSizeForDevice(),
+            "menuButton": 25,
         ]
         
         let margins = view.layoutMarginsGuide
@@ -165,11 +165,11 @@ class TaskViewController: TemplateViewController {
         
         if #available(iOS 11, *) {
             NSLayoutConstraint.activate([
-                self.textFieldContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: self.getMultiplierForDevice()),
+                self.textFieldContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 
-                self.buttonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.bottomAnchor, multiplier: self.getMultiplierForDevice()),
+                self.buttonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 
-                self.permissionButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.buttonContainerView.bottomAnchor, multiplier: self.getMultiplierForDevice()),
+                self.permissionButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.buttonContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 ])
         }
         

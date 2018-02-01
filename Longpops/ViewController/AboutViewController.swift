@@ -82,14 +82,14 @@ class AboutViewController: TemplateViewController {
         self.twitterButton.translatesAutoresizingMaskIntoConstraints = false
         self.twitterButton.setTitle("@mrtnlst", for: .normal)
         self.twitterButton.setTitleColor(.white, for: .normal)
-        self.twitterButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        self.twitterButton.titleLabel?.font = UIFont.systemFont(ofSize: LayoutHandler.getLinkButtonSizeForDevice(), weight: .medium)
         self.twitterButton.addTarget(self, action: #selector(AboutViewController.twitterButtonPressed), for: .touchUpInside)
         self.twitterContainerView.addSubview(self.twitterButton)
 
         self.websiteButton.translatesAutoresizingMaskIntoConstraints = false
         self.websiteButton.setTitle(" martinlist.org", for: .normal)
         self.websiteButton.setTitleColor(.white, for: .normal)
-        self.websiteButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        self.websiteButton.titleLabel?.font = UIFont.systemFont(ofSize: LayoutHandler.getLinkButtonSizeForDevice(), weight: .medium)
         self.websiteButton.addTarget(self, action: #selector(AboutViewController.websiteButtonPressed), for: .touchUpInside)
         self.websiteContainerView.addSubview(self.websiteButton)
         
@@ -131,7 +131,8 @@ class AboutViewController: TemplateViewController {
         
         let metricsDictionary: [String: Any] = [
             "imageSize": 25,
-            "backButtonSize": 50,
+            "backButtonSize": LayoutHandler.getSaveButtonSizeForDevice(),
+            "margin": LayoutHandler.getMarginForDevice(),
         ]
         
         let margins = view.layoutMarginsGuide
@@ -165,7 +166,7 @@ class AboutViewController: TemplateViewController {
         
         // MARK: Twitter Button Constraints
 
-        self.twitterContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[twitterImage(imageSize)]-[twitterButton]-(>=1)-|",
+        self.twitterContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[twitterImage(imageSize)]-[twitterButton]-(>=1)-|",
                                                                                     options: [],
                                                                                     metrics: metricsDictionary,
                                                                                     views: viewsDictionary))
@@ -181,7 +182,7 @@ class AboutViewController: TemplateViewController {
         
         // MARK: Website Button Constraints
         
-        self.websiteContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[websiteImage(imageSize)]-[websiteButton]-(>=1)-|",
+        self.websiteContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[websiteImage(imageSize)]-[websiteButton]-(>=1)-|",
                                                                                 options: [],
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))

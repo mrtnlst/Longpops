@@ -76,7 +76,7 @@ class SettingsViewController: TemplateViewController {
         self.advancedTaskLabel.translatesAutoresizingMaskIntoConstraints = false;
         self.advancedTaskLabel.text = NSLocalizedString("settings-label-startup-screen", comment: "Settings label.")
         self.advancedTaskLabel.textColor = .white
-        self.advancedTaskLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        self.advancedTaskLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .medium)
         self.advancedTaskLabel.lineBreakMode = .byWordWrapping
         self.advancedTaskLabel.numberOfLines = 0
         self.advancedTaskLabel.textAlignment = .left
@@ -90,7 +90,7 @@ class SettingsViewController: TemplateViewController {
         self.hapticFeedBackOnJumpLabel.translatesAutoresizingMaskIntoConstraints = false;
         self.hapticFeedBackOnJumpLabel.text = NSLocalizedString("settings-label-haptic-jump", comment: "Haptic Feedback label.")
         self.hapticFeedBackOnJumpLabel.textColor = .white
-        self.hapticFeedBackOnJumpLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        self.hapticFeedBackOnJumpLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .medium)
         self.hapticFeedBackOnJumpLabel.lineBreakMode = .byWordWrapping
         self.hapticFeedBackOnJumpLabel.numberOfLines = 0
         self.hapticFeedBackOnJumpLabel.textAlignment = .left
@@ -104,7 +104,7 @@ class SettingsViewController: TemplateViewController {
         self.hapticFeedBackOnSaveLabel.translatesAutoresizingMaskIntoConstraints = false;
         self.hapticFeedBackOnSaveLabel.text = NSLocalizedString("settings-label-haptic-save", comment: "Haptic Feedback label.")
         self.hapticFeedBackOnSaveLabel.textColor = .white
-        self.hapticFeedBackOnSaveLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        self.hapticFeedBackOnSaveLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .medium)
         self.hapticFeedBackOnSaveLabel.lineBreakMode = .byWordWrapping
         self.hapticFeedBackOnSaveLabel.numberOfLines = 0
         self.hapticFeedBackOnSaveLabel.textAlignment = .left
@@ -139,7 +139,8 @@ class SettingsViewController: TemplateViewController {
             ]
         
         let metricsDictionary: [String: Any] = [
-            "backButtonSize": 50,
+            "backButtonSize": LayoutHandler.getSaveButtonSizeForDevice(),
+            "margin": LayoutHandler.getMarginForDevice(),
             ]
         
         let margins = view.layoutMarginsGuide
@@ -175,7 +176,7 @@ class SettingsViewController: TemplateViewController {
                                                                       multiplier: 1.0,
                                                                       constant: 0.0))
         
-        self.startupContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[advancedTaskLabel]-[advancedTaskSwitch]-|",
+        self.startupContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[advancedTaskLabel]-[advancedTaskSwitch]-(margin)-|",
                                                                                    options: [],
                                                                                    metrics: metricsDictionary,
                                                                                    views: viewsDictionary))
@@ -199,7 +200,7 @@ class SettingsViewController: TemplateViewController {
                                                                   multiplier: 1.0,
                                                                   constant: 0.0))
         
-        self.hapticFeedBackOnJumpContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[hapticFeedBackOnJumpLabel]-[hapticFeedBackOnJumpSwitch]-|",
+        self.hapticFeedBackOnJumpContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[hapticFeedBackOnJumpLabel]-[hapticFeedBackOnJumpSwitch]-(margin)-|",
                                                                                options: [],
                                                                                metrics: metricsDictionary,
                                                                                views: viewsDictionary))
@@ -223,7 +224,7 @@ class SettingsViewController: TemplateViewController {
                                                                                 multiplier: 1.0,
                                                                                 constant: 0.0))
         
-        self.hapticFeedBackOnSaveContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[hapticFeedBackOnSaveLabel]-[hapticFeedBackOnSaveSwitch]-|",
+        self.hapticFeedBackOnSaveContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[hapticFeedBackOnSaveLabel]-[hapticFeedBackOnSaveSwitch]-(margin)-|",
                                                                                              options: [],
                                                                                              metrics: metricsDictionary,
                                                                                              views: viewsDictionary))
