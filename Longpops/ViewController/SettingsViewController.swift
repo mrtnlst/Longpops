@@ -34,6 +34,8 @@ class SettingsViewController: TemplateViewController {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
+        
+        setupGestures()
     }
     
     override func setupViews() {
@@ -73,6 +75,12 @@ class SettingsViewController: TemplateViewController {
         
         let defaults = UserDefaults.standard
         self.advancedTaskSwitch.isOn = defaults.bool(forKey: "advancedTask")
+    }
+    
+    func setupGestures() {
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.handleGesture))
+        swipeDown.direction = .down
+        self.view.addGestureRecognizer(swipeDown)
     }
     
     override func setupConstraints() {
@@ -153,6 +161,21 @@ class SettingsViewController: TemplateViewController {
     }
     
     @objc func backButtonPressed() {
+        changeRootViewControllerOnDismiss()
+    }
+    
+    @objc func advancedTaskSwitchToggled() {
+        let defaults = UserDefaults.standard
+        defaults.set(self.advancedTaskSwitch.isOn, forKey: "advancedTask")
+    }
+    
+    @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
+        if gesture.direction == UISwipeGestureRecognizerDirection.down {
+            changeRootViewControllerOnDismiss()
+        }
+    }
+    
+    fileprivate func changeRootViewControllerOnDismiss() {
         dismiss(animated: true, completion: {
             if self.advancedTaskSwitch.isOn {
                 UIApplication.shared.delegate?.window??.rootViewController = AdvancedTaskViewController()
@@ -161,10 +184,5 @@ class SettingsViewController: TemplateViewController {
                 UIApplication.shared.delegate?.window??.rootViewController = SimpleTaskViewController()
             }
         })
-    }
-    
-    @objc func advancedTaskSwitchToggled() {
-        let defaults = UserDefaults.standard
-        defaults.set(self.advancedTaskSwitch.isOn, forKey: "advancedTask")
     }
 }

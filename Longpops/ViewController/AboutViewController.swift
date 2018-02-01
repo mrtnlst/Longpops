@@ -49,6 +49,7 @@ class AboutViewController: TemplateViewController {
         super.viewDidLoad()        
         setupViews()
         setupConstraints()
+        setupGestures()
     }
     
     override func setupViews() {
@@ -109,6 +110,12 @@ class AboutViewController: TemplateViewController {
         self.versionContainerView.addSubview(self.versionLabel)
     }
 
+    func setupGestures() {
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.handleGesture))
+        swipeDown.direction = .down
+        self.view.addGestureRecognizer(swipeDown)
+    }
+    
     override func setupConstraints() {
         super.setupConstraints()
         
@@ -257,5 +264,11 @@ class AboutViewController: TemplateViewController {
     
     @objc func backButtonPressed() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
+        if gesture.direction == UISwipeGestureRecognizerDirection.down {
+            dismiss(animated: true, completion: nil)
+        }
     }
 }
