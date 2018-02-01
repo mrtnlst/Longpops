@@ -7,7 +7,7 @@
 */
 
 "description-label-about" = "Longpops brings the concept of sticky notes to iOS.\nIt's meant to be a fast way to create overdue Reminder items, that stay on your lock screen until they are marked as completed.\n\nDeveloped and designed by Martin List.";
-"description-label-settings" = "Customize launch screen and haptics.";
+"description-label-settings" = "Customize the launch screen.";
 "description-label-simpletask" = "Create overdue Reminders, that stay on your lock screen.";
 "description-label-advancedtask" = "Quickly configure time-based reminders.";
 

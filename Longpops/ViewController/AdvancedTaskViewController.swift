@@ -287,7 +287,6 @@ class AdvancedTaskViewController: TaskViewController {
                     
                     if DateTimeHandler.validateDate(day: values[2], month: values[3], year: values[4], activeTextField: textField.tag) > 0  {
                         self.dayTextField.becomeFirstResponder()
-                        self.giveHapticFeedbackOnJump()
                         return
                     }
                 }
@@ -300,13 +299,10 @@ class AdvancedTaskViewController: TaskViewController {
                 else {
                     self.view.viewWithTag(nextField)?.becomeFirstResponder()
                 }
-                
-                self.giveHapticFeedbackOnJump()
             }
         }
         else {
             textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
-            self.giveHapticFeedbackOnJump()
         }
     }
     
@@ -352,7 +348,6 @@ class AdvancedTaskViewController: TaskViewController {
                 let values = self.getTextFieldValues()
                 
                 if DateTimeHandler.validateDate(day: values[2], month: values[3], year: values[4], activeTextField: textField.tag) > 0  {
-                    self.giveHapticFeedbackOnJump()
                     self.dayTextField.becomeFirstResponder()
                     return
                 }
@@ -388,7 +383,6 @@ class AdvancedTaskViewController: TaskViewController {
                 let values = self.getTextFieldValues()
                 
                 if DateTimeHandler.validateDate(day: values[2], month: values[3], year: values[4], activeTextField: textField.tag) > 0 {
-                    self.giveHapticFeedbackOnJump()
                     self.dayTextField.becomeFirstResponder()
                     return
                 }
@@ -416,8 +410,6 @@ class AdvancedTaskViewController: TaskViewController {
         else {
             self.view.viewWithTag(nextField)?.becomeFirstResponder()
         }
-        
-        self.giveHapticFeedbackOnJump()
     }
     
     override func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -464,7 +456,6 @@ class AdvancedTaskViewController: TaskViewController {
         
         // Validate date.
         if DateTimeHandler.validateDate(day: textFieldValues[2], month: textFieldValues[3], year: textFieldValues[4], activeTextField: activeTextField.tag) > 0 {
-            self.giveHapticFeedbackOnJump()
             self.dayTextField.becomeFirstResponder()
             return
         }
@@ -583,23 +574,6 @@ class AdvancedTaskViewController: TaskViewController {
             if #available(iOS 10.0, *) {
                 let impact = UIImpactFeedbackGenerator(style: .medium)
                 impact.impactOccurred()
-            } else {
-                // Fallback on earlier versions
-            }
-        }
-    }
-    
-    func giveHapticFeedbackOnJump() {
-        
-        let defaults = UserDefaults.standard
-        let hapticFeedback = defaults.bool(forKey: "feedbackOnJump")
-        
-        if hapticFeedback {
-            if #available(iOS 10.0, *) {
-                let impact = UIImpactFeedbackGenerator(style: .light)
-                impact.impactOccurred()
-            } else {
-                // Fallback on earlier versions
             }
         }
     }
