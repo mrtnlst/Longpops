@@ -460,6 +460,13 @@ class AdvancedTaskViewController: TaskViewController {
         // Get textField values from .text or .placeholder.
         let textFieldValues = self.getTextFieldValues()
         
+        // Validate date.
+        if DateTimeHandler.validateDate(day: textFieldValues[2], month: textFieldValues[3], year: textFieldValues[4], activeTextField: activeTextField.tag) > 0 {
+            self.giveHapticFeedbackOnJump()
+            self.dayTextField.becomeFirstResponder()
+            return
+        }
+        
         // Compare with current date and time.
         let isDateTimeValid = DateTimeHandler.compareDateAndTime(hour: textFieldValues[0], minute: textFieldValues[1], day: textFieldValues[2], month: textFieldValues[3], year: textFieldValues[4])
         
