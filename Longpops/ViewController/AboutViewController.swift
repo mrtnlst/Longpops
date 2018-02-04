@@ -139,7 +139,7 @@ class AboutViewController: TemplateViewController {
         
         let metricsDictionary: [String: Any] = [
             "imageSize": 25,
-            "backButtonSize": LayoutHandler.getSaveButtonSizeForDevice(),
+            "backButtonSize": LayoutHandler.getBackButtonSizeForDevice(),
             "margin": LayoutHandler.getMarginForDevice(),
         ]
         

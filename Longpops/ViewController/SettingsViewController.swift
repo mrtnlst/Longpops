@@ -77,15 +77,14 @@ class SettingsViewController: TemplateViewController {
         self.advancedTaskSwitch.translatesAutoresizingMaskIntoConstraints = false
         self.advancedTaskSwitch.onTintColor = UIColor(red: 97.0/255, green: 208.0/255, blue: 255.0/255, alpha: 1.0)
         self.advancedTaskSwitch.addTarget(self, action: #selector(advancedTaskSwitchToggled), for: .valueChanged)
+        self.advancedTaskSwitch.layer.shadowColor = UIColor.black.cgColor
+        self.advancedTaskSwitch.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.advancedTaskSwitch.layer.shadowOpacity = 0.1
         self.startupContainerView.addSubview(self.advancedTaskSwitch)
         
+        self.showIntroButton = LayoutHandler.createButton(title: NSLocalizedString("intro-button-title", comment: "Intro Button."))
         self.showIntroButton.translatesAutoresizingMaskIntoConstraints = false
-        self.showIntroButton.setTitle(NSLocalizedString("intro-button-title", comment: "Intro button."), for: .normal)
-        self.showIntroButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        self.showIntroButton.setTitleColor(.white, for: .normal)
         self.showIntroButton.addTarget(self, action: #selector(SettingsViewController.showIntroButtonPressed), for: .touchUpInside)
-        self.showIntroButton.titleLabel?.textAlignment = .center
-        self.showIntroButton.titleLabel?.numberOfLines = 2
         self.showIntroButtonContainerView.addSubview(self.showIntroButton)
         
         let defaults = UserDefaults.standard
@@ -111,7 +110,7 @@ class SettingsViewController: TemplateViewController {
             ]
         
         let metricsDictionary: [String: Any] = [
-            "backButtonSize": LayoutHandler.getSaveButtonSizeForDevice(),
+            "backButtonSize": LayoutHandler.getBackButtonSizeForDevice(),
             "margin": LayoutHandler.getMarginForDevice(),
             ]
         
@@ -161,12 +160,20 @@ class SettingsViewController: TemplateViewController {
                                                                                views: viewsDictionary))
        
         // showIntro Button.
-        self.showIntroButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[showIntroButton]-(margin)-|",
+        self.showIntroButtonContainerView.addConstraint(NSLayoutConstraint(item: self.showIntroButton,
+                                                                      attribute: .centerX,
+                                                                      relatedBy: .equal,
+                                                                      toItem: self.showIntroButtonContainerView,
+                                                                      attribute: .centerX,
+                                                                      multiplier: 1.0,
+                                                                      constant: 0.0))
+        
+        self.showIntroButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[showIntroButton]-|",
                                                                                 options: [],
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
         
-        self.showIntroButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[showIntroButton]-|",
+        self.showIntroButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[showIntroButton]-(>=1)-|",
                                                                                 options: [],
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))

@@ -73,6 +73,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         self.backButton.layer.shadowColor = UIColor.black.cgColor
         self.backButton.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.backButton.layer.shadowOpacity = 0.2
+        self.backButton.alpha = 0.8
         self.backButton.translatesAutoresizingMaskIntoConstraints = false
         self.backButton.addTarget(self, action: #selector(SettingsViewController.backButtonPressed), for: .touchUpInside)
         self.backButtonContainerView.addSubview(self.backButton)
@@ -151,6 +152,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
                                                                                    options: [],
                                                                                    metrics: metricsDictionary,
                                                                                    views: viewsDictionary))
+        
      self.view.layoutIfNeeded()
     }
     

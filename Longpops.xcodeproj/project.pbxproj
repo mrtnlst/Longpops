@@ -97,8 +97,8 @@
 			children = (
 				5BB187E31FBCD2E300AB3ABA /* AboutViewController.swift */,
 				5BB7A7652013E25C00EF2A54 /* SettingsViewController.swift */,
-				5BE6EF2F200B676700AE14F2 /* TemplateViewController.swift */,
 				5B4C821820275D84008A4C96 /* IntroViewController.swift */,
+				5BE6EF2F200B676700AE14F2 /* TemplateViewController.swift */,
 				5BB7A7632013C6F400EF2A54 /* TaskViewController.swift */,
 				5BB187D31FB87A6000AB3ABA /* SimpleTaskViewController.swift */,
 				5BB7A7692014BEDB00EF2A54 /* AdvancedTaskViewController.swift */,
