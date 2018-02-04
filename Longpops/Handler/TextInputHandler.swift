@@ -40,6 +40,15 @@ class TextInputHandler {
         if tag > 4 {
             return 0
         }
+        else if Locale.current.regionCode == "US" && tag == 2 {
+            return tag + 2
+        }
+        else if Locale.current.regionCode == "US" && tag == 4 {
+            return tag - 1
+        }
+        else if Locale.current.regionCode == "US" && tag == 3 {
+            return tag + 2
+        }
         else {
             return tag + 1
         }
@@ -49,6 +58,15 @@ class TextInputHandler {
         if tag < 1 {
             return 5
         }
+        else if Locale.current.regionCode == "US" && tag == 5 {
+            return tag - 2
+        }
+        else if Locale.current.regionCode == "US" && tag == 4 {
+            return tag - 2
+        }
+        else if Locale.current.regionCode == "US" && tag == 3 {
+            return tag + 1
+        }
         else {
             return tag - 1
         }
@@ -56,7 +74,7 @@ class TextInputHandler {
     
     static func isDateComponentCorrect(textField: UITextField) -> Bool {
         
-        // Validity check os only executed if required digits are reached.
+        // Validity check is only executed if required digits are reached.
         if let input = Int(textField.text!) {
             switch textField.tag {
             case 1:
