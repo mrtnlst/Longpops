@@ -19,6 +19,7 @@
 "settings-label-haptic-save" = "Enable haptic\nfeedback when hitting\nsave";
 
 "permission-button-title" = "Open Settings to enable access to Reminders!";
+"intro-button-title" = "Show intro again";
 
 "alert-title" =  "Ooops … I can't do that!";
 "alert-message" = "Your date lies in the past. Please enter a valid date!";

@@ -19,6 +19,7 @@
 "settings-label-haptic-save" = "Haptisches Feedback\nfür speichern\neiner Erinnerung";
 
 "permission-button-title" = "Einstellungen für Zugriff auf Erinnerungen öffnen!";
+"intro-button-title" = "Intro wiederholen";
 
 "alert-title" =  "Ups … das geht nicht!";
 "alert-message" = "Das Datum liegt in der Vergangenheit. Bitte gib ein gültiges Datum ein!";

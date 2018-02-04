@@ -11,15 +11,19 @@ class SettingsViewController: TemplateViewController {
     
     private var backButtonContainerView: UIView
     private var startupContainerView: UIView
+    private var showIntroButtonContainerView: UIView
 
     var backButton: UIButton
+    var showIntroButton: UIButton
     var advancedTaskSwitch: UISwitch
     var advancedTaskLabel: UILabel
     
     override init() {
         self.backButtonContainerView = UIView()
         self.startupContainerView = UIView()
+        self.showIntroButtonContainerView = UIView()
         self.backButton = UIButton()
+        self.showIntroButton = UIButton()
         self.advancedTaskLabel = UILabel()
         self.advancedTaskSwitch = UISwitch()
         
@@ -49,6 +53,9 @@ class SettingsViewController: TemplateViewController {
         
         self.startupContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.startupContainerView)
+        
+        self.showIntroButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.showIntroButtonContainerView)
      
         self.backButton.setImage(UIImage(named: "BackButton"), for: .normal)
         self.backButton.layer.shadowColor = UIColor.black.cgColor
@@ -72,6 +79,14 @@ class SettingsViewController: TemplateViewController {
         self.advancedTaskSwitch.addTarget(self, action: #selector(advancedTaskSwitchToggled), for: .valueChanged)
         self.startupContainerView.addSubview(self.advancedTaskSwitch)
         
+        self.showIntroButton.translatesAutoresizingMaskIntoConstraints = false
+        self.showIntroButton.setTitle(NSLocalizedString("intro-button-title", comment: "Intro button."), for: .normal)
+        self.showIntroButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        self.showIntroButton.setTitleColor(.white, for: .normal)
+        self.showIntroButton.addTarget(self, action: #selector(SettingsViewController.showIntroButtonPressed), for: .touchUpInside)
+        self.showIntroButton.titleLabel?.textAlignment = .center
+        self.showIntroButton.titleLabel?.numberOfLines = 2
+        self.showIntroButtonContainerView.addSubview(self.showIntroButton)
         
         let defaults = UserDefaults.standard
         self.advancedTaskSwitch.isOn = defaults.bool(forKey: "advancedTask")
@@ -91,6 +106,8 @@ class SettingsViewController: TemplateViewController {
             "backButton": self.backButton,
             "advancedTaskSwitch": self.advancedTaskSwitch,
             "advancedTaskLabel": self.advancedTaskLabel,
+            "showIntroButton": self.showIntroButton,
+            "showIntroButtonContainerView": self.showIntroButtonContainerView,
             ]
         
         let metricsDictionary: [String: Any] = [
@@ -106,12 +123,16 @@ class SettingsViewController: TemplateViewController {
             self.startupContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.startupContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
+            self.showIntroButtonContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.showIntroButtonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            
             ])
         
         if #available(iOS 11, *) {
             NSLayoutConstraint.activate([
                 self.startupContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: 1.0),
-                self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.startupContainerView.bottomAnchor, multiplier: 1.0),
+                self.showIntroButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.startupContainerView.bottomAnchor, multiplier: 1.0),
+                self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.showIntroButtonContainerView.bottomAnchor, multiplier: 1.0),
                 ])
         }
 
@@ -139,6 +160,16 @@ class SettingsViewController: TemplateViewController {
                                                                                metrics: metricsDictionary,
                                                                                views: viewsDictionary))
        
+        // showIntro Button.
+        self.showIntroButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[showIntroButton]-(margin)-|",
+                                                                                options: [],
+                                                                                metrics: metricsDictionary,
+                                                                                views: viewsDictionary))
+        
+        self.showIntroButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[showIntroButton]-|",
+                                                                                options: [],
+                                                                                metrics: metricsDictionary,
+                                                                                views: viewsDictionary))
        
         // MARK: Back Button Constraints
         self.backButtonContainerView.addConstraint(NSLayoutConstraint(item: self.backButton,
@@ -162,6 +193,11 @@ class SettingsViewController: TemplateViewController {
     
     @objc func backButtonPressed() {
         changeRootViewControllerOnDismiss()
+    }
+    
+    @objc func showIntroButtonPressed() {
+        let destinationController = IntroViewController()
+        self.present(destinationController, animated: true, completion: nil)
     }
     
     @objc func advancedTaskSwitchToggled() {
