@@ -36,10 +36,9 @@ class SettingsViewController: TemplateViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
-        setupConstraints()
-        
-        setupGestures()
+        self.setupViews()
+        self.setupConstraints()
+        self.setupGestures()
     }
     
     override func setupViews() {
@@ -207,7 +206,7 @@ class SettingsViewController: TemplateViewController {
     
     @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
         if gesture.direction == UISwipeGestureRecognizerDirection.down {
-            changeRootViewControllerOnDismiss()
+            self.changeRootViewControllerOnDismiss()
         }
     }
     

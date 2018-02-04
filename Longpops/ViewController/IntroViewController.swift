@@ -10,14 +10,25 @@ import UIKit
 
 class IntroViewController: TemplateViewController, UIScrollViewDelegate {
 
-    let pageControlContainer: UIView
-    let scrollView = UIScrollView()
-    var colors:[UIColor] = [UIColor.red, UIColor.blue, UIColor.green, UIColor.yellow]
-    var frame: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
-    var pageControl : UIPageControl = UIPageControl()
+    private var pageControlContainer: UIView
+    private var backButtonContainerView: UIView
+
+    var backButton: UIButton
+    let scrollView: UIScrollView
+    var colors: [UIColor]
+    var frame: CGRect
+    var pageControl: UIPageControl
 
     override init() {
         self.pageControlContainer = UIView()
+        self.backButtonContainerView = UIView()
+        
+        self.backButton = UIButton()
+        self.scrollView = UIScrollView()
+        self.colors = [UIColor.red, UIColor.blue, UIColor.green, UIColor.yellow]
+        self.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        self.pageControl = UIPageControl()
+        
         super.init()
     }
     
@@ -30,8 +41,8 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         self.setupViews()
         self.setupConstraints()
         self.setupPageControl()
+        self.setupGestures()
     }
-
     
     override func setupViews() {
         super.setupViews()
@@ -41,6 +52,9 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         
         self.pageControlContainer.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.pageControlContainer)
+        
+        self.backButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.backButtonContainerView)
         
         self.pageControl.translatesAutoresizingMaskIntoConstraints = false
         self.pageControl.numberOfPages = colors.count
@@ -55,6 +69,19 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         self.scrollView.showsHorizontalScrollIndicator = false
         self.pageControlContainer.addSubview(scrollView)
        
+        self.backButton.setImage(UIImage(named: "BackButton"), for: .normal)
+        self.backButton.layer.shadowColor = UIColor.black.cgColor
+        self.backButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.backButton.layer.shadowOpacity = 0.2
+        self.backButton.translatesAutoresizingMaskIntoConstraints = false
+        self.backButton.addTarget(self, action: #selector(SettingsViewController.backButtonPressed), for: .touchUpInside)
+        self.backButtonContainerView.addSubview(self.backButton)
+    }
+    
+    func setupGestures() {
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.handleGesture))
+        swipeDown.direction = .down
+        self.view.addGestureRecognizer(swipeDown)
     }
     
     override func setupConstraints() {
@@ -68,10 +95,13 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
             "scrollView": self.scrollView,
             "pageControlContainer": self.pageControlContainer,
             "pageControl": self.pageControl,
+            "backButtonContainerView": self.backButtonContainerView,
+            "backButton": self.backButton,
             ]
         
         let metricsDictionary: [String: Any] = [
             "margin": LayoutHandler.getMarginForDevice(),
+            "backButtonSize": LayoutHandler.getSaveButtonSizeForDevice(),
             ]
         
         let margins = view.layoutMarginsGuide
@@ -79,10 +109,13 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
             self.pageControlContainer.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.pageControlContainer.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
+            self.backButtonContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.backButtonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             ])
         
             NSLayoutConstraint.activate([
                 self.pageControlContainer.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.pageControlContainer.bottomAnchor, multiplier: 1.0),
                 ])
         
         self.pageControlContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[scrollView]-|",
@@ -99,6 +132,25 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
                                                                                     options: [],
                                                                                     metrics: [:],
                                                                                     views: viewsDictionary))
+        
+        // MARK: Back Button Constraints
+        self.backButtonContainerView.addConstraint(NSLayoutConstraint(item: self.backButton,
+                                                                      attribute: .centerX,
+                                                                      relatedBy: .equal,
+                                                                      toItem: self.backButtonContainerView,
+                                                                      attribute: .centerX,
+                                                                      multiplier: 1.0,
+                                                                      constant: 0.0))
+        
+        self.backButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[backButton(backButtonSize)]-(>=1)-|",
+                                                                                   options: [],
+                                                                                   metrics: metricsDictionary,
+                                                                                   views: viewsDictionary))
+        
+        self.backButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[backButton(backButtonSize)]-|",
+                                                                                   options: [],
+                                                                                   metrics: metricsDictionary,
+                                                                                   views: viewsDictionary))
      self.view.layoutIfNeeded()
     }
     
@@ -116,6 +168,15 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         self.scrollView.isPagingEnabled = true
         self.scrollView.contentSize = CGSize(width: (self.scrollView.frame.size.width - 32) * 4, height: self.scrollView.frame.size.height)
         self.pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControlEvents.valueChanged)
+    }
+    
+    // MARK: Button actions.
+    @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func backButtonPressed() {
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK : PageControl Actions
