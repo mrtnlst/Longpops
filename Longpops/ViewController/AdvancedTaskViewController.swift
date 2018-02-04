@@ -87,6 +87,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.hoursTextField.keyboardType = .numberPad
         self.hoursTextField.keyboardAppearance = .dark
         self.hoursTextField.tag = 1
+        self.hoursTextField.textAlignment = .center
         self.hoursTextField.inputAccessoryView = inputToolbar
         self.hoursTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
         self.textFieldContainerView.addSubview(self.hoursTextField)
@@ -98,6 +99,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.minutesTextField.keyboardType = .numberPad
         self.minutesTextField.keyboardAppearance = .dark
         self.minutesTextField.tag = 2
+        self.minutesTextField.textAlignment = .center
         self.minutesTextField.inputAccessoryView = inputToolbar
         self.minutesTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
         self.textFieldContainerView.addSubview(self.minutesTextField)
@@ -109,6 +111,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.dayTextField.keyboardType = .numberPad
         self.dayTextField.keyboardAppearance = .dark
         self.dayTextField.tag = 3
+        self.dayTextField.textAlignment = .center
         self.dayTextField.inputAccessoryView = inputToolbar
         self.dayTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
         self.textFieldContainerView.addSubview(self.dayTextField)
@@ -120,6 +123,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.monthTextField.keyboardType = .numberPad
         self.monthTextField.keyboardAppearance = .dark
         self.monthTextField.tag = 4
+        self.monthTextField.textAlignment = .center
         self.monthTextField.inputAccessoryView = inputToolbar
         self.monthTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
         self.textFieldContainerView.addSubview(self.monthTextField)
@@ -131,6 +135,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.yearTextField.keyboardType = .numberPad
         self.yearTextField.keyboardAppearance = .dark
         self.yearTextField.tag = 5
+        self.yearTextField.textAlignment = .center
         self.yearTextField.inputAccessoryView = inputToolbar
         self.yearTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
         self.textFieldContainerView.addSubview(self.yearTextField)
@@ -192,8 +197,8 @@ class AdvancedTaskViewController: TaskViewController {
             ]
         
         let metricsDictionary: [String: Any] = [
-            "smallFieldWidth": 38,
-            "bigFieldWidth": 58,
+            "smallFieldWidth": 36,
+            "bigFieldWidth": 56,
             "textFieldMargin": LayoutHandler.getMarginForDevice(),
             ]
         
