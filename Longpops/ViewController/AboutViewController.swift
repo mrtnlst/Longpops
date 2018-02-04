@@ -98,6 +98,7 @@ class AboutViewController: TemplateViewController {
         self.backButton.layer.shadowColor = UIColor.black.cgColor
         self.backButton.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.backButton.layer.shadowOpacity = 0.2
+        self.backButton.alpha = 0.8
         self.backButton.translatesAutoresizingMaskIntoConstraints = false
         self.backButton.addTarget(self, action: #selector(AboutViewController.backButtonPressed), for: .touchUpInside)
         self.backButtonContainerView.addSubview(self.backButton)

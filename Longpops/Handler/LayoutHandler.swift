@@ -60,16 +60,13 @@ class LayoutHandler {
         
         let type = self.getDeviceSize()
         
-        if type == deviceType.iPhoneSE {
-            return 50
-        }
-        if type == deviceType.iPhone6 {
+        if type == deviceType.iPhone6Plus {
             return 50
         }
         if type == deviceType.iPad {
             return 70
         }
-        return 60
+        return 40
     }
     
     static func getHeadingFontSizeForDevice() -> CGFloat {
