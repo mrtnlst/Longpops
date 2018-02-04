@@ -208,7 +208,7 @@ class AdvancedTaskViewController: TaskViewController {
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(textFieldMargin)-[hoursTextField(smallFieldWidth)]-[colonLabel]-[minutesTextField(smallFieldWidth)]-(>=1)-[dayTextField(smallFieldWidth)][dotLabel1][monthTextField(smallFieldWidth)][dotLabel2][yearTextField(bigFieldWidth)]-(textFieldMargin)-|",
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(textFieldMargin)-[hoursTextField(smallFieldWidth)]-(1)-[colonLabel]-(1)-[minutesTextField(smallFieldWidth)]-(>=1)-[dayTextField(smallFieldWidth)]-(1)-[dotLabel1]-(1)-[monthTextField(smallFieldWidth)]-(1)-[dotLabel2]-(1)-[yearTextField(bigFieldWidth)]-(textFieldMargin)-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
