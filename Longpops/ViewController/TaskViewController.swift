@@ -102,21 +102,11 @@ class TaskViewController: TemplateViewController {
         self.createReminderButton.addTarget(self, action: #selector(TaskViewController.saveSticky), for: .touchUpInside)
         self.buttonContainerView.addSubview(self.createReminderButton)
         
-        self.permissionButton = LayoutHandler.createButton(title: NSLocalizedString("permission-button-title", comment: "Permission button."))
+        self.permissionButton = LongpopsButton.init(title: NSLocalizedString("permission-button-title", comment: "Permission button."))
         self.permissionButton.translatesAutoresizingMaskIntoConstraints = false
         self.permissionButton.addTarget(self, action: #selector(TaskViewController.permissionButtonPressed), for: .touchUpInside)
         self.permissionButton.isHidden = true
         self.permissionButtonContainerView.addSubview(self.permissionButton)
-        
-//        self.permissionButton.setTitle(NSLocalizedString("permission-button-title", comment: "Permission button."), for: .normal)
-//        self.permissionButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-//        self.permissionButton.setTitleColor(.white, for: .normal)
-//        self.permissionButton.translatesAutoresizingMaskIntoConstraints = false
-//        self.permissionButton.addTarget(self, action: #selector(TaskViewController.permissionButtonPressed), for: .touchUpInside)
-//        self.permissionButton.titleLabel?.textAlignment = .center
-//        self.permissionButton.titleLabel?.numberOfLines = 2
-//        self.permissionButton.isHidden = true
-//        self.permissionButtonContainerView.addSubview(self.permissionButton)
         
         self.infoButton.translatesAutoresizingMaskIntoConstraints = false
         self.infoButton.setImage(UIImage(named: "InfoButton"), for: .normal)

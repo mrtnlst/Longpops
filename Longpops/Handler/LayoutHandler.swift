@@ -152,26 +152,4 @@ class LayoutHandler {
         
         return layoutString
     }
-    
-    static func createButton(title: String) -> UIButton {
-        
-        let button = UIButton()
-        button.backgroundColor = UIColor(red: 97.0/255, green: 208.0/255, blue: 255.0/255, alpha: 1.0)
-        button.setTitle(title, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        button.titleLabel?.textAlignment = .center
-        button.titleLabel?.numberOfLines = 0
-        button.titleLabel?.lineBreakMode = .byWordWrapping
-        button.setTitleColor(.white, for: .normal)
-        button.setTitleColor(UIColor(white: 1.0, alpha: 0.5) , for: .highlighted)
-        button.layer.cornerRadius = 5
-        button.contentEdgeInsets = UIEdgeInsetsMake(5.0, 10.0, 5.0, 10.0)
-
-        
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 0, height: 0)
-        button.layer.shadowOpacity = 0.1
-        
-        return button
-    }
 }

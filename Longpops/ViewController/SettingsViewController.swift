@@ -81,12 +81,12 @@ class SettingsViewController: TemplateViewController {
         self.advancedTaskSwitch.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.advancedTaskSwitch.layer.shadowOpacity = 0.1
         self.startupContainerView.addSubview(self.advancedTaskSwitch)
-        
-        self.showIntroButton = LayoutHandler.createButton(title: NSLocalizedString("intro-button-title", comment: "Intro Button."))
+
+        self.showIntroButton = LongpopsButton(title: NSLocalizedString("intro-button-title", comment: "Intro Button."))
         self.showIntroButton.translatesAutoresizingMaskIntoConstraints = false
         self.showIntroButton.addTarget(self, action: #selector(SettingsViewController.showIntroButtonPressed), for: .touchUpInside)
         self.showIntroButtonContainerView.addSubview(self.showIntroButton)
-        
+
         let defaults = UserDefaults.standard
         self.advancedTaskSwitch.isOn = defaults.bool(forKey: "advancedTask")
     }
