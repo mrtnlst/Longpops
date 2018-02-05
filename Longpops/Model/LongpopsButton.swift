@@ -10,6 +10,10 @@ import UIKit
 
 class LongpopsButton: UIButton {
     
+    let brightBlue = UIColor(red: 97.0/255, green: 208.0/255, blue: 255.0/255, alpha: 1.0)
+    let highlightedBlue = UIColor(red: 67.0/255, green: 109.0/255, blue: 133.0/255, alpha: 1.0)
+    let highlightedGray = UIColor(red: 135.0/255, green: 136.0/255, blue: 136.0/255, alpha: 1.0)
+    
     init(title: String) {
         super.init(frame: .zero)
         
@@ -25,7 +29,7 @@ class LongpopsButton: UIButton {
         self.titleLabel?.numberOfLines = 0
         self.titleLabel?.lineBreakMode = .byWordWrapping
         self.setTitleColor(.white, for: .normal)
-        self.setTitleColor(UIColor(red: 135.0/255, green: 136.0/255, blue: 136.0/255, alpha: 1.0) , for: .highlighted)
+        self.setTitleColor( highlightedGray, for: .highlighted)
        
         // Setting button shadow.
         self.layer.shadowColor = UIColor.black.cgColor
@@ -39,7 +43,7 @@ class LongpopsButton: UIButton {
 
     override var isHighlighted: Bool {
         didSet {
-            backgroundColor = isHighlighted ? UIColor(red: 67.0/255, green: 109.0/255, blue: 133.0/255, alpha: 1.0) : UIColor(red: 97.0/255, green: 208.0/255, blue: 255.0/255, alpha: 1.0)
+            self.backgroundColor = isHighlighted ? highlightedBlue : brightBlue
         }
     }
 }
