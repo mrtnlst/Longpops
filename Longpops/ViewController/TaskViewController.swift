@@ -48,7 +48,6 @@ class TaskViewController: TemplateViewController {
         
         self.setupViews()
         self.setupConstraints()
-        self.getCreateReminderButtonCenterX()
 
         self.eventStore = EKEventStore()
         self.eventStore.requestAccess(to: EKEntityType.reminder) { (granted, error) -> Void in
@@ -178,13 +177,15 @@ class TaskViewController: TemplateViewController {
         
         // MARK: Reminder Button Constraints
         
-        self.buttonContainerView.addConstraint(NSLayoutConstraint(item: self.createReminderButton,
-                                                                  attribute: .centerX,
-                                                                  relatedBy: .equal,
-                                                                  toItem: self.buttonContainerView,
-                                                                  attribute: .centerX,
-                                                                  multiplier: 1.0,
-                                                                  constant: 0.0))
+        self.createReminderButtonCenterX = NSLayoutConstraint(item: self.createReminderButton,
+                                                              attribute: .centerX,
+                                                              relatedBy: .equal,
+                                                              toItem: self.buttonContainerView,
+                                                              attribute: .centerX,
+                                                              multiplier: 1.0,
+                                                              constant: 0.0)
+        
+        self.buttonContainerView.addConstraint(self.createReminderButtonCenterX)
         
         self.buttonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[createReminderButton(createReminderButtonWidth)]-(>=1)-|",
                                                                                options: [],
@@ -298,20 +299,6 @@ class TaskViewController: TemplateViewController {
             self.view.layoutIfNeeded()
             self.successLabel.alpha = 0
         })
-    }
-    
-    func getCreateReminderButtonCenterX() {
-        
-        // Get reference for createReminderButton centerX constraint in superView.
-        for constraint in self.createReminderButton.superview!.constraints {
-            if let button = constraint.firstItem as? UIButton {
-                if button == self.createReminderButton {
-                    if constraint.firstAttribute == .centerX {
-                        self.createReminderButtonCenterX = constraint
-                    }
-                }
-            }
-        }
     }
     
     // MARK: Create Reminder
