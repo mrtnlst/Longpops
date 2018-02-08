@@ -16,6 +16,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
     var backButton: UIButton
     let scrollView: UIScrollView
     var colors: [UIColor]
+    var introViews: [UIView]
     var frame: CGRect
     var pageControl: UIPageControl
 
@@ -26,6 +27,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         self.backButton = UIButton()
         self.scrollView = UIScrollView()
         self.colors = [UIColor.red, UIColor.blue, UIColor.green, UIColor.yellow]
+        self.introViews = [UIView]()
         self.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         self.pageControl = UIPageControl()
         
@@ -47,8 +49,8 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
     override func setupViews() {
         super.setupViews()
         
-        self.headingLabel.text = "Intro"
-        self.descriptionLabel.text = "This is an intro"
+        self.headingLabel.text = NSLocalizedString("heading-label-intro", comment: "Intro label heading.")
+        self.descriptionLabel.text = NSLocalizedString("description-label-intro", comment: "Intro description label.")
         
         self.pageControlContainer.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.pageControlContainer)
@@ -57,7 +59,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         self.view.addSubview(self.backButtonContainerView)
         
         self.pageControl.translatesAutoresizingMaskIntoConstraints = false
-        self.pageControl.numberOfPages = colors.count
+        self.pageControl.numberOfPages = 3
         self.pageControl.currentPage = 0
         self.pageControl.tintColor = UIColor.red
         self.pageControl.pageIndicatorTintColor = UIColor.black
@@ -103,6 +105,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         let metricsDictionary: [String: Any] = [
             "margin": LayoutHandler.getMarginForDevice(),
             "backButtonSize": LayoutHandler.getSaveButtonSizeForDevice(),
+            "scrollViewHeight": LayoutHandler.getIntroPageScrollViewHeightForDevice(),
             ]
         
         let margins = view.layoutMarginsGuide
@@ -129,9 +132,9 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
         
-        self.pageControlContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView(300)]-[pageControl]-|",
+        self.pageControlContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView(scrollViewHeight)]-[pageControl]-|",
                                                                                     options: [],
-                                                                                    metrics: [:],
+                                                                                    metrics: metricsDictionary,
                                                                                     views: viewsDictionary))
         
         // MARK: Back Button Constraints
@@ -156,21 +159,106 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
      self.view.layoutIfNeeded()
     }
     
+    func createIntroPageView(subView: UIView, image: String, description: String) {
+        
+        let simpleTaskImage = UIImageView()
+        simpleTaskImage.image = UIImage(named: image)
+        simpleTaskImage.translatesAutoresizingMaskIntoConstraints = false
+        subView.addSubview(simpleTaskImage)
+        
+        let tutorialLabel = UILabel()
+        tutorialLabel.text = NSLocalizedString(description, comment: "Tutorial label.")
+        tutorialLabel.textColor = .white
+        tutorialLabel.textAlignment = .left
+        tutorialLabel.numberOfLines = 0
+        tutorialLabel.translatesAutoresizingMaskIntoConstraints = false
+        subView.addSubview(tutorialLabel)
+        
+        self.scrollView.addSubview(subView)
+        
+        
+        let viewsDictionary: [String: Any] = [
+            "simpleTaskImage": simpleTaskImage,
+            "tutorialLabel": tutorialLabel,
+            ]
+        
+        let metricsDictionary: [String: Any] = [
+            "width": LayoutHandler.getIntroImageSizeForDevice().0,
+            "height": LayoutHandler.getIntroImageSizeForDevice().1,
+            ]
+        
+        subView.addConstraint(NSLayoutConstraint(item: simpleTaskImage,
+                                                 attribute: .centerY,
+                                                 relatedBy: .equal,
+                                                 toItem: subView,
+                                                 attribute: .centerY,
+                                                 multiplier: 1.0,
+                                                 constant: 0.0))
+        
+        subView.addConstraint(NSLayoutConstraint(item: tutorialLabel,
+                                                 attribute: .centerY,
+                                                 relatedBy: .equal,
+                                                 toItem: subView,
+                                                 attribute: .centerY,
+                                                 multiplier: 1.0,
+                                                 constant: 0.0))
+        
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[simpleTaskImage(width)]-(>=5)-[tutorialLabel]-|",
+                                                              options: [],
+                                                              metrics: metricsDictionary,
+                                                              views: viewsDictionary))
+        
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[simpleTaskImage(height)]-|",
+                                                              options: [],
+                                                              metrics: metricsDictionary,
+                                                              views: viewsDictionary))
+        
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[tutorialLabel]-(>=1)-|",
+                                                              options: [],
+                                                              metrics: metricsDictionary,
+                                                              views: viewsDictionary))
+        
+    }
+    
+    func createSimpleTaskView(subView: UIView) {
+        self.createIntroPageView(subView: subView, image: "SimpleTask", description: "tutorial-label-simpletask")
+    
+    }
+    
+    func createAdvancedTaskView(subView: UIView) {
+        self.createIntroPageView(subView: subView, image: "AdvancedTask", description: "tutorial-label-advancedtask")
+    }
+    
+    func createSettingsView(subView: UIView) {
+        self.createIntroPageView(subView: subView, image: "Settings", description: "tutorial-label-settings")
+    }
+    
     func setupPageControl() {
-        for index in 0..<4 {
+ 
+        for index in 0..<3 {
             
             self.frame.origin.x = (self.scrollView.frame.size.width - 32) * CGFloat(index)
-            self.frame.size.height = 300
+            self.frame.size.height = CGFloat(LayoutHandler.getIntroPageScrollViewHeightForDevice())
             self.frame.size.width = self.scrollView.frame.size.width - 32
             
             let subView = UIView(frame: self.frame)
-            subView.backgroundColor = self.colors[index]
-            self.scrollView.addSubview(subView)
+            
+            switch index {
+            case 0:
+                self.createSimpleTaskView(subView: subView)
+            case 1:
+                self.createAdvancedTaskView(subView: subView)
+            case 2:
+                self.createSettingsView(subView: subView)
+            default:
+                break
+            }
         }
         self.scrollView.isPagingEnabled = true
-        self.scrollView.contentSize = CGSize(width: (self.scrollView.frame.size.width - 32) * 4, height: self.scrollView.frame.size.height)
+        self.scrollView.contentSize = CGSize(width: (self.scrollView.frame.size.width - 32) * 3, height: self.scrollView.frame.size.height)
         self.pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControlEvents.valueChanged)
     }
+    
     
     // MARK: Button actions.
     @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {

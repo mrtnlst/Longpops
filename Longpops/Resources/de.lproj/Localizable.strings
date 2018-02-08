@@ -10,9 +10,11 @@
 "description-label-settings" = "Konfiguriere den Startbildschirm.";
 "description-label-simpletask" = "Erzeuge Erinnerungen, die auf deinem Lockscreen bleiben.";
 "description-label-advancedtask" = "Konfiguriere zeitbasierte Erinnerungen.";
+"description-label-intro" = "Longpops bietet dir einen schnellen Weg, Erinnerungen zu erstellen.";
 
 "heading-label-settings" = "Einstellungen";
 "heading-label-about" = "Über";
+"heading-label-intro" = "Willkommen";
 
 "settings-label-startup-screen" = "Erstelle zeitbasierte\nErinnerungen";
 "settings-label-haptic-jump" = "Haptisches Feedback\nfür Sprung zwischen\nTextfeldern";
@@ -27,3 +29,7 @@
 
 "success-label" = "Gespeichert!";
 "title-textfield-placeholder" = "Erinnere mich an ..";
+
+"tutorial-label-simpletask" = "Tippe Return, um eine Erinnerung mit unmittelbarem Alarm zu erstellen.";
+"tutorial-label-advancedtask" = "Konfiguriere Uhrzeit und Datum für eine zeitbasierte Erinnerungen.";
+"tutorial-label-settings" = "Nutze die Einstellungen, um zwischen beiden Eingabemasken zu wechseln.";

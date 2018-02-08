@@ -10,9 +10,11 @@
 "description-label-settings" = "Customize the launch screen.";
 "description-label-simpletask" = "Create overdue Reminders, that stay on your lock screen.";
 "description-label-advancedtask" = "Quickly configure time-based reminders.";
+"description-label-intro" = "Longpops offers a fast way to create Reminder items.";
 
 "heading-label-settings" = "Settings";
 "heading-label-about" = "About";
+"heading-label-intro" = "Welcome";
 
 "settings-label-startup-screen" = "Create time-based\nreminders";
 "settings-label-haptic-jump" = "Enable haptic\nfeedback when switching\nbetween text fields";
@@ -28,4 +30,6 @@
 "success-label" = "Saved!";
 "title-textfield-placeholder" = "Remind me of ..";
 
-
+"tutorial-label-simpletask" = "Enter a title and hit return to create a reminder, that appears immediatly.";
+"tutorial-label-advancedtask" = "Enter date and time to create a time-based reminder.";
+"tutorial-label-settings" = "You can switch between both modes in settings.";

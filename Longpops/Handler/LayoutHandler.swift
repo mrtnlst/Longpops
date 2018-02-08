@@ -127,6 +127,32 @@ class LayoutHandler {
         return 15
     }
     
+    static func getIntroPageScrollViewHeightForDevice() -> Int {
+        
+        let type = self.getDeviceSize()
+        
+        if type == deviceType.iPhoneSE{
+            return 250
+        }
+        if type == deviceType.iPhone6Plus{
+            return 400
+        }
+        return 300
+    }
+    
+    static func getIntroImageSizeForDevice() -> (Int, Int) {
+        
+        let type = self.getDeviceSize()
+        
+        if type == deviceType.iPhoneSE {
+            return (125, 250)
+        }
+        if type == deviceType.iPhone6 {
+            return (150, 300)
+        }
+        return (200, 400)
+    }
+    
     static func getMarginForDevice() -> Int {
         
         let type = self.getDeviceSize()
