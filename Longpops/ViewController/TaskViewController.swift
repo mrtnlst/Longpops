@@ -58,6 +58,11 @@ class TaskViewController: TemplateViewController {
                     self.permissionButton.isHidden = false
                 }
             }
+            else {
+                DispatchQueue.main.async {
+                    self.checkForIntro()
+                }
+            }
         }
     }
     
@@ -279,6 +284,19 @@ class TaskViewController: TemplateViewController {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.saveSticky()
         return true
+    }
+    
+    // MARK: Show Intro
+    
+    func checkForIntro() {
+        let defaults = UserDefaults.standard
+        let showIntro = defaults.bool(forKey: "showIntro")
+        
+        if !showIntro {
+            defaults.set(true, forKey: "showIntro")
+            let destinationController = IntroViewController()
+            self.present(destinationController, animated: true, completion: nil)
+        }
     }
     
     // MARK: Button Animations
