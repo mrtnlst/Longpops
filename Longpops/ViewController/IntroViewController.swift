@@ -208,7 +208,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
         
-        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[simpleTaskImage(height)]-|",
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[simpleTaskImage(height)]|",
                                                               options: [],
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
