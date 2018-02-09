@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import EventKit
 
 class IntroViewController: TemplateViewController, UIScrollViewDelegate {
 
@@ -19,6 +20,8 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
     var introViews: [UIView]
     var frame: CGRect
     var pageControl: UIPageControl
+    var eventStore: EKEventStore!
+    var numberOfPages: CGFloat
 
     override init() {
         self.pageControlContainer = UIView()
@@ -30,6 +33,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         self.introViews = [UIView]()
         self.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         self.pageControl = UIPageControl()
+        self.numberOfPages = 3
         
         super.init()
     }
@@ -40,6 +44,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.checkForIntro()
         self.setupViews()
         self.setupConstraints()
         self.setupPageControl()
@@ -59,7 +64,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         self.view.addSubview(self.backButtonContainerView)
         
         self.pageControl.translatesAutoresizingMaskIntoConstraints = false
-        self.pageControl.numberOfPages = 3
+        self.pageControl.numberOfPages = Int(numberOfPages)
         self.pageControl.currentPage = 0
         self.pageControl.tintColor = UIColor.red
         self.pageControl.pageIndicatorTintColor = UIColor.black
@@ -159,6 +164,46 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
      self.view.layoutIfNeeded()
     }
     
+    func setupPageControl() {
+        
+        for index in 0..<Int(numberOfPages) {
+            
+            self.frame.origin.x = (self.scrollView.frame.size.width - 32) * CGFloat(index)
+            self.frame.size.height = CGFloat(LayoutHandler.getIntroPageScrollViewHeightForDevice())
+            self.frame.size.width = self.scrollView.frame.size.width - 32
+            
+            let subView = UIView(frame: self.frame)
+            
+            switch index {
+            case 0:
+                self.createSimpleTaskView(subView: subView)
+            case 1:
+                self.createAdvancedTaskView(subView: subView)
+            case 2:
+                self.createSettingsView(subView: subView)
+            case 3:
+                self.createPermissionIntroPage(subView: subView)
+            default:
+                break
+            }
+        }
+        self.scrollView.isPagingEnabled = true
+        self.scrollView.contentSize = CGSize(width: (self.scrollView.frame.size.width - 32) * numberOfPages, height: self.scrollView.frame.size.height)
+        self.pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControlEvents.valueChanged)
+    }
+    
+    func createSimpleTaskView(subView: UIView) {
+        self.createIntroPageView(subView: subView, image: "SimpleTask", description: "tutorial-label-simpletask")
+    }
+
+    func createAdvancedTaskView(subView: UIView) {
+        self.createIntroPageView(subView: subView, image: "AdvancedTask", description: "tutorial-label-advancedtask")
+    }
+    
+    func createSettingsView(subView: UIView) {
+        self.createIntroPageView(subView: subView, image: "Settings", description: "tutorial-label-settings")
+    }
+    
     func createIntroPageView(subView: UIView, image: String, description: String) {
         
         let simpleTaskImage = UIImageView()
@@ -220,52 +265,128 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         
     }
     
-    func createSimpleTaskView(subView: UIView) {
-        self.createIntroPageView(subView: subView, image: "SimpleTask", description: "tutorial-label-simpletask")
-    
+    func createPermissionIntroPage(subView: UIView) {
+        
+        let permissionContainerView = UIView()
+        permissionContainerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let permissionExplanationLabel = UILabel()
+        permissionExplanationLabel.text = NSLocalizedString("permission-explanation-label", comment: "Permission explanation label.")
+        permissionExplanationLabel.textColor = .white
+        permissionExplanationLabel.textAlignment = .center
+        permissionExplanationLabel.numberOfLines = 0
+        permissionExplanationLabel.translatesAutoresizingMaskIntoConstraints = false
+        permissionContainerView.addSubview(permissionExplanationLabel)
+        
+        let askPermissionButton = LongpopsButton(title: NSLocalizedString("intro-permission-button-title",
+                                                 comment: "Permission Button."))
+        askPermissionButton.translatesAutoresizingMaskIntoConstraints = false
+        askPermissionButton.addTarget(self, action: #selector(IntroViewController.checkPermission), for: .touchUpInside)
+        permissionContainerView.addSubview(askPermissionButton)
+        
+        subView.addSubview(permissionContainerView)
+        self.scrollView.addSubview(subView)
+        
+        let viewsDictionary: [String: Any] = [
+            "askPermissionButton": askPermissionButton,
+            "permissionExplanationLabel": permissionExplanationLabel,
+            "permissionContainerView": permissionContainerView,
+            ]
+        
+        let metricsDictionary: [String: Any] = [:]
+        
+        
+        // permissionContainerView.
+        
+        subView.addConstraint(NSLayoutConstraint(item: permissionContainerView,
+                                                                 attribute: .centerY,
+                                                                 relatedBy: .equal,
+                                                                 toItem: subView,
+                                                                 attribute: .centerY,
+                                                                 multiplier: 1.0,
+                                                                 constant: 0.0))
+        
+        subView.addConstraint(NSLayoutConstraint(item: permissionContainerView,
+                                                 attribute: .centerY,
+                                                 relatedBy: .equal,
+                                                 toItem: subView,
+                                                 attribute: .centerY,
+                                                 multiplier: 1.0,
+                                                 constant: 0.0))
+        
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[permissionContainerView]-(>=1)-|",
+                                                              options: [],
+                                                              metrics: metricsDictionary,
+                                                              views: viewsDictionary))
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[permissionContainerView]-(>=1)-|",
+                                                              options: [],
+                                                              metrics: metricsDictionary,
+                                                              views: viewsDictionary))
+        
+        permissionContainerView.addConstraint(NSLayoutConstraint(item: askPermissionButton,
+                                                 attribute: .centerX,
+                                                 relatedBy: .equal,
+                                                 toItem: permissionContainerView,
+                                                 attribute: .centerX,
+                                                 multiplier: 1.0,
+                                                 constant: 0.0))
+        
+        permissionContainerView.addConstraint(NSLayoutConstraint(item: permissionExplanationLabel,
+                                                 attribute: .centerX,
+                                                 relatedBy: .equal,
+                                                 toItem: permissionContainerView,
+                                                 attribute: .centerX,
+                                                 multiplier: 1.0,
+                                                 constant: 0.0))
+        
+        permissionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[askPermissionButton]-(>=1)-|",
+                                                              options: [],
+                                                              metrics: metricsDictionary,
+                                                              views: viewsDictionary))
+        
+        permissionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[permissionExplanationLabel]-(>=1)-|",
+                                                              options: [],
+                                                              metrics: metricsDictionary,
+                                                              views: viewsDictionary))
+        
+        permissionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[askPermissionButton]-[permissionExplanationLabel]-(>=1)-|",
+                                                              options: [],
+                                                              metrics: metricsDictionary,
+                                                              views: viewsDictionary))
+        
     }
     
-    func createAdvancedTaskView(subView: UIView) {
-        self.createIntroPageView(subView: subView, image: "AdvancedTask", description: "tutorial-label-advancedtask")
-    }
+    // MARK: Permission Handling
     
-    func createSettingsView(subView: UIView) {
-        self.createIntroPageView(subView: subView, image: "Settings", description: "tutorial-label-settings")
-    }
-    
-    func setupPageControl() {
- 
-        for index in 0..<3 {
-            
-            self.frame.origin.x = (self.scrollView.frame.size.width - 32) * CGFloat(index)
-            self.frame.size.height = CGFloat(LayoutHandler.getIntroPageScrollViewHeightForDevice())
-            self.frame.size.width = self.scrollView.frame.size.width - 32
-            
-            let subView = UIView(frame: self.frame)
-            
-            switch index {
-            case 0:
-                self.createSimpleTaskView(subView: subView)
-            case 1:
-                self.createAdvancedTaskView(subView: subView)
-            case 2:
-                self.createSettingsView(subView: subView)
-            default:
-                break
+    @objc func checkPermission() {
+        self.eventStore = EKEventStore()
+        self.eventStore.requestAccess(to: EKEntityType.reminder) { (granted, error) -> Void in
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dismissed"), object: nil)
+                self.dismiss(animated: true, completion: nil)
             }
         }
-        self.scrollView.isPagingEnabled = true
-        self.scrollView.contentSize = CGSize(width: (self.scrollView.frame.size.width - 32) * 3, height: self.scrollView.frame.size.height)
-        self.pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControlEvents.valueChanged)
     }
     
+    func checkForIntro() {
+        let defaults = UserDefaults.standard
+        let showIntro = defaults.bool(forKey: "showIntro")
+        
+        if !showIntro {
+            defaults.set(true, forKey: "showIntro")
+            self.numberOfPages = 4
+        }
+    }
     
     // MARK: Button actions.
+    
     @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dismissed"), object: nil)
         dismiss(animated: true, completion: nil)
     }
     
     @objc func backButtonPressed() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dismissed"), object: nil)
         dismiss(animated: true, completion: nil)
     }
     

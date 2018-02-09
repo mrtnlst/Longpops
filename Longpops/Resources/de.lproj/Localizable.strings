@@ -21,6 +21,8 @@
 "settings-label-haptic-save" = "Haptisches Feedback\nfür speichern\neiner Erinnerung";
 
 "permission-button-title" = "Einstellungen für Zugriff\nauf Erinnerungen öffnen!";
+"intro-permission-button-title" = "Erlaube Zugriff auf Erinnerungen";
+"permission-explanation-label" = "Longpops benötigt den Zugriff auf Erinnerungen, um neue zu erzeugen.";
 "intro-button-title" = "Intro wiederholen";
 
 "alert-title" =  "Ups … das geht nicht!";

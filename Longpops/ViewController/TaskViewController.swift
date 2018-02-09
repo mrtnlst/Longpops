@@ -45,29 +45,19 @@ class TaskViewController: TemplateViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.setupViews()
         self.setupConstraints()
-
-        self.eventStore = EKEventStore()
-        self.eventStore.requestAccess(to: EKEntityType.reminder) { (granted, error) -> Void in
-            if !granted{
-                DispatchQueue.main.async {
-                    self.createReminderButton.isEnabled = false
-                    self.titleTextField.isEnabled = false
-                    self.permissionButton.isHidden = false
-                }
-            }
-            else {
-                DispatchQueue.main.async {
-                    self.checkForIntro()
-                }
-            }
-        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(TaskViewController.checkPermission), name: NSNotification.Name(rawValue: "dismissed"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.titleTextField.becomeFirstResponder()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.checkForIntro()
     }
     
     override func setupViews() {
@@ -293,9 +283,24 @@ class TaskViewController: TemplateViewController {
         let showIntro = defaults.bool(forKey: "showIntro")
         
         if !showIntro {
-            defaults.set(true, forKey: "showIntro")
             let destinationController = IntroViewController()
             self.present(destinationController, animated: true, completion: nil)
+        }
+        else {
+            self.checkPermission()
+        }
+    }
+    
+    @objc func checkPermission() {
+        self.eventStore = EKEventStore()
+        self.eventStore.requestAccess(to: EKEntityType.reminder) { (granted, error) -> Void in
+            if !granted{
+                DispatchQueue.main.async {
+                    self.createReminderButton.isEnabled = false
+                    self.titleTextField.isEnabled = false
+                    self.permissionButton.isHidden = false
+                }
+            }
         }
     }
     
