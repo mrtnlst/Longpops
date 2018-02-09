@@ -293,7 +293,9 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
             "permissionContainerView": permissionContainerView,
             ]
         
-        let metricsDictionary: [String: Any] = [:]
+        let metricsDictionary: [String: Any] = [
+            "space": 20,
+                ]
         
         
         // permissionContainerView.
@@ -339,7 +341,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
                                                  multiplier: 1.0,
                                                  constant: 0.0))
         
-        permissionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[askPermissionButton]-(>=1)-|",
+        permissionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[askPermissionButton]-|",
                                                               options: [],
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
@@ -349,7 +351,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
         
-        permissionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[askPermissionButton]-[permissionExplanationLabel]-(>=1)-|",
+        permissionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[askPermissionButton]-(space)-[permissionExplanationLabel]-(>=1)-|",
                                                               options: [],
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
