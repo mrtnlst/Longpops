@@ -22,6 +22,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
     var pageControl: UIPageControl
     var eventStore: EKEventStore!
     var numberOfPages: CGFloat
+    var swipeDown: UISwipeGestureRecognizer
 
     override init() {
         self.pageControlContainer = UIView()
@@ -34,6 +35,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         self.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         self.pageControl = UIPageControl()
         self.numberOfPages = 3
+        self.swipeDown = UISwipeGestureRecognizer()
         
         super.init()
     }
@@ -44,11 +46,11 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupGestures()
         self.checkForIntro()
         self.setupViews()
         self.setupConstraints()
         self.setupPageControl()
-        self.setupGestures()
     }
     
     override func setupViews() {
@@ -87,9 +89,9 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
     }
     
     func setupGestures() {
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.handleGesture))
-        swipeDown.direction = .down
-        self.view.addGestureRecognizer(swipeDown)
+        self.swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.handleGesture))
+        self.swipeDown.direction = .down
+        self.view.addGestureRecognizer(self.swipeDown)
     }
     
     override func setupConstraints() {
@@ -127,7 +129,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
                 self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.pageControlContainer.bottomAnchor, multiplier: 1.0),
                 ])
         
-        self.pageControlContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[scrollView]-(margin)-|",
+        self.pageControlContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[scrollView]-|",
                                                                                     options: [],
                                                                                     metrics: metricsDictionary,
                                                                                     views: viewsDictionary))
@@ -166,14 +168,16 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
     
     func setupPageControl() {
         
+        let margin = LayoutHandler.getPageControlMargin()
+        
         for index in 0..<Int(numberOfPages) {
             
-            self.frame.origin.x = (self.scrollView.frame.size.width - 32) * CGFloat(index)
+            self.frame.origin.x = (self.scrollView.frame.size.width - margin) * CGFloat(index)
             self.frame.size.height = CGFloat(LayoutHandler.getIntroPageScrollViewHeightForDevice())
-            self.frame.size.width = self.scrollView.frame.size.width - 32
+            self.frame.size.width = self.scrollView.frame.size.width - margin
             
             let subView = UIView(frame: self.frame)
-                subView.backgroundColor = .blue
+
             switch index {
             case 0:
                 self.createSimpleTaskView(subView: subView)
@@ -188,7 +192,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
             }
         }
         self.scrollView.isPagingEnabled = true
-        self.scrollView.contentSize = CGSize(width: (self.scrollView.frame.size.width - 32) * numberOfPages, height: self.scrollView.frame.size.height)
+        self.scrollView.contentSize = CGSize(width: (self.scrollView.frame.size.width - margin) * numberOfPages, height: self.scrollView.frame.size.height)
         self.pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControlEvents.valueChanged)
     }
     
@@ -290,7 +294,8 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         
         let metricsDictionary: [String: Any] = [
             "space": 20,
-                ]
+            "bottomSpace": LayoutHandler.getPermissionIntroViewBottomHeightForDevice(),
+            ]
         
         subView.addConstraint(NSLayoutConstraint(item: askPermissionButton,
                                                  attribute: .centerX,
@@ -318,7 +323,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
         
-        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[askPermissionButton]-(space)-[permissionExplanationLabel]-|",
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[askPermissionButton]-(space)-[permissionExplanationLabel]-(bottomSpace)-|",
                                                               options: [],
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
@@ -342,7 +347,9 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         let showIntro = defaults.bool(forKey: "showIntro")
         
         if !showIntro {
-//            defaults.set(true, forKey: "showIntro")
+            self.backButton.isHidden = true
+            self.swipeDown.isEnabled = false
+            defaults.set(true, forKey: "showIntro")
             self.numberOfPages = 4
         }
     }

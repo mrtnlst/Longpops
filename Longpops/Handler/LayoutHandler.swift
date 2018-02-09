@@ -44,16 +44,13 @@ class LayoutHandler {
         if type == deviceType.iPhoneSE {
            return 0.0
         }
-        if type == deviceType.iPhone6Plus {
-            return 3.0
-        }
-        if type == deviceType.iPhoneX {
-            return 2.0
+        if type == deviceType.iPhone6 {
+            return 1.0
         }
         if type == deviceType.iPad {
             return 5.0
         }
-        return 1.0
+        return 2.0
     }
     
     static func getSaveButtonSizeForDevice() -> Int {
@@ -125,6 +122,32 @@ class LayoutHandler {
             return 20
         }
         return 15
+    }
+    
+    static func getPermissionIntroViewBottomHeightForDevice() -> Int {
+        
+        let type = self.getDeviceSize()
+        
+        if type == deviceType.iPhoneSE {
+            return 40
+        }
+        if type == deviceType.iPhone6 {
+            return 80
+        }
+        if type == deviceType.iPhoneX {
+            return 160
+        }
+        
+        return 120
+    }
+    static func getPageControlMargin() -> CGFloat {
+        
+        let type = self.getDeviceSize()
+        
+        if type == deviceType.iPhone6Plus {
+            return 40
+        }
+        return 32
     }
     
     static func getIntroPageScrollViewHeightForDevice() -> Int {
