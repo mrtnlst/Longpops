@@ -127,7 +127,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
                 self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.pageControlContainer.bottomAnchor, multiplier: 1.0),
                 ])
         
-        self.pageControlContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[scrollView]-|",
+        self.pageControlContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[scrollView]-(margin)-|",
                                                                                     options: [],
                                                                                     metrics: metricsDictionary,
                                                                                     views: viewsDictionary))
@@ -173,7 +173,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
             self.frame.size.width = self.scrollView.frame.size.width - 32
             
             let subView = UIView(frame: self.frame)
-            
+                subView.backgroundColor = .blue
             switch index {
             case 0:
                 self.createSimpleTaskView(subView: subView)
@@ -267,91 +267,58 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
     
     func createPermissionIntroPage(subView: UIView) {
         
-        let permissionContainerView = UIView()
-        permissionContainerView.translatesAutoresizingMaskIntoConstraints = false
-        
         let permissionExplanationLabel = UILabel()
         permissionExplanationLabel.text = NSLocalizedString("permission-explanation-label", comment: "Permission explanation label.")
         permissionExplanationLabel.textColor = .white
         permissionExplanationLabel.textAlignment = .center
         permissionExplanationLabel.numberOfLines = 0
         permissionExplanationLabel.translatesAutoresizingMaskIntoConstraints = false
-        permissionContainerView.addSubview(permissionExplanationLabel)
+        subView.addSubview(permissionExplanationLabel)
         
         let askPermissionButton = LongpopsButton(title: NSLocalizedString("intro-permission-button-title",
                                                  comment: "Permission Button."))
         askPermissionButton.translatesAutoresizingMaskIntoConstraints = false
         askPermissionButton.addTarget(self, action: #selector(IntroViewController.checkPermission), for: .touchUpInside)
-        permissionContainerView.addSubview(askPermissionButton)
+        subView.addSubview(askPermissionButton)
         
-        subView.addSubview(permissionContainerView)
         self.scrollView.addSubview(subView)
         
         let viewsDictionary: [String: Any] = [
             "askPermissionButton": askPermissionButton,
             "permissionExplanationLabel": permissionExplanationLabel,
-            "permissionContainerView": permissionContainerView,
             ]
         
         let metricsDictionary: [String: Any] = [
             "space": 20,
                 ]
         
-        
-        // permissionContainerView.
-        
-        subView.addConstraint(NSLayoutConstraint(item: permissionContainerView,
-                                                                 attribute: .centerY,
-                                                                 relatedBy: .equal,
-                                                                 toItem: subView,
-                                                                 attribute: .centerY,
-                                                                 multiplier: 1.0,
-                                                                 constant: 0.0))
-        
-        subView.addConstraint(NSLayoutConstraint(item: permissionContainerView,
-                                                 attribute: .centerY,
+        subView.addConstraint(NSLayoutConstraint(item: askPermissionButton,
+                                                 attribute: .centerX,
                                                  relatedBy: .equal,
                                                  toItem: subView,
-                                                 attribute: .centerY,
+                                                 attribute: .centerX,
                                                  multiplier: 1.0,
                                                  constant: 0.0))
         
-        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[permissionContainerView]-(>=1)-|",
-                                                              options: [],
-                                                              metrics: metricsDictionary,
-                                                              views: viewsDictionary))
-        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[permissionContainerView]-(>=1)-|",
-                                                              options: [],
-                                                              metrics: metricsDictionary,
-                                                              views: viewsDictionary))
-        
-        permissionContainerView.addConstraint(NSLayoutConstraint(item: askPermissionButton,
+        subView.addConstraint(NSLayoutConstraint(item: permissionExplanationLabel,
                                                  attribute: .centerX,
                                                  relatedBy: .equal,
-                                                 toItem: permissionContainerView,
+                                                 toItem: subView,
                                                  attribute: .centerX,
                                                  multiplier: 1.0,
                                                  constant: 0.0))
         
-        permissionContainerView.addConstraint(NSLayoutConstraint(item: permissionExplanationLabel,
-                                                 attribute: .centerX,
-                                                 relatedBy: .equal,
-                                                 toItem: permissionContainerView,
-                                                 attribute: .centerX,
-                                                 multiplier: 1.0,
-                                                 constant: 0.0))
-        
-        permissionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[askPermissionButton]-|",
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[askPermissionButton]-|",
                                                               options: [],
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
         
-        permissionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[permissionExplanationLabel]-(>=1)-|",
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[permissionExplanationLabel]-(>=1)-|",
                                                               options: [],
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
         
-        permissionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[askPermissionButton]-(space)-[permissionExplanationLabel]-(>=1)-|",
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[askPermissionButton]-(space)-[permissionExplanationLabel]-|",
                                                               options: [],
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
@@ -375,7 +342,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         let showIntro = defaults.bool(forKey: "showIntro")
         
         if !showIntro {
-            defaults.set(true, forKey: "showIntro")
+//            defaults.set(true, forKey: "showIntro")
             self.numberOfPages = 4
         }
     }

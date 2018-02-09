@@ -134,10 +134,10 @@ class LayoutHandler {
         if type == deviceType.iPhoneSE{
             return 250
         }
-        if type == deviceType.iPhone6Plus{
-            return 400
+        if type == deviceType.iPhone6{
+            return 300
         }
-        return 300
+        return 400
     }
     
     static func getIntroImageSizeForDevice() -> (Int, Int) {
