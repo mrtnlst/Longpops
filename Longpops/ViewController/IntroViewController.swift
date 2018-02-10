@@ -271,59 +271,66 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
     
     func createPermissionIntroPage(subView: UIView) {
         
+        let permissionContainerView = UIView()
+        permissionContainerView.translatesAutoresizingMaskIntoConstraints = false
+        
         let permissionExplanationLabel = UILabel()
         permissionExplanationLabel.text = NSLocalizedString("permission-explanation-label", comment: "Permission explanation label.")
         permissionExplanationLabel.textColor = .white
         permissionExplanationLabel.textAlignment = .center
         permissionExplanationLabel.numberOfLines = 0
         permissionExplanationLabel.translatesAutoresizingMaskIntoConstraints = false
-        subView.addSubview(permissionExplanationLabel)
+        permissionContainerView.addSubview(permissionExplanationLabel)
         
         let askPermissionButton = LongpopsButton(title: NSLocalizedString("intro-permission-button-title",
                                                  comment: "Permission Button."))
         askPermissionButton.translatesAutoresizingMaskIntoConstraints = false
         askPermissionButton.addTarget(self, action: #selector(IntroViewController.checkPermission), for: .touchUpInside)
-        subView.addSubview(askPermissionButton)
+        permissionContainerView.addSubview(askPermissionButton)
+        
+        subView.addSubview(permissionContainerView)
         
         self.scrollView.addSubview(subView)
         
         let viewsDictionary: [String: Any] = [
             "askPermissionButton": askPermissionButton,
             "permissionExplanationLabel": permissionExplanationLabel,
+            "permissionContainerView": permissionContainerView,
             ]
         
         let metricsDictionary: [String: Any] = [
             "space": 20,
-            "bottomSpace": LayoutHandler.getPermissionIntroViewBottomHeightForDevice(),
             ]
         
-        subView.addConstraint(NSLayoutConstraint(item: askPermissionButton,
-                                                 attribute: .centerX,
-                                                 relatedBy: .equal,
-                                                 toItem: subView,
-                                                 attribute: .centerX,
-                                                 multiplier: 1.0,
-                                                 constant: 0.0))
+        subView.addConstraint(NSLayoutConstraint(item: permissionContainerView,
+                                                                 attribute: .centerY,
+                                                                 relatedBy: .equal,
+                                                                 toItem: subView,
+                                                                 attribute: .centerY,
+                                                                 multiplier: 1.0,
+                                                                 constant: 0.0))
         
-        subView.addConstraint(NSLayoutConstraint(item: permissionExplanationLabel,
-                                                 attribute: .centerX,
-                                                 relatedBy: .equal,
-                                                 toItem: subView,
-                                                 attribute: .centerX,
-                                                 multiplier: 1.0,
-                                                 constant: 0.0))
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[permissionContainerView]|",
+                                                                              options: [],
+                                                                              metrics: metricsDictionary,
+                                                                              views: viewsDictionary))
         
-        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[askPermissionButton]-|",
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[permissionContainerView]-(>=1)-|",
                                                               options: [],
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
         
-        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[permissionExplanationLabel]-(>=1)-|",
+        permissionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[askPermissionButton]-|",
                                                               options: [],
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
         
-        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[askPermissionButton]-(space)-[permissionExplanationLabel]-(bottomSpace)-|",
+        permissionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[permissionExplanationLabel]-|",
+                                                              options: [],
+                                                              metrics: metricsDictionary,
+                                                              views: viewsDictionary))
+        
+        permissionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[askPermissionButton]-(space)-[permissionExplanationLabel]-|",
                                                               options: [],
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))

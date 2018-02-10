@@ -123,23 +123,7 @@ class LayoutHandler {
         }
         return 15
     }
-    
-    static func getPermissionIntroViewBottomHeightForDevice() -> Int {
-        
-        let type = self.getDeviceSize()
-        
-        if type == deviceType.iPhoneSE {
-            return 40
-        }
-        if type == deviceType.iPhone6 {
-            return 80
-        }
-        if type == deviceType.iPhoneX {
-            return 160
-        }
-        
-        return 120
-    }
+
     static func getPageControlMargin() -> CGFloat {
         
         let type = self.getDeviceSize()
