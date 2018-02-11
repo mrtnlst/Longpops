@@ -18,7 +18,6 @@ class TaskViewController: TemplateViewController {
     var titleTextField: UITextField
     var createReminderButton: UIButton
     var createReminderButtonCenterX: NSLayoutConstraint
-    var successLabel: UILabel
     var permissionButton: UIButton
     var infoButton: UIButton
     var settingsButton: UIButton
@@ -32,7 +31,6 @@ class TaskViewController: TemplateViewController {
         self.titleTextField = UITextField()
         self.createReminderButton = UIButton()
         self.createReminderButtonCenterX = NSLayoutConstraint()
-        self.successLabel = UILabel()
         self.permissionButton = UIButton(type: .system)
         self.infoButton = UIButton(type: .system)
         self.settingsButton = UIButton(type: .system)
@@ -81,13 +79,6 @@ class TaskViewController: TemplateViewController {
         self.titleTextField.tag = 0
         self.textFieldContainerView.addSubview(self.titleTextField)
         
-        self.successLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.successLabel.text = NSLocalizedString("success-label", comment: "Permission button.")
-        self.successLabel.textColor = .white
-        self.successLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        self.successLabel.alpha = 0
-        self.buttonContainerView.addSubview(self.successLabel)
-        
         self.createReminderButton.setImage(UIImage(named: "SaveButton"), for: .normal)
         self.createReminderButton.layer.shadowColor = UIColor.black.cgColor
         self.createReminderButton.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -129,7 +120,6 @@ class TaskViewController: TemplateViewController {
             "descriptionLabel": self.descriptionLabel,
             "titleTextField": self.titleTextField,
             "createReminderButton": self.createReminderButton,
-            "successLabel": self.successLabel,
             "permissionButton": self.permissionButton,
             "infoButton": self.infoButton,
             "settingsButton": self.settingsButton,
@@ -188,24 +178,6 @@ class TaskViewController: TemplateViewController {
                                                                                views: viewsDictionary))
         
         self.buttonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[createReminderButton(createReminderButtonHeight)]-|",
-                                                                               options: [],
-                                                                               metrics: metricsDictionary,
-                                                                               views: viewsDictionary))
-        
-        self.buttonContainerView.addConstraint(NSLayoutConstraint(item: self.successLabel,
-                                                                  attribute: .centerX,
-                                                                  relatedBy: .equal,
-                                                                  toItem: self.buttonContainerView,
-                                                                  attribute: .centerX,
-                                                                  multiplier: 1.0,
-                                                                  constant: 0.0))
-        
-        self.buttonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[successLabel]-(>=1)-|",
-                                                                               options: [],
-                                                                               metrics: metricsDictionary,
-                                                                               views: viewsDictionary))
-        
-        self.buttonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[successLabel]-|",
                                                                                options: [],
                                                                                metrics: metricsDictionary,
                                                                                views: viewsDictionary))
