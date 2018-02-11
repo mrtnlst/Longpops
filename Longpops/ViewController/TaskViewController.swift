@@ -43,8 +43,6 @@ class TaskViewController: TemplateViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupViews()
-        self.setupConstraints()
         
         NotificationCenter.default.addObserver(self, selector: #selector(TaskViewController.checkPermission), name: NSNotification.Name(rawValue: "dismissed"), object: nil)
     }

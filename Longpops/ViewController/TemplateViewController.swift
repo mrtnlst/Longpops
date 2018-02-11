@@ -34,8 +34,6 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createBackgroundGradient()
-        self.setupViews()
-        self.setupConstraints()
     }
     
     func setupViews() {
