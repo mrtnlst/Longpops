@@ -152,7 +152,6 @@ class TaskViewController: TemplateViewController {
         }
         
         // MARK: Heading Constraints
-        
         self.headingContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[settingsButton(menuButton)]-(>=1)-[headingLabel]-(>=1)-[infoButton(menuButton)]-|",
                                                                                 options: .alignAllLastBaseline,
                                                                                 metrics: metricsDictionary,

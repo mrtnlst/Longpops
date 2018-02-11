@@ -160,20 +160,13 @@ class SettingsViewController: TemplateViewController {
                                                                                views: viewsDictionary))
        
         // showIntro Button.
-        self.showIntroButtonContainerView.addConstraint(NSLayoutConstraint(item: self.showIntroButton,
-                                                                      attribute: .centerX,
-                                                                      relatedBy: .equal,
-                                                                      toItem: self.showIntroButtonContainerView,
-                                                                      attribute: .centerX,
-                                                                      multiplier: 1.0,
-                                                                      constant: 0.0))
         
         self.showIntroButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[showIntroButton]-|",
                                                                                 options: [],
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
         
-        self.showIntroButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[showIntroButton]-(>=1)-|",
+        self.showIntroButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[showIntroButton]-|",
                                                                                 options: [],
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
