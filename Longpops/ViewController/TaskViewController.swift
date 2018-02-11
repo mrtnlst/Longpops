@@ -181,21 +181,13 @@ class TaskViewController: TemplateViewController {
                                                                                views: viewsDictionary))
         
         // MARK: Permission Button Constraints
-        
-        self.permissionButtonContainerView.addConstraint(NSLayoutConstraint(item: self.permissionButton,
-                                                                            attribute: .centerX,
-                                                                            relatedBy: .equal,
-                                                                            toItem: self.permissionButtonContainerView,
-                                                                            attribute: .centerX,
-                                                                            multiplier: 1.0,
-                                                                            constant: 0.0))
-        
+
         self.permissionButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[permissionButton]-|",
                                                                                          options: [],
                                                                                          metrics: metricsDictionary,
                                                                                          views: viewsDictionary))
         
-        self.permissionButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[permissionButton]-(>=1)-|",
+        self.permissionButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[permissionButton]-|",
                                                                                          options: [],
                                                                                          metrics: metricsDictionary,
                                                                                          views: viewsDictionary))
