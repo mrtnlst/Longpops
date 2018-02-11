@@ -21,7 +21,7 @@ class TaskViewController: TemplateViewController {
     var permissionButton: UIButton
     var infoButton: UIButton
     var settingsButton: UIButton
-    var eventStore: EKEventStore!
+    var eventStore: EKEventStore
     
     override init() {
         self.textFieldContainerView = UIView()
@@ -34,6 +34,8 @@ class TaskViewController: TemplateViewController {
         self.permissionButton = UIButton(type: .system)
         self.infoButton = UIButton(type: .system)
         self.settingsButton = UIButton(type: .system)
+        self.eventStore = EKEventStore()
+
         super.init()
     }
     
@@ -253,7 +255,6 @@ class TaskViewController: TemplateViewController {
     }
     
     @objc func checkPermission() {
-        self.eventStore = EKEventStore()
         self.eventStore.requestAccess(to: EKEntityType.reminder) { (granted, error) -> Void in
             if !granted{
                 DispatchQueue.main.async {
