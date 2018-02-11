@@ -294,7 +294,7 @@ class TaskViewController: TemplateViewController {
             try self.eventStore.save(reminder, commit: true)
             print("Saved")
         }
-        catch {
+        catch let error {
             print("Error creating and saving new reminder : \(error)")
         }
     }
