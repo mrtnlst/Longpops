@@ -239,7 +239,7 @@ class TaskViewController: TemplateViewController {
         saveNewReminder(stickyText: self.titleTextField.text!)
         
         self.titleTextField.text = ""
-        beginSuccessAnimation()
+        AnimationHandler.beginSuccessAnimation(createReminderButton: self.createReminderButton)
     }
     
     @objc func permissionButtonPressed() {
@@ -302,26 +302,6 @@ class TaskViewController: TemplateViewController {
                 }
             }
         }
-    }
-    
-    // MARK: Button Animations
-    
-    func beginSuccessAnimation() {
-        self.createReminderButtonCenterX.constant = -1 * (self.successLabel.frame.width / 2 + 35)
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            self.view.layoutIfNeeded()
-            self.successLabel.alpha = 1.0
-        }, completion: {(true) in self.endSuccessAnimation()})
-    }
-    
-    func endSuccessAnimation() {
-        self.createReminderButtonCenterX.constant = 0
-        
-        UIView.animate(withDuration: 0.5, delay: 0.5, animations:{
-            self.view.layoutIfNeeded()
-            self.successLabel.alpha = 0
-        })
     }
     
     // MARK: Create Reminder

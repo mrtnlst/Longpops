@@ -22,11 +22,11 @@
 		5BB7A76C201518CE00EF2A54 /* TextInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB7A76B201518CE00EF2A54 /* TextInputHandler.swift */; };
 		5BB7A76E2016527200EF2A54 /* DateTimeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB7A76D2016527200EF2A54 /* DateTimeHandler.swift */; };
 		5BE6EF30200B676700AE14F2 /* TemplateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE6EF2F200B676700AE14F2 /* TemplateViewController.swift */; };
+		5BE859C92030624900D1C8EC /* AnimationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE859C82030624900D1C8EC /* AnimationHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5B18861C201E3BEE00CC7669 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5B18861E201E3C3100CC7669 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5B18861F201E3C3100CC7669 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5B4C821820275D84008A4C96 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		5B4C821C2028C633008A4C96 /* LongpopsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LongpopsButton.swift; path = Longpops/Model/LongpopsButton.swift; sourceTree = SOURCE_ROOT; };
@@ -44,6 +44,7 @@
 		5BB7A76B201518CE00EF2A54 /* TextInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextInputHandler.swift; path = Longpops/Handler/TextInputHandler.swift; sourceTree = SOURCE_ROOT; };
 		5BB7A76D2016527200EF2A54 /* DateTimeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DateTimeHandler.swift; path = Longpops/Handler/DateTimeHandler.swift; sourceTree = SOURCE_ROOT; };
 		5BE6EF2F200B676700AE14F2 /* TemplateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateViewController.swift; sourceTree = "<group>"; };
+		5BE859C82030624900D1C8EC /* AnimationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +61,7 @@
 		5B0C376B201E3420000843F5 /* Handler */ = {
 			isa = PBXGroup;
 			children = (
+				5BE859C82030624900D1C8EC /* AnimationHandler.swift */,
 				5BB7A76B201518CE00EF2A54 /* TextInputHandler.swift */,
 				5BB7A76D2016527200EF2A54 /* DateTimeHandler.swift */,
 				5B61547520237BC100F65E5B /* LayoutHandler.swift */,
@@ -209,6 +211,7 @@
 				5BE6EF30200B676700AE14F2 /* TemplateViewController.swift in Sources */,
 				5BB7A76C201518CE00EF2A54 /* TextInputHandler.swift in Sources */,
 				5BB7A76A2014BEDB00EF2A54 /* AdvancedTaskViewController.swift in Sources */,
+				5BE859C92030624900D1C8EC /* AnimationHandler.swift in Sources */,
 				5B4C821920275D84008A4C96 /* IntroViewController.swift in Sources */,
 				5BB187D21FB87A6000AB3ABA /* AppDelegate.swift in Sources */,
 				5BB7A7662013E25C00EF2A54 /* SettingsViewController.swift in Sources */,
@@ -231,7 +234,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				5BB187DB1FB87A6000AB3ABA /* Base */,
-				5B18861E201E3C3100CC7669 /* de */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

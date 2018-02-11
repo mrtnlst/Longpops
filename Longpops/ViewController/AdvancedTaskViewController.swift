@@ -492,11 +492,10 @@ class AdvancedTaskViewController: TaskViewController {
             return
         }
         
-        self.saveAdvancedReminder(date: isDateTimeValid.1)
+//        self.saveAdvancedReminder(date: isDateTimeValid.1)
         self.resetTextFields()
         self.titleTextField.becomeFirstResponder()
-        self.beginSuccessAnimation()
-        
+        AnimationHandler.beginSuccessAnimation(createReminderButton: self.createReminderButton)
         self.giveHapticFeedbackOnSave()
     }
     
