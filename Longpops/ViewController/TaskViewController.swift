@@ -199,10 +199,15 @@ class TaskViewController: TemplateViewController {
     @objc func saveSticky() {
         
         // Create new Reminders item.
-        saveNewReminder(stickyText: self.titleTextField.text!)
+        self.saveNewReminder(stickyText: self.titleTextField.text!)
         
+        self.disableButtonInteractionWhileAnimating()
         self.titleTextField.text = ""
-        AnimationHandler.beginSuccessAnimation(createReminderButton: self.createReminderButton)
+        self.giveHapticFeedbackOnSave()
+        
+        AnimationHandler.beginSuccessAnimation(createReminderButton: self.createReminderButton, forwardEnableUserInteraction: { () -> Void in
+            self.enableButtonInteractionAfterAnimating()
+        })
     }
     
     @objc func permissionButtonPressed() {
@@ -235,8 +240,27 @@ class TaskViewController: TemplateViewController {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.saveSticky()
+        
+        // Check if animation is in progress.
+        if self.createReminderButton.isUserInteractionEnabled {
+            self.saveSticky()
+        }
         return true
+    }
+    
+    func giveHapticFeedbackOnSave() {
+        if #available(iOS 10.0, *) {
+            let impact = UIImpactFeedbackGenerator(style: .medium)
+            impact.impactOccurred()
+        }
+    }
+    
+    func disableButtonInteractionWhileAnimating() {
+        self.createReminderButton.isUserInteractionEnabled = false
+    }
+    
+    func enableButtonInteractionAfterAnimating() {
+        self.createReminderButton.isUserInteractionEnabled = true
     }
     
     // MARK: Show Intro

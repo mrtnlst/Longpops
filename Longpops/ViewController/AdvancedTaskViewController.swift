@@ -494,8 +494,13 @@ class AdvancedTaskViewController: TaskViewController {
         
         self.saveAdvancedReminder(date: isDateTimeValid.1)
         self.resetTextFields()
+        self.disableButtonInteractionWhileAnimating()
+        
         self.titleTextField.becomeFirstResponder()
-        AnimationHandler.beginSuccessAnimation(createReminderButton: self.createReminderButton)
+        
+        AnimationHandler.beginSuccessAnimation(createReminderButton: self.createReminderButton, forwardEnableUserInteraction: { () -> Void in
+            self.enableButtonInteractionAfterAnimating()
+        })
         self.giveHapticFeedbackOnSave()
     }
     
@@ -559,6 +564,17 @@ class AdvancedTaskViewController: TaskViewController {
         }
     }
     
+    override func disableButtonInteractionWhileAnimating() {
+        super.disableButtonInteractionWhileAnimating()
+        self.inputToolbar.isUserInteractionEnabled = false
+    }
+    
+    override func enableButtonInteractionAfterAnimating() {
+        super.enableButtonInteractionAfterAnimating()
+        self.inputToolbar.isUserInteractionEnabled = true
+
+    }
+    
     @objc func updateDateTimePlaceHolder() {
         self.hoursTextField.placeholder = DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0)
         self.minutesTextField.placeholder = DateTimeHandler.getMinuteString(minute: DateTimeHandler.getCurrentTime().1)
@@ -577,13 +593,6 @@ class AdvancedTaskViewController: TaskViewController {
         self.dateTimer.invalidate()
         self.countdownTimer.invalidate()
         print("Timers invalidated.")
-    }
-    
-    func giveHapticFeedbackOnSave() {
-        if #available(iOS 10.0, *) {
-            let impact = UIImpactFeedbackGenerator(style: .medium)
-            impact.impactOccurred()
-        }
     }
     
     func giveHapticFeedbackOnJump() {

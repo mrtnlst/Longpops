@@ -57,6 +57,7 @@ class SimpleTaskViewController: TaskViewController {
                                                                                   views: viewsDictionary))
         
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }

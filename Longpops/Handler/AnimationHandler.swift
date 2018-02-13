@@ -10,9 +10,7 @@ import UIKit
 
 class AnimationHandler {
     
-    static func beginSuccessAnimation(createReminderButton: UIButton) {
-        
-        createReminderButton.isUserInteractionEnabled = false
+    static func beginSuccessAnimation(createReminderButton: UIButton, forwardEnableUserInteraction: @escaping () -> ()) {
         
         UIView.animate(withDuration: 0.5) {
             createReminderButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
@@ -28,10 +26,14 @@ class AnimationHandler {
                           duration: 0.75,
                           options: .transitionCrossDissolve,
                           animations: {createReminderButton.setImage(UIImage(named: "SuccessButton"), for: .normal)},
-                          completion:  {(true) in self.endSuccessAnimation(createReminderButton: createReminderButton)})
+                          completion:  {(true) in
+                            self.endSuccessAnimation(createReminderButton: createReminderButton, enableButtonInteraction: { () -> Void in
+                                forwardEnableUserInteraction()
+                            })
+        })
     }
     
-    static func endSuccessAnimation(createReminderButton: UIButton) {
+    static func endSuccessAnimation(createReminderButton: UIButton, enableButtonInteraction: @escaping () -> ()) {
         
         UIView.animate(withDuration: 0.75, delay: 0.5, options: .curveEaseInOut, animations: {
             UIView.transition(with: createReminderButton as UIView,
@@ -49,6 +51,7 @@ class AnimationHandler {
                        delay: 0.25,
                        options: .curveEaseInOut,
                        animations: {createReminderButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)},
-                       completion: {(true) in createReminderButton.isUserInteractionEnabled = true})
+                       completion: {(true) in enableButtonInteraction()
+        })
     }
 }
