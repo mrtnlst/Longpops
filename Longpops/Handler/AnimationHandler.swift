@@ -12,6 +12,8 @@ class AnimationHandler {
     
     static func beginSuccessAnimation(createReminderButton: UIButton) {
         
+        createReminderButton.isUserInteractionEnabled = false
+        
         UIView.animate(withDuration: 0.5) {
             createReminderButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         }
@@ -47,6 +49,6 @@ class AnimationHandler {
                        delay: 0.25,
                        options: .curveEaseInOut,
                        animations: {createReminderButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)},
-                       completion: nil)
+                       completion: {(true) in createReminderButton.isUserInteractionEnabled = true})
     }
 }
