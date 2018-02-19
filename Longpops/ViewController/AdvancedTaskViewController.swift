@@ -323,11 +323,6 @@ class AdvancedTaskViewController: TaskViewController {
         }
     }
     
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        textField.inputAccessoryView = inputToolbar
-        return true
-    }
-    
     // MARK: Keyboard Actions
     
     @objc func keyboardForwardButton() {
