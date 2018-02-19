@@ -11,6 +11,8 @@
 		5B4C821920275D84008A4C96 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4C821820275D84008A4C96 /* IntroViewController.swift */; };
 		5B4C821D2028C633008A4C96 /* LongpopsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4C821C2028C633008A4C96 /* LongpopsButton.swift */; };
 		5B61547620237BC100F65E5B /* LayoutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B61547520237BC100F65E5B /* LayoutHandler.swift */; };
+		5B85E0EF203AE359002AC7E2 /* ReminderListHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B85E0EE203AE359002AC7E2 /* ReminderListHandler.swift */; };
+		5B85E0F1203B3613002AC7E2 /* ReminderListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B85E0F0203B3613002AC7E2 /* ReminderListButton.swift */; };
 		5BB187D21FB87A6000AB3ABA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB187D11FB87A6000AB3ABA /* AppDelegate.swift */; };
 		5BB187D41FB87A6000AB3ABA /* SimpleTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB187D31FB87A6000AB3ABA /* SimpleTaskViewController.swift */; };
 		5BB187D91FB87A6000AB3ABA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BB187D81FB87A6000AB3ABA /* Assets.xcassets */; };
@@ -31,6 +33,8 @@
 		5B4C821820275D84008A4C96 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		5B4C821C2028C633008A4C96 /* LongpopsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LongpopsButton.swift; path = Longpops/Model/LongpopsButton.swift; sourceTree = SOURCE_ROOT; };
 		5B61547520237BC100F65E5B /* LayoutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LayoutHandler.swift; path = Longpops/Handler/LayoutHandler.swift; sourceTree = SOURCE_ROOT; };
+		5B85E0EE203AE359002AC7E2 /* ReminderListHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListHandler.swift; sourceTree = "<group>"; };
+		5B85E0F0203B3613002AC7E2 /* ReminderListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReminderListButton.swift; path = Longpops/Model/ReminderListButton.swift; sourceTree = SOURCE_ROOT; };
 		5BB187CE1FB87A6000AB3ABA /* Longpops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Longpops.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BB187D11FB87A6000AB3ABA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BB187D31FB87A6000AB3ABA /* SimpleTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTaskViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +69,7 @@
 				5BB7A76B201518CE00EF2A54 /* TextInputHandler.swift */,
 				5BB7A76D2016527200EF2A54 /* DateTimeHandler.swift */,
 				5B61547520237BC100F65E5B /* LayoutHandler.swift */,
+				5B85E0EE203AE359002AC7E2 /* ReminderListHandler.swift */,
 			);
 			path = Handler;
 			sourceTree = "<group>";
@@ -73,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				5B4C821C2028C633008A4C96 /* LongpopsButton.swift */,
+				5B85E0F0203B3613002AC7E2 /* ReminderListButton.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -212,6 +218,8 @@
 				5BB7A76C201518CE00EF2A54 /* TextInputHandler.swift in Sources */,
 				5BB7A76A2014BEDB00EF2A54 /* AdvancedTaskViewController.swift in Sources */,
 				5BE859C92030624900D1C8EC /* AnimationHandler.swift in Sources */,
+				5B85E0EF203AE359002AC7E2 /* ReminderListHandler.swift in Sources */,
+				5B85E0F1203B3613002AC7E2 /* ReminderListButton.swift in Sources */,
 				5B4C821920275D84008A4C96 /* IntroViewController.swift in Sources */,
 				5BB187D21FB87A6000AB3ABA /* AppDelegate.swift in Sources */,
 				5BB7A7662013E25C00EF2A54 /* SettingsViewController.swift in Sources */,

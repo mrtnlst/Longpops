@@ -75,7 +75,6 @@ class AdvancedTaskViewController: TaskViewController {
         self.setupInputToolbar()
         
         self.headingLabel.text = "Longpops"
-        self.descriptionLabel.text =  NSLocalizedString("description-label-advancedtask", comment: "Description label")
         
         self.titleTextField.inputAccessoryView = inputToolbar
         self.titleTextField.autocorrectionType = .no

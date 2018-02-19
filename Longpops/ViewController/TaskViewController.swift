@@ -12,7 +12,8 @@ import EventKit
 class TaskViewController: TemplateViewController {
 
     var textFieldContainerView: UIView
-    var buttonContainerView: UIView
+    var createButtonContainerView: UIView
+    var reminderListButtonContainerView: UIView
     var permissionButtonContainerView: UIView
     
     var titleTextField: UITextField
@@ -21,12 +22,14 @@ class TaskViewController: TemplateViewController {
     var permissionButton: UIButton
     var infoButton: UIButton
     var settingsButton: UIButton
+    var reminderListButton: UIButton
     var eventStore: EKEventStore
     
     override init() {
         self.textFieldContainerView = UIView()
-        self.buttonContainerView = UIView()
+        self.createButtonContainerView = UIView()
         self.permissionButtonContainerView = UIView()
+        self.reminderListButtonContainerView = UIView()
         
         self.titleTextField = UITextField()
         self.createReminderButton = UIButton()
@@ -34,8 +37,9 @@ class TaskViewController: TemplateViewController {
         self.permissionButton = UIButton(type: .system)
         self.infoButton = UIButton(type: .system)
         self.settingsButton = UIButton(type: .system)
+        self.reminderListButton = UIButton()
         self.eventStore = EKEventStore()
-
+        
         super.init()
     }
     
@@ -64,11 +68,17 @@ class TaskViewController: TemplateViewController {
         self.textFieldContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.textFieldContainerView)
         
-        self.buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.buttonContainerView)
+        self.createButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.createButtonContainerView)
         
         self.permissionButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.permissionButtonContainerView)
+        
+        self.reminderListButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.reminderListButtonContainerView)
+        
+        self.descriptionLabel.removeFromSuperview()
+        self.descriptionContainerView.removeFromSuperview()
         
         self.titleTextField.translatesAutoresizingMaskIntoConstraints = false
         self.titleTextField.keyboardAppearance = .dark
@@ -85,7 +95,7 @@ class TaskViewController: TemplateViewController {
         self.createReminderButton.layer.shadowOpacity = 0.2
         self.createReminderButton.translatesAutoresizingMaskIntoConstraints = false
         self.createReminderButton.addTarget(self, action: #selector(TaskViewController.saveSticky), for: .touchUpInside)
-        self.buttonContainerView.addSubview(self.createReminderButton)
+        self.createButtonContainerView.addSubview(self.createReminderButton)
         
         self.permissionButton = LongpopsButton.init(title: NSLocalizedString("permission-button-title", comment: "Permission button."))
         self.permissionButton.translatesAutoresizingMaskIntoConstraints = false
@@ -104,17 +114,19 @@ class TaskViewController: TemplateViewController {
         self.settingsButton.addTarget(self, action: #selector(TaskViewController.settingsButtonPressed), for: .touchUpInside)
         self.settingsButton.tintColor = .white
         self.headingContainerView.addSubview(self.settingsButton)
+        
+        self.reminderListButton = ReminderListButton.init(title: "Add to: ")
+        self.reminderListButton.translatesAutoresizingMaskIntoConstraints = false
+        self.reminderListButton.addTarget(self, action: #selector(TaskViewController.reminderListButtonPressed), for: .touchUpInside)
+        self.reminderListButtonContainerView.addSubview(self.reminderListButton)
     }
     
     override func setupConstraints() {
         
-        super.setupConstraints()
-        
         let viewsDictionary: [String: Any] = [
             "headingContainerView": self.headingContainerView,
-            "descriptionContainerView": self.descriptionContainerView,
             "textFieldContainerView": self.textFieldContainerView,
-            "buttonContainerView": self.buttonContainerView,
+            "createButtonContainerView": self.createButtonContainerView,
             "permissionButtonContainerView": self.permissionButtonContainerView,
             "headingLabel": self.headingLabel,
             "descriptionLabel": self.descriptionLabel,
@@ -123,6 +135,7 @@ class TaskViewController: TemplateViewController {
             "permissionButton": self.permissionButton,
             "infoButton": self.infoButton,
             "settingsButton": self.settingsButton,
+            "reminderListButton": self.reminderListButton,
             ]
         
         let metricsDictionary: [String: Any] = [
@@ -133,50 +146,87 @@ class TaskViewController: TemplateViewController {
         
         let margins = view.layoutMarginsGuide
         NSLayoutConstraint.activate([
+            self.headingContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.headingContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            
             self.textFieldContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.textFieldContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
-            self.buttonContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            self.buttonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            self.reminderListButtonContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.reminderListButtonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            
+            self.createButtonContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.createButtonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
             self.permissionButtonContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.permissionButtonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
             ])
         
         if #available(iOS 11, *) {
+            let guide = view.safeAreaLayoutGuide
             NSLayoutConstraint.activate([
-                self.textFieldContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                self.headingContainerView.topAnchor.constraintEqualToSystemSpacingBelow(guide.topAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 
-                self.buttonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                self.textFieldContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 
-                self.permissionButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.buttonContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                self.reminderListButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                
+                self.createButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.reminderListButtonContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                
+                self.permissionButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.createButtonContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 ])
         }
         
         // MARK: Heading Constraints
+        
+        self.headingContainerView.addConstraint(NSLayoutConstraint(item: self.headingLabel,
+                                                                   attribute: .centerX,
+                                                                   relatedBy: .equal,
+                                                                   toItem: self.headingContainerView,
+                                                                   attribute: .centerX,
+                                                                   multiplier: 1.0,
+                                                                   constant: 0.0))
+        
         self.headingContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[settingsButton(menuButton)]-(>=1)-[headingLabel]-(>=1)-[infoButton(menuButton)]-|",
                                                                                 options: .alignAllLastBaseline,
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
+        
+        self.headingContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[headingLabel]-|",
+                                                                                options: [],
+                                                                                metrics: [:],
+                                                                                views: viewsDictionary))
+        
+        // MARK: Permission Button Constraints
+        
+        self.reminderListButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[reminderListButton]-|",
+                                                                                         options: [],
+                                                                                         metrics: metricsDictionary,
+                                                                                         views: viewsDictionary))
+        
+        self.reminderListButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[reminderListButton]-|",
+                                                                                         options: [],
+                                                                                         metrics: metricsDictionary,
+                                                                                         views: viewsDictionary))
         
         // MARK: Reminder Button Constraints
         
         self.createReminderButtonCenterX = NSLayoutConstraint(item: self.createReminderButton,
                                                               attribute: .centerX,
                                                               relatedBy: .equal,
-                                                              toItem: self.buttonContainerView,
+                                                              toItem: self.createButtonContainerView,
                                                               attribute: .centerX,
                                                               multiplier: 1.0,
                                                               constant: 0.0)
         
-        self.buttonContainerView.addConstraint(self.createReminderButtonCenterX)
+        self.createButtonContainerView.addConstraint(self.createReminderButtonCenterX)
         
-        self.buttonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[createReminderButton(createReminderButtonWidth)]-(>=1)-|",
+        self.createButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[createReminderButton(createReminderButtonWidth)]-(>=1)-|",
                                                                                options: [],
                                                                                metrics: metricsDictionary,
                                                                                views: viewsDictionary))
         
-        self.buttonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[createReminderButton(createReminderButtonHeight)]-|",
+        self.createButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[createReminderButton(createReminderButtonHeight)]-|",
                                                                                options: [],
                                                                                metrics: metricsDictionary,
                                                                                views: viewsDictionary))
@@ -239,6 +289,10 @@ class TaskViewController: TemplateViewController {
         self.present(settingsViewController, animated: true, completion: nil)
     }
     
+    @objc func reminderListButtonPressed() {
+        print("Pressed")
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         // Check if animation is in progress.
@@ -285,6 +339,15 @@ class TaskViewController: TemplateViewController {
                     self.createReminderButton.isEnabled = false
                     self.titleTextField.isEnabled = false
                     self.permissionButton.isHidden = false
+                }
+            }
+            else {
+                DispatchQueue.main.async {
+                    if let buttonTitle = self.reminderListButton.titleLabel?.text {
+                        let newTitle = buttonTitle + ReminderListHandler.getUserReminderList(eventStore: self.eventStore).title
+                        self.reminderListButton.setTitle(newTitle, for: .normal)
+                        self.reminderListButton.setNeedsLayout()
+                    }
                 }
             }
         }
