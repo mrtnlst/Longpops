@@ -14,20 +14,32 @@ class ReminderListHandler {
         return eventStore.calendars(for: .reminder)
     }
     
-    static func getUserReminderList(eventStore: EKEventStore) -> EKCalendar{
+    static func getUserReminderList(eventStore: EKEventStore) -> (EKCalendar, Int) {
         let defaults = UserDefaults.standard
         
-        let defaultList = defaults.object(forKey: "defaultList")
+        let defaultList = defaults.string(forKey: "defaultList")
         
         if defaultList == nil {
-            return eventStore.defaultCalendarForNewReminders()!
+            return (eventStore.defaultCalendarForNewReminders()!, 0)
         }
         
-        return defaultList as! EKCalendar
+        return compareDeviceAndUserLists(userList: defaultList!, eventStore: eventStore)
+    }
+    
+    static func compareDeviceAndUserLists(userList: String, eventStore: EKEventStore) -> (EKCalendar, Int) {
+        
+        let reminderLists = getDeviceReminderLists(eventStore: eventStore)
+        
+        for (index, list) in reminderLists.enumerated() {
+            if list.title == userList {
+                return (list, index)
+            }
+        }
+        return (eventStore.defaultCalendarForNewReminders()!, 0)
     }
     
     static func saveUserReminderList(list: EKCalendar) {
         let defaults = UserDefaults.standard
-        defaults.set(list, forKey: "defaultList")
+        defaults.set(list.title, forKey: "defaultList")
     }
 }

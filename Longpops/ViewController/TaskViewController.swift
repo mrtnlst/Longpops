@@ -87,7 +87,7 @@ class TaskViewController: TemplateViewController {
         self.createReminderButton.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.createReminderButton.layer.shadowOpacity = 0.2
         self.createReminderButton.translatesAutoresizingMaskIntoConstraints = false
-        self.createReminderButton.addTarget(self, action: #selector(TaskViewController.saveSticky), for: .touchUpInside)
+        self.createReminderButton.addTarget(self, action: #selector(TaskViewController.createReminderButtonPressed), for: .touchUpInside)
         self.createButtonContainerView.addSubview(self.createReminderButton)
         
         self.permissionButton = LongpopsButton.init(title: NSLocalizedString("permission-button-title", comment: "Permission button."))
@@ -217,7 +217,7 @@ class TaskViewController: TemplateViewController {
     
     // MARK: Button Actions
     
-    @objc func saveSticky() {
+    @objc func createReminderButtonPressed() {
         
         // Create new Reminders item.
         self.saveNewReminder(stickyText: self.titleTextField.text!)
@@ -264,7 +264,7 @@ class TaskViewController: TemplateViewController {
         
         // Check if animation is in progress.
         if self.createReminderButton.isUserInteractionEnabled {
-            self.saveSticky()
+            self.createReminderButtonPressed()
         }
         return true
     }

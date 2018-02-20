@@ -22,9 +22,8 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     var inputToolbar: UIToolbar
     var dateTimer: Timer
     var countdownTimer: Timer
-    
-    var data = ["1", "2", "3"]
-    var picker = UIPickerView()
+    var reminderListPicker: UIPickerView
+    var reminderLists: [EKCalendar]
     
     enum jumpDirection {
         case jumpForward
@@ -44,6 +43,8 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.inputToolbar = UIToolbar()
         self.dateTimer = Timer()
         self.countdownTimer = Timer()
+        self.reminderListPicker = UIPickerView()
+        self.reminderLists = []
         
         super.init()
     }
@@ -84,9 +85,10 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.titleTextField.inputAccessoryView = inputToolbar
         self.titleTextField.autocorrectionType = .no
         
-        picker.delegate = self
-        picker.dataSource = self
-        self.reminderListTextField.inputView = picker
+        self.reminderListPicker.delegate = self
+        self.reminderListPicker.dataSource = self
+        
+        self.reminderListTextField.inputView = reminderListPicker
         self.reminderListTextField.inputAccessoryView = inputToolbar
         
         self.hoursTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -152,9 +154,9 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.reminderListTextField.translatesAutoresizingMaskIntoConstraints = false
         self.reminderListTextField.backgroundColor = .white
         self.reminderListTextField.borderStyle = .roundedRect
-//        self.reminderListTextField.placeholder = NSLocalizedString("Add to", comment: "Permission button.")
         self.reminderListTextField.delegate = self
         self.reminderListTextField.tag = 6
+        self.reminderListTextField.tintColor = .clear
         self.textFieldContainerView.addSubview(self.reminderListTextField)
         
         self.colonLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -176,14 +178,14 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.textFieldContainerView.addSubview(self.dotLabel2)
     }
     
-    fileprivate func setupInputToolbar() {
+    func setupInputToolbar() {
         self.inputToolbar.barStyle = .blackTranslucent
         self.inputToolbar.sizeToFit()
         
         let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(AdvancedTaskViewController.saveSticky))
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(AdvancedTaskViewController.createReminderButtonPressed))
         doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .normal)
         doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .highlighted)
         doneButton.tintColor = UIColor.white
@@ -279,6 +281,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     }
     
     // MARK: TextField Actions
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
         // Allow backspace.
@@ -345,6 +348,52 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
             if TextInputHandler.getNumberOfDigits(string: textContent) > 0 {
                 textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
             }
+        }
+    }
+    
+    func disableTextFields() {
+        let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField, self.reminderListTextField]
+        
+        for textField in textFields {
+            textField.isEnabled = false
+        }
+    }
+    
+    func getActiveTextField() -> UITextField {
+        
+        let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField, self.reminderListTextField]
+        
+        var activeTextField = UITextField()
+        
+        for textField in textFields {
+            if textField.isFirstResponder {
+                activeTextField = textField
+                break
+            }
+        }
+        return activeTextField
+    }
+    
+    func getTextFieldValues() -> [Int]{
+        var values = [Int]()
+        let textFields = [self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
+        
+        for textField in textFields {
+            if let value = Int(textField.text!) {
+                values.append(value)
+            }
+            else {
+                values.append(Int(textField.placeholder!)!)
+            }
+        }
+        return values
+    }
+    
+    func resetTextFields() {
+        let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
+        
+        for textField in textFields {
+            textField.text = ""
         }
     }
     
@@ -422,7 +471,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.jumpToTextField(textField, direction: jumpDirection.jumpBackward)
     }
     
-    fileprivate func jumpToTextField(_ textField: UITextField, direction: jumpDirection) {
+    func jumpToTextField(_ textField: UITextField, direction: jumpDirection) {
         
         // Determine the next TextField to become active.
         var nextField: Int
@@ -459,13 +508,16 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return data.count
+        return self.reminderLists.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return data[row]
+        return self.reminderLists[row].title
     }
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.reminderListTextField.text = "Add to: " + self.reminderLists[row].title
+    }
     
     // MARK: Timers
     func startCountdownTimer() {
@@ -482,14 +534,34 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.dateTimer.fire()
     }
     
+    @objc func updateDateTimePlaceHolder() {
+        self.hoursTextField.placeholder = DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0)
+        self.minutesTextField.placeholder = DateTimeHandler.getMinuteString(minute: DateTimeHandler.getCurrentTime().1)
+        self.dayTextField.placeholder = DateTimeHandler.getDayString(day: DateTimeHandler.getCurrentDate().0)
+        self.monthTextField.placeholder = DateTimeHandler.getMonthString(month: DateTimeHandler.getCurrentDate().1)
+        self.yearTextField.placeholder = String(format: "%d", DateTimeHandler.getCurrentDate().2)
+    }
+    
+    @objc func willEnterForeground() {
+        self.updateDateTimePlaceHolder()
+        self.startCountdownTimer()
+        print("Timers activated.")
+    }
+    
+    @objc func didEnterBackground() {
+        self.dateTimer.invalidate()
+        self.countdownTimer.invalidate()
+        print("Timers invalidated.")
+    }
+    
     // Save Reminder
     
-    override func saveSticky() {
+    override func createReminderButtonPressed() {
         
         // Format last active textField if necessary.
         let activeTextField = self.getActiveTextField()
         
-        if activeTextField.tag != 0 {
+        if 1 ... 5 ~= activeTextField.tag  {
             if !TextInputHandler.isTextFieldEmtpy(textField: activeTextField) {
                 if !TextInputHandler.isDateComponentCorrect(textField: activeTextField) {
                     activeTextField.becomeFirstResponder()
@@ -527,12 +599,16 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
             return
         }
         
+        // Create reminder item and save reminder list.
         self.saveAdvancedReminder(date: isDateTimeValid.1)
-        self.resetTextFields()
-        self.disableButtonInteractionWhileAnimating()
+        ReminderListHandler.saveUserReminderList(list: self.reminderLists[self.reminderListPicker.selectedRow(inComponent: 0)])
         
+        // Reset textFields.
+        self.resetTextFields()
         self.titleTextField.becomeFirstResponder()
         
+        // Save animation.
+        self.disableButtonInteractionWhileAnimating()
         AnimationHandler.beginSuccessAnimation(createReminderButton: self.createReminderButton, forwardEnableUserInteraction: { () -> Void in
             self.enableButtonInteractionAfterAnimating()
         })
@@ -548,7 +624,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         reminder.title = self.titleTextField.text!
         reminder.dueDateComponents = components
         reminder.addAlarm(EKAlarm.init(absoluteDate: date))
-        reminder.calendar = self.eventStore.defaultCalendarForNewReminders()
+        reminder.calendar = self.reminderLists[self.reminderListPicker.selectedRow(inComponent: 0)]
         
         do {
             try self.eventStore.save(reminder, commit: true)
@@ -561,44 +637,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     
     // MARK: Helper Methods
     
-    func getActiveTextField() -> UITextField {
-        
-        let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField, self.reminderListTextField]
-        
-        var activeTextField = UITextField()
-        
-        for textField in textFields {
-            if textField.isFirstResponder {
-                activeTextField = textField
-                break
-            }
-        }
-        return activeTextField
-    }
-    
-    func getTextFieldValues() -> [Int]{
-        var values = [Int]()
-        let textFields = [self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
-        
-        for textField in textFields {
-            if let value = Int(textField.text!) {
-                values.append(value)
-            }
-            else {
-                values.append(Int(textField.placeholder!)!)
-            }
-        }
-        return values
-    }
-    
-    func resetTextFields() {
-        let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
-        
-        for textField in textFields {
-            textField.text = ""
-        }
-    }
-    
     override func disableButtonInteractionWhileAnimating() {
         super.disableButtonInteractionWhileAnimating()
         self.inputToolbar.isUserInteractionEnabled = false
@@ -607,35 +645,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     override func enableButtonInteractionAfterAnimating() {
         super.enableButtonInteractionAfterAnimating()
         self.inputToolbar.isUserInteractionEnabled = true
-
-    }
-    
-    @objc func updateDateTimePlaceHolder() {
-        self.hoursTextField.placeholder = DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0)
-        self.minutesTextField.placeholder = DateTimeHandler.getMinuteString(minute: DateTimeHandler.getCurrentTime().1)
-        self.dayTextField.placeholder = DateTimeHandler.getDayString(day: DateTimeHandler.getCurrentDate().0)
-        self.monthTextField.placeholder = DateTimeHandler.getMonthString(month: DateTimeHandler.getCurrentDate().1)
-        self.yearTextField.placeholder = String(format: "%d", DateTimeHandler.getCurrentDate().2)
-    }
-    
-    func disableTextFields() {
-        let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField, self.reminderListTextField]
-        
-        for textField in textFields {
-            textField.isEnabled = false
-        }
-    }
-    
-    @objc func willEnterForeground() {
-        self.updateDateTimePlaceHolder()
-        self.startCountdownTimer()
-        print("Timers activated.")
-    }
-    
-    @objc func didEnterBackground() {
-        self.dateTimer.invalidate()
-        self.countdownTimer.invalidate()
-        print("Timers invalidated.")
     }
     
     func giveHapticFeedbackOnJump() {
@@ -656,8 +665,11 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
             }
             else {
                 DispatchQueue.main.async {
-                    self.reminderListTextField.text = "Add to: " + ReminderListHandler.getUserReminderList(eventStore: self.eventStore).title
+                    let userList = ReminderListHandler.getUserReminderList(eventStore: self.eventStore)
+                    self.reminderListTextField.text = "Add to: " + userList.0.title
                     self.reminderListTextField.setNeedsLayout()
+                    self.reminderLists = ReminderListHandler.getDeviceReminderLists(eventStore: self.eventStore)
+                    self.reminderListPicker.selectRow(userList.1, inComponent: 0, animated: false)
                 }
             }
         }
