@@ -292,10 +292,6 @@ class TaskViewController: TemplateViewController {
         self.present(settingsViewController, animated: true, completion: nil)
     }
     
-    @objc func reminderListButtonPressed() {
-        print("Pressed")
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         // Check if animation is in progress.
