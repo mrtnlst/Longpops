@@ -8,7 +8,7 @@
 import UIKit
 import EventKit
 
-class AdvancedTaskViewController: TaskViewController {
+class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
     var hoursTextField: UITextField
     var minutesTextField: UITextField
@@ -21,6 +21,9 @@ class AdvancedTaskViewController: TaskViewController {
     var inputToolbar: UIToolbar
     var dateTimer: Timer
     var countdownTimer: Timer
+    
+    var data = ["1", "2", "3"]
+    var picker = UIPickerView()
     
     enum jumpDirection {
         case jumpForward
@@ -78,6 +81,11 @@ class AdvancedTaskViewController: TaskViewController {
         
         self.titleTextField.inputAccessoryView = inputToolbar
         self.titleTextField.autocorrectionType = .no
+        
+        picker.delegate = self
+        picker.dataSource = self
+        self.reminderListTextField.inputView = picker
+        self.reminderListTextField.inputAccessoryView = inputToolbar
         
         self.hoursTextField.translatesAutoresizingMaskIntoConstraints = false
         self.hoursTextField.backgroundColor = .white
@@ -266,6 +274,8 @@ class AdvancedTaskViewController: TaskViewController {
         switch textField {
         case self.titleTextField:
             return true
+        case self.reminderListTextField:
+            return true
         case self.yearTextField:
             if TextInputHandler.isStringAnInt(string: string) {
                 return true
@@ -329,7 +339,7 @@ class AdvancedTaskViewController: TaskViewController {
         let textField = self.getActiveTextField()
         
         // The titleTextField doesn't need formatting.
-        if textField.tag == 0 {
+        if textField.tag == 0 || textField.tag == 6 {
             self.jumpToTextField(textField, direction: jumpDirection.jumpForward)
             return
         }
@@ -365,7 +375,7 @@ class AdvancedTaskViewController: TaskViewController {
         let textField = self.getActiveTextField()
         
         // The titleTextField doesn't need formatting.
-        if textField.tag == 0 {
+        if textField.tag == 0 || textField.tag == 6 {
             self.jumpToTextField(textField, direction: jumpDirection.jumpBackward)
             return
         }
@@ -425,6 +435,21 @@ class AdvancedTaskViewController: TaskViewController {
         self.giveHapticFeedbackOnJump()
         return true
     }
+    
+    // MARK: UIPicker
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return data.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return data[row]
+    }
+    
     
     // MARK: Timers
     func startCountdownTimer() {
@@ -522,7 +547,7 @@ class AdvancedTaskViewController: TaskViewController {
     
     func getActiveTextField() -> UITextField {
         
-        let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
+        let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField, self.reminderListTextField]
         
         var activeTextField = UITextField()
         

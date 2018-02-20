@@ -13,7 +13,7 @@ class TaskViewController: TemplateViewController {
 
     var textFieldContainerView: UIView
     var createButtonContainerView: UIView
-    var reminderListButtonContainerView: UIView
+    var reminderListTextFieldContainerView: UIView
     var permissionButtonContainerView: UIView
     
     var titleTextField: UITextField
@@ -22,14 +22,14 @@ class TaskViewController: TemplateViewController {
     var permissionButton: UIButton
     var infoButton: UIButton
     var settingsButton: UIButton
-    var reminderListButton: UIButton
+    var reminderListTextField: UITextField
     var eventStore: EKEventStore
     
     override init() {
         self.textFieldContainerView = UIView()
         self.createButtonContainerView = UIView()
         self.permissionButtonContainerView = UIView()
-        self.reminderListButtonContainerView = UIView()
+        self.reminderListTextFieldContainerView = UIView()
         
         self.titleTextField = UITextField()
         self.createReminderButton = UIButton()
@@ -37,7 +37,7 @@ class TaskViewController: TemplateViewController {
         self.permissionButton = UIButton(type: .system)
         self.infoButton = UIButton(type: .system)
         self.settingsButton = UIButton(type: .system)
-        self.reminderListButton = UIButton()
+        self.reminderListTextField = UITextField()
         self.eventStore = EKEventStore()
         
         super.init()
@@ -74,8 +74,8 @@ class TaskViewController: TemplateViewController {
         self.permissionButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.permissionButtonContainerView)
         
-        self.reminderListButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.reminderListButtonContainerView)
+        self.reminderListTextFieldContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.reminderListTextFieldContainerView)
         
         self.descriptionLabel.removeFromSuperview()
         self.descriptionContainerView.removeFromSuperview()
@@ -115,10 +115,13 @@ class TaskViewController: TemplateViewController {
         self.settingsButton.tintColor = .white
         self.headingContainerView.addSubview(self.settingsButton)
         
-        self.reminderListButton = ReminderListButton.init(title: "Add to: ")
-        self.reminderListButton.translatesAutoresizingMaskIntoConstraints = false
-        self.reminderListButton.addTarget(self, action: #selector(TaskViewController.reminderListButtonPressed), for: .touchUpInside)
-        self.reminderListButtonContainerView.addSubview(self.reminderListButton)
+        self.reminderListTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.reminderListTextField.backgroundColor = .white
+        self.reminderListTextField.borderStyle = .roundedRect
+        self.reminderListTextField.placeholder = NSLocalizedString("Add to", comment: "Permission button.")
+        self.reminderListTextField.delegate = self
+        self.reminderListTextField.tag = 6
+        self.reminderListTextFieldContainerView.addSubview(self.reminderListTextField)
     }
     
     override func setupConstraints() {
@@ -135,7 +138,7 @@ class TaskViewController: TemplateViewController {
             "permissionButton": self.permissionButton,
             "infoButton": self.infoButton,
             "settingsButton": self.settingsButton,
-            "reminderListButton": self.reminderListButton,
+            "reminderListTextField": self.reminderListTextField,
             ]
         
         let metricsDictionary: [String: Any] = [
@@ -152,8 +155,8 @@ class TaskViewController: TemplateViewController {
             self.textFieldContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.textFieldContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
-            self.reminderListButtonContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            self.reminderListButtonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            self.reminderListTextFieldContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.reminderListTextFieldContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
             self.createButtonContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.createButtonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
@@ -169,9 +172,9 @@ class TaskViewController: TemplateViewController {
                 
                 self.textFieldContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 
-                self.reminderListButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                self.reminderListTextFieldContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 
-                self.createButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.reminderListButtonContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                self.createButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.reminderListTextFieldContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 
                 self.permissionButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.createButtonContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 ])
@@ -199,12 +202,12 @@ class TaskViewController: TemplateViewController {
         
         // MARK: Permission Button Constraints
         
-        self.reminderListButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[reminderListButton]-|",
+        self.reminderListTextFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[reminderListTextField]-|",
                                                                                          options: [],
                                                                                          metrics: metricsDictionary,
                                                                                          views: viewsDictionary))
         
-        self.reminderListButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[reminderListButton]-|",
+        self.reminderListTextFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[reminderListTextField]-|",
                                                                                          options: [],
                                                                                          metrics: metricsDictionary,
                                                                                          views: viewsDictionary))
@@ -343,10 +346,9 @@ class TaskViewController: TemplateViewController {
             }
             else {
                 DispatchQueue.main.async {
-                    if let buttonTitle = self.reminderListButton.titleLabel?.text {
-                        let newTitle = buttonTitle + ReminderListHandler.getUserReminderList(eventStore: self.eventStore).title
-                        self.reminderListButton.setTitle(newTitle, for: .normal)
-                        self.reminderListButton.setNeedsLayout()
+                    if let text = self.reminderListTextField.text {
+                        self.reminderListTextField.text = text + ReminderListHandler.getUserReminderList(eventStore: self.eventStore).title
+                        self.reminderListTextField.setNeedsLayout()
                     }
                 }
             }

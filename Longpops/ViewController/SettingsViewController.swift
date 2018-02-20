@@ -17,6 +17,7 @@ class SettingsViewController: TemplateViewController {
     var showIntroButton: UIButton
     var advancedTaskSwitch: UISwitch
     var advancedTaskLabel: UILabel
+    var hasSwitchBeenToggled: Bool
     
     override init() {
         self.backButtonContainerView = UIView()
@@ -26,6 +27,7 @@ class SettingsViewController: TemplateViewController {
         self.showIntroButton = UIButton()
         self.advancedTaskLabel = UILabel()
         self.advancedTaskSwitch = UISwitch()
+        self.hasSwitchBeenToggled = false
         
         super.init()
     }
@@ -203,6 +205,7 @@ class SettingsViewController: TemplateViewController {
     @objc func advancedTaskSwitchToggled() {
         let defaults = UserDefaults.standard
         defaults.set(self.advancedTaskSwitch.isOn, forKey: "advancedTask")
+        self.hasSwitchBeenToggled = true
     }
     
     @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
@@ -213,11 +216,13 @@ class SettingsViewController: TemplateViewController {
     
     fileprivate func changeRootViewControllerOnDismiss() {
         dismiss(animated: true, completion: {
-            if self.advancedTaskSwitch.isOn {
-                UIApplication.shared.delegate?.window??.rootViewController = AdvancedTaskViewController()
-            }
-            else {
-                UIApplication.shared.delegate?.window??.rootViewController = SimpleTaskViewController()
+            if self.hasSwitchBeenToggled {
+                if self.advancedTaskSwitch.isOn {
+                    UIApplication.shared.delegate?.window??.rootViewController = AdvancedTaskViewController()
+                }
+                else {
+                    UIApplication.shared.delegate?.window??.rootViewController = SimpleTaskViewController()
+                }
             }
         })
     }
