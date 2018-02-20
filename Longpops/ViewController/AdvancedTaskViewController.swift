@@ -24,6 +24,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     var countdownTimer: Timer
     var reminderListPicker: UIPickerView
     var reminderLists: [EKCalendar]
+    var inputContainerView: UIView
     
     enum jumpDirection {
         case jumpForward
@@ -45,6 +46,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.countdownTimer = Timer()
         self.reminderListPicker = UIPickerView()
         self.reminderLists = []
+        self.inputContainerView = UIView()
         
         super.init()
     }
@@ -87,7 +89,14 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         
         self.reminderListPicker.delegate = self
         self.reminderListPicker.dataSource = self
-        self.reminderListPicker.backgroundColor = .black
+        self.reminderListPicker.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.inputContainerView = UIView(frame: CGRect(x: self.reminderListPicker.frame.origin.x,
+                                                       y: self.reminderListPicker.frame.origin.y,
+                                                       width: UIScreen.main.bounds.width,
+                                                       height: self.reminderListPicker.frame.size.height))
+        self.inputViewBackground()
+        self.inputContainerView.addSubview(self.reminderListPicker)
         
         self.hoursTextField.translatesAutoresizingMaskIntoConstraints = false
         self.hoursTextField.backgroundColor = .white
@@ -155,7 +164,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.reminderListTextField.delegate = self
         self.reminderListTextField.tag = 6
         self.reminderListTextField.tintColor = .clear
-        self.reminderListTextField.inputView = reminderListPicker
+        self.reminderListTextField.inputView = self.inputContainerView
         self.reminderListTextField.inputAccessoryView = inputToolbar
         self.textFieldContainerView.addSubview(self.reminderListTextField)
         
@@ -214,6 +223,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
             "dotLabel1": self.dotLabel1,
             "dotLabel2": self.dotLabel2,
             "reminderListTextField": self.reminderListTextField,
+            "reminderListPicker": self.reminderListPicker,
             ]
         
         let metricsDictionary: [String: Any] = [
@@ -278,6 +288,23 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
+        
+        // InputContainerView constraints to center UIPicker.
+        self.inputContainerView.addConstraint(NSLayoutConstraint(item: self.reminderListPicker,
+                                                                   attribute: .centerX,
+                                                                   relatedBy: .equal,
+                                                                   toItem: self.inputContainerView,
+                                                                   attribute: .centerX,
+                                                                   multiplier: 1.0,
+                                                                   constant: 0.0))
+        
+        self.inputContainerView.addConstraint(NSLayoutConstraint(item: self.reminderListPicker,
+                                                                 attribute: .centerY,
+                                                                 relatedBy: .equal,
+                                                                 toItem: self.inputContainerView,
+                                                                 attribute: .centerY,
+                                                                 multiplier: 1.0,
+                                                                 constant: 0.0))
     }
     
     // MARK: TextField Actions
@@ -681,6 +708,18 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
             }
         }
     }
+    
+    func inputViewBackground() {
+        let bottomColor = UIColor(red:0.38, green:0.10, blue:0.19, alpha:1.0).cgColor
+        let topColor = UIColor(red:0.38, green:0.15, blue:0.15, alpha:1.0).cgColor
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.inputContainerView.frame
+        gradientLayer.colors = [topColor, bottomColor]
+        gradientLayer.locations = [0.1,1.0]
+        self.inputContainerView.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
