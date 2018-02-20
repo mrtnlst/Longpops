@@ -13,7 +13,6 @@ class TaskViewController: TemplateViewController {
 
     var textFieldContainerView: UIView
     var createButtonContainerView: UIView
-    var reminderListTextFieldContainerView: UIView
     var permissionButtonContainerView: UIView
     
     var titleTextField: UITextField
@@ -22,14 +21,12 @@ class TaskViewController: TemplateViewController {
     var permissionButton: UIButton
     var infoButton: UIButton
     var settingsButton: UIButton
-    var reminderListTextField: UITextField
     var eventStore: EKEventStore
     
     override init() {
         self.textFieldContainerView = UIView()
         self.createButtonContainerView = UIView()
         self.permissionButtonContainerView = UIView()
-        self.reminderListTextFieldContainerView = UIView()
         
         self.titleTextField = UITextField()
         self.createReminderButton = UIButton()
@@ -37,7 +34,6 @@ class TaskViewController: TemplateViewController {
         self.permissionButton = UIButton(type: .system)
         self.infoButton = UIButton(type: .system)
         self.settingsButton = UIButton(type: .system)
-        self.reminderListTextField = UITextField()
         self.eventStore = EKEventStore()
         
         super.init()
@@ -73,10 +69,7 @@ class TaskViewController: TemplateViewController {
         
         self.permissionButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.permissionButtonContainerView)
-        
-        self.reminderListTextFieldContainerView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.reminderListTextFieldContainerView)
-        
+    
         self.descriptionLabel.removeFromSuperview()
         self.descriptionContainerView.removeFromSuperview()
         
@@ -114,14 +107,7 @@ class TaskViewController: TemplateViewController {
         self.settingsButton.addTarget(self, action: #selector(TaskViewController.settingsButtonPressed), for: .touchUpInside)
         self.settingsButton.tintColor = .white
         self.headingContainerView.addSubview(self.settingsButton)
-        
-        self.reminderListTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.reminderListTextField.backgroundColor = .white
-        self.reminderListTextField.borderStyle = .roundedRect
-        self.reminderListTextField.placeholder = NSLocalizedString("Add to", comment: "Permission button.")
-        self.reminderListTextField.delegate = self
-        self.reminderListTextField.tag = 6
-        self.reminderListTextFieldContainerView.addSubview(self.reminderListTextField)
+
     }
     
     override func setupConstraints() {
@@ -138,7 +124,6 @@ class TaskViewController: TemplateViewController {
             "permissionButton": self.permissionButton,
             "infoButton": self.infoButton,
             "settingsButton": self.settingsButton,
-            "reminderListTextField": self.reminderListTextField,
             ]
         
         let metricsDictionary: [String: Any] = [
@@ -155,9 +140,6 @@ class TaskViewController: TemplateViewController {
             self.textFieldContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.textFieldContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
-            self.reminderListTextFieldContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            self.reminderListTextFieldContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
-            
             self.createButtonContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.createButtonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
@@ -172,9 +154,7 @@ class TaskViewController: TemplateViewController {
                 
                 self.textFieldContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 
-                self.reminderListTextFieldContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
-                
-                self.createButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.reminderListTextFieldContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                self.createButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 
                 self.permissionButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.createButtonContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 ])
@@ -199,18 +179,6 @@ class TaskViewController: TemplateViewController {
                                                                                 options: [],
                                                                                 metrics: [:],
                                                                                 views: viewsDictionary))
-        
-        // MARK: Permission Button Constraints
-        
-        self.reminderListTextFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[reminderListTextField]-|",
-                                                                                         options: [],
-                                                                                         metrics: metricsDictionary,
-                                                                                         views: viewsDictionary))
-        
-        self.reminderListTextFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[reminderListTextField]-|",
-                                                                                         options: [],
-                                                                                         metrics: metricsDictionary,
-                                                                                         views: viewsDictionary))
         
         // MARK: Reminder Button Constraints
         
@@ -338,12 +306,6 @@ class TaskViewController: TemplateViewController {
                     self.createReminderButton.isEnabled = false
                     self.titleTextField.isEnabled = false
                     self.permissionButton.isHidden = false
-                }
-            }
-            else {
-                DispatchQueue.main.async {
-                    self.reminderListTextField.text = "Add to: " + ReminderListHandler.getUserReminderList(eventStore: self.eventStore).title
-                    self.reminderListTextField.setNeedsLayout()
                 }
             }
         }
