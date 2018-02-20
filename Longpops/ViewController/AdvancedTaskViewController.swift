@@ -87,9 +87,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         
         self.reminderListPicker.delegate = self
         self.reminderListPicker.dataSource = self
-        
-        self.reminderListTextField.inputView = reminderListPicker
-        self.reminderListTextField.inputAccessoryView = inputToolbar
+        self.reminderListPicker.backgroundColor = .black
         
         self.hoursTextField.translatesAutoresizingMaskIntoConstraints = false
         self.hoursTextField.backgroundColor = .white
@@ -157,6 +155,8 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.reminderListTextField.delegate = self
         self.reminderListTextField.tag = 6
         self.reminderListTextField.tintColor = .clear
+        self.reminderListTextField.inputView = reminderListPicker
+        self.reminderListTextField.inputAccessoryView = inputToolbar
         self.textFieldContainerView.addSubview(self.reminderListTextField)
         
         self.colonLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -511,8 +511,15 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         return self.reminderLists.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.reminderLists[row].title
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        
+        // Create white text picker labels.
+        let pickerItem = UILabel()
+        pickerItem.attributedText = NSAttributedString(string: self.reminderLists[row].title,
+                                            attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 20.0),NSAttributedStringKey.foregroundColor:UIColor.white])
+        pickerItem.textAlignment = .center
+        
+        return pickerItem
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
