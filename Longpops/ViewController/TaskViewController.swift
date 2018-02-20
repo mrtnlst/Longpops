@@ -346,10 +346,8 @@ class TaskViewController: TemplateViewController {
             }
             else {
                 DispatchQueue.main.async {
-                    if let text = self.reminderListTextField.text {
-                        self.reminderListTextField.text = text + ReminderListHandler.getUserReminderList(eventStore: self.eventStore).title
-                        self.reminderListTextField.setNeedsLayout()
-                    }
+                    self.reminderListTextField.text = "Add to: " + ReminderListHandler.getUserReminderList(eventStore: self.eventStore).title
+                    self.reminderListTextField.setNeedsLayout()
                 }
             }
         }
