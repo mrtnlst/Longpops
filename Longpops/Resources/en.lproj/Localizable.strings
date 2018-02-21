@@ -20,7 +20,9 @@
 "intro-permission-button-title" = "Allow access to Reminders";
 "permission-explanation-label" = "Longpops needs your permission to use Reminders, on order to work properly.";
 "intro-button-title" = "Show intro again";
+
 "textfield-label-add-to-list" = "Add to:";
+"textfield-label-add-alarm" = "Add alarm:";
 
 "done-button-input-toolbar" = "Save";
 

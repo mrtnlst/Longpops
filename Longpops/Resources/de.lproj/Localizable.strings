@@ -20,7 +20,9 @@
 "intro-permission-button-title" = "Erlaube Zugriff\nauf Erinnerungen";
 "permission-explanation-label" = "Longpops benötigt den Zugriff auf Erinnerungen, um neue zu erzeugen.";
 "intro-button-title" = "Intro wiederholen";
+
 "textfield-label-add-to-list" = "Liste:";
+"textfield-label-add-alarm" = "Wecker hinzufügen:";
 
 "done-button-input-toolbar" = "Speichern";
 

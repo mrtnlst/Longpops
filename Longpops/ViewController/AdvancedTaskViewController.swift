@@ -27,7 +27,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     var inputContainerView: UIView
     var addToListLabel: UILabel
     var saveWithAlarmSwitch: UISwitch
-//    var saveWithAlarmContainerView: UIView
     var saveWithAlarmLabel: UILabel
     
     enum jumpDirection {
@@ -53,7 +52,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.inputContainerView = UIView()
         self.addToListLabel = UILabel()
         self.saveWithAlarmSwitch = UISwitch()
-//        self.saveWithAlarmContainerView = UIView()
         self.saveWithAlarmLabel = UILabel()
         
         super.init()
@@ -204,9 +202,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.dotLabel2.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         self.textFieldContainerView.addSubview(self.dotLabel2)
         
-//        self.saveWithAlarmContainerView.translatesAutoresizingMaskIntoConstraints = false
-//        self.view.addSubview(self.saveWithAlarmContainerView)
-//
         self.saveWithAlarmSwitch.translatesAutoresizingMaskIntoConstraints = false
         self.saveWithAlarmSwitch.onTintColor = UIColor(red: 97.0/255, green: 208.0/255, blue: 255.0/255, alpha: 1.0)
         self.saveWithAlarmSwitch.layer.shadowColor = UIColor.black.cgColor
@@ -215,7 +210,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.textFieldContainerView.addSubview(self.saveWithAlarmSwitch)
         
         self.saveWithAlarmLabel.translatesAutoresizingMaskIntoConstraints = false;
-        self.saveWithAlarmLabel.text = "Add alarm:"//NSLocalizedString("textfield-label-add-to-list", comment: "ReminderList Textfield")
+        self.saveWithAlarmLabel.text = NSLocalizedString("textfield-label-add-alarm", comment: "Add alarm Label")
         self.saveWithAlarmLabel.textColor = .white
         self.saveWithAlarmLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .regular)
         self.saveWithAlarmLabel.lineBreakMode = .byWordWrapping
@@ -273,18 +268,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
             "textFieldMargin": LayoutHandler.getMarginForDevice(),
             "addToLabelWidth": self.addToListLabel.intrinsicContentSize.width,
             ]
-        
-//        let margins = view.layoutMarginsGuide
-//        NSLayoutConstraint.activate([
-//            self.saveWithAlarmContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-//            self.saveWithAlarmContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
-//            ])
-//
-//        if #available(iOS 11, *) {
-//            NSLayoutConstraint.activate([
-//                self.saveWithAlarmContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.topAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
-//        ])
-//        }
         
         // Textfields Constraints
         
@@ -348,6 +331,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
         
+        // SaveWithAlarm Switch and Label.
         self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[yearTextField]-[reminderListTextField]-[saveWithAlarmSwitch]-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,

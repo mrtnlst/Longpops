@@ -57,6 +57,9 @@ class LayoutHandler {
         
         let type = self.getDeviceSize()
         
+        if type == deviceType.iPhoneSE {
+            return 45
+        }
         if type == deviceType.iPhone6Plus {
             return 60
         }
