@@ -25,6 +25,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     var reminderListPicker: UIPickerView
     var reminderLists: [EKCalendar]
     var inputContainerView: UIView
+    var addToListLabel: UILabel
     
     enum jumpDirection {
         case jumpForward
@@ -47,6 +48,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.reminderListPicker = UIPickerView()
         self.reminderLists = []
         self.inputContainerView = UIView()
+        self.addToListLabel = UILabel()
         
         super.init()
     }
@@ -168,6 +170,16 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.reminderListTextField.inputAccessoryView = inputToolbar
         self.textFieldContainerView.addSubview(self.reminderListTextField)
         
+        self.addToListLabel.translatesAutoresizingMaskIntoConstraints = false;
+        self.addToListLabel.text = NSLocalizedString("textfield-label-add-to-list", comment: "ReminderList Textfield")
+        self.addToListLabel.textColor = .white
+        self.addToListLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .regular)
+        self.addToListLabel.lineBreakMode = .byWordWrapping
+        self.addToListLabel.numberOfLines = 0
+        self.addToListLabel.textAlignment = .left
+        
+        self.textFieldContainerView.addSubview(self.addToListLabel)
+        
         self.colonLabel.translatesAutoresizingMaskIntoConstraints = false
         self.colonLabel.text = ":"
         self.colonLabel.textColor = .white
@@ -194,7 +206,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(AdvancedTaskViewController.createReminderButtonPressed))
+        let doneButton = UIBarButtonItem(title: NSLocalizedString("done-button-input-toolbar", comment: "Done button title"), style: .plain, target: self, action: #selector(AdvancedTaskViewController.createReminderButtonPressed))
         doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .normal)
         doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .highlighted)
         doneButton.tintColor = UIColor.white
@@ -224,13 +236,16 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
             "dotLabel2": self.dotLabel2,
             "reminderListTextField": self.reminderListTextField,
             "reminderListPicker": self.reminderListPicker,
+            "addToListLabel": self.addToListLabel,
             ]
         
         let metricsDictionary: [String: Any] = [
             "smallFieldWidth": 36,
             "bigFieldWidth": 56,
             "textFieldMargin": LayoutHandler.getMarginForDevice(),
+            "addToLabelWidth": self.addToListLabel.intrinsicContentSize.width,
             ]
+        
         
         // Textfields Constraints
         
@@ -283,8 +298,12 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[hoursTextField]-[addToListLabel]-|",
+                                                                                  options: [],
+                                                                                  metrics: metricsDictionary,
+                                                                                  views: viewsDictionary))
         
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(textFieldMargin)-[reminderListTextField]-(textFieldMargin)-|",
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(textFieldMargin)-[addToListLabel(addToLabelWidth)]-(5)-[reminderListTextField]-(textFieldMargin)-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
@@ -550,7 +569,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.reminderListTextField.text = "Add to: " + self.reminderLists[row].title
+        self.reminderListTextField.text = self.reminderLists[row].title
     }
     
     // MARK: Timers
@@ -700,7 +719,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
             else {
                 DispatchQueue.main.async {
                     let userList = ReminderListHandler.getUserReminderList(eventStore: self.eventStore)
-                    self.reminderListTextField.text = "Add to: " + userList.0.title
+                    self.reminderListTextField.text = userList.0.title
                     self.reminderListTextField.setNeedsLayout()
                     self.reminderLists = ReminderListHandler.getDeviceReminderLists(eventStore: self.eventStore)
                     self.reminderListPicker.selectRow(userList.1, inComponent: 0, animated: false)

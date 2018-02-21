@@ -8,8 +8,6 @@
 
 "description-label-about" = "Longpops bringt das Konzept von Sticky Notes auf iOS.\nEs ermöglicht einen schnellen Weg, um Erinnerungen zu erstellen, die solange auf deinem Sperrbildschirm angezeigt werden, bis du sie als erledigt markiert hast.\n\nEntwickelt und designt von Martin List.";
 "description-label-settings" = "Konfiguriere den Startbildschirm.";
-"description-label-simpletask" = "Erzeuge Erinnerungen, die auf deinem Lockscreen bleiben.";
-"description-label-advancedtask" = "Konfiguriere zeitbasierte Erinnerungen.";
 "description-label-intro" = "Longpops bietet dir einen schnellen Weg, Erinnerungen zu erstellen.";
 
 "heading-label-settings" = "Einstellungen";
@@ -17,13 +15,14 @@
 "heading-label-intro" = "Willkommen";
 
 "settings-label-startup-screen" = "Erstelle zeitbasierte\nErinnerungen";
-"settings-label-haptic-jump" = "Haptisches Feedback\nfür Sprung zwischen\nTextfeldern";
-"settings-label-haptic-save" = "Haptisches Feedback\nfür speichern\neiner Erinnerung";
 
 "permission-button-title" = "Einstellungen für Zugriff\nauf Erinnerungen öffnen!";
 "intro-permission-button-title" = "Erlaube Zugriff\nauf Erinnerungen";
 "permission-explanation-label" = "Longpops benötigt den Zugriff auf Erinnerungen, um neue zu erzeugen.";
 "intro-button-title" = "Intro wiederholen";
+"textfield-label-add-to-list" = "Liste:";
+
+"done-button-input-toolbar" = "Speichern";
 
 "alert-title" =  "Ups … das geht nicht!";
 "alert-message" = "Das Datum liegt in der Vergangenheit. Bitte gib ein gültiges Datum ein!";
