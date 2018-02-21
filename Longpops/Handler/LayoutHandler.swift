@@ -15,7 +15,6 @@ class LayoutHandler {
         case iPhone6
         case iPhone6Plus
         case iPhoneX
-        case iPad
     }
     
     static func getDeviceSize() -> deviceType{
@@ -28,10 +27,6 @@ class LayoutHandler {
         }
         if UIScreen.main.bounds.size.height == 812 {
             return deviceType.iPhoneX
-        }
-        
-        if UIScreen.main.bounds.size.height > 812 {
-            return deviceType.iPad
         }
         
         return deviceType.iPhone6
@@ -47,9 +42,7 @@ class LayoutHandler {
         if type == deviceType.iPhone6 {
             return 1.0
         }
-        if type == deviceType.iPad {
-            return 5.0
-        }
+        
         return 2.0
     }
     
@@ -63,9 +56,7 @@ class LayoutHandler {
         if type == deviceType.iPhone6Plus {
             return 60
         }
-        if type == deviceType.iPad {
-            return 70
-        }
+
         return 50
     }
     
@@ -76,9 +67,7 @@ class LayoutHandler {
         if type == deviceType.iPhone6Plus {
             return 50
         }
-        if type == deviceType.iPad {
-            return 70
-        }
+
         return 50
     }
     
@@ -92,9 +81,7 @@ class LayoutHandler {
         if type == deviceType.iPhone6Plus {
             return 55
         }
-        if type == deviceType.iPad {
-            return 80
-        }
+ 
         return 50
     }
     
@@ -108,9 +95,7 @@ class LayoutHandler {
         if type == deviceType.iPhone6Plus {
             return 20
         }
-        if type == deviceType.iPad {
-            return 22
-        }
+
         return 18
     }
     
@@ -121,9 +106,7 @@ class LayoutHandler {
         if type == deviceType.iPhone6Plus {
             return 17
         }
-        if type == deviceType.iPad {
-            return 20
-        }
+
         return 15
     }
 
@@ -141,10 +124,10 @@ class LayoutHandler {
         
         let type = self.getDeviceSize()
         
-        if type == deviceType.iPhoneSE{
+        if type == deviceType.iPhoneSE {
             return 250
         }
-        if type == deviceType.iPhone6{
+        if type == deviceType.iPhone6 {
             return 300
         }
         return 400
@@ -167,9 +150,6 @@ class LayoutHandler {
         
         let type = self.getDeviceSize()
         
-        if type == deviceType.iPad {
-            return 200
-        }
         if type == deviceType.iPhone6Plus {
             return 10
         }

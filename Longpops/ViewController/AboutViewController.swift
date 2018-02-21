@@ -104,7 +104,7 @@ class AboutViewController: TemplateViewController {
         self.backButtonContainerView.addSubview(self.backButton)
         
         self.versionLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.versionLabel.text = "Version 1.1"
+        self.versionLabel.text = "Version 2.0"
         self.versionLabel.textColor = .white
         self.versionLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         self.versionLabel.textAlignment = .center
