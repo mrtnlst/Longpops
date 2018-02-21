@@ -168,6 +168,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.reminderListTextField.tintColor = .clear
         self.reminderListTextField.inputView = self.inputContainerView
         self.reminderListTextField.inputAccessoryView = inputToolbar
+        self.reminderListTextField.adjustsFontSizeToFitWidth = false
         self.textFieldContainerView.addSubview(self.reminderListTextField)
         
         self.addToListLabel.translatesAutoresizingMaskIntoConstraints = false;
@@ -177,7 +178,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.addToListLabel.lineBreakMode = .byWordWrapping
         self.addToListLabel.numberOfLines = 0
         self.addToListLabel.textAlignment = .left
-        
         self.textFieldContainerView.addSubview(self.addToListLabel)
         
         self.colonLabel.translatesAutoresizingMaskIntoConstraints = false
