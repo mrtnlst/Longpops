@@ -73,8 +73,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         super.viewWillAppear(animated)
         self.updateDateTimePlaceHolder()
         self.startCountdownTimer()
-        
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -165,7 +163,11 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.textFieldContainerView.addSubview(self.yearTextField)
         
         self.reminderListTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.reminderListTextField.backgroundColor = .white
+        self.reminderListTextField.backgroundColor = .clear
+        self.reminderListTextField.layer.borderColor = UIColor.white.cgColor
+        self.reminderListTextField.layer.borderWidth = 2.0
+        self.reminderListTextField.layer.cornerRadius = 5.0
+        self.reminderListTextField.textColor = .white
         self.reminderListTextField.borderStyle = .roundedRect
         self.reminderListTextField.delegate = self
         self.reminderListTextField.tag = 6
@@ -173,12 +175,13 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.reminderListTextField.inputView = self.inputContainerView
         self.reminderListTextField.inputAccessoryView = inputToolbar
         self.reminderListTextField.adjustsFontSizeToFitWidth = false
+        self.reminderListTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .regular)
         self.textFieldContainerView.addSubview(self.reminderListTextField)
         
         self.addToListLabel.translatesAutoresizingMaskIntoConstraints = false;
         self.addToListLabel.text = NSLocalizedString("textfield-label-add-to-list", comment: "ReminderList Textfield")
         self.addToListLabel.textColor = .white
-        self.addToListLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .regular)
+        self.addToListLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .semibold)
         self.addToListLabel.lineBreakMode = .byWordWrapping
         self.addToListLabel.numberOfLines = 0
         self.addToListLabel.textAlignment = .left
@@ -212,7 +215,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.saveWithAlarmLabel.translatesAutoresizingMaskIntoConstraints = false;
         self.saveWithAlarmLabel.text = NSLocalizedString("textfield-label-add-alarm", comment: "Add alarm Label")
         self.saveWithAlarmLabel.textColor = .white
-        self.saveWithAlarmLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .regular)
+        self.saveWithAlarmLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .semibold)
         self.saveWithAlarmLabel.lineBreakMode = .byWordWrapping
         self.saveWithAlarmLabel.numberOfLines = 0
         self.saveWithAlarmLabel.textAlignment = .left
@@ -227,7 +230,10 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         
-        let doneButton = UIBarButtonItem(title: NSLocalizedString("done-button-input-toolbar", comment: "Done button title"), style: .plain, target: self, action: #selector(AdvancedTaskViewController.createReminderButtonPressed))
+        let doneButton = UIBarButtonItem(title: NSLocalizedString("done-button-input-toolbar", comment: "Done button title"),
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(AdvancedTaskViewController.createReminderButtonPressed))
         doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .normal)
         doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .highlighted)
         doneButton.tintColor = UIColor.white
@@ -423,6 +429,12 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     }
     
     @objc func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        if textField.tag == 6 {
+            self.reminderListTextField.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+            return
+        }
+        self.reminderListTextField.backgroundColor = .clear
         
         if let textContent = textField.text {
             if TextInputHandler.getNumberOfDigits(string: textContent) > 0 {
