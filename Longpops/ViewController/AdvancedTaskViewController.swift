@@ -61,16 +61,16 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         super.viewDidLoad()
         self.setupViews()
         self.setupConstraints()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackground), name: .UIApplicationDidEnterBackground, object: nil)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateDateTimePlaceHolder()
         self.startCountdownTimer()
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -92,11 +92,11 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.reminderListPicker.delegate = self
         self.reminderListPicker.dataSource = self
         self.reminderListPicker.translatesAutoresizingMaskIntoConstraints = false
-        
+    
         self.inputContainerView = UIView(frame: CGRect(x: self.reminderListPicker.frame.origin.x,
                                                        y: self.reminderListPicker.frame.origin.y,
                                                        width: UIScreen.main.bounds.width,
-                                                       height: self.reminderListPicker.frame.size.height))
+                                                       height: LayoutHandler.getInputViewHeightForDevice(inputToolbarHeight: self.inputToolbar.frame.size.height)))
         self.inputViewBackground()
         self.inputContainerView.addSubview(self.reminderListPicker)
         
