@@ -14,7 +14,7 @@
 "heading-label-about" = "Über";
 "heading-label-intro" = "Willkommen";
 
-"settings-label-startup-screen" = "Erstelle zeitbasierte\nErinnerungen";
+"settings-label-startup-screen" = "Erweiterter Modus";
 
 "permission-button-title" = "Einstellungen für Zugriff\nauf Erinnerungen öffnen!";
 "intro-permission-button-title" = "Erlaube Zugriff\nauf Erinnerungen";
@@ -33,5 +33,5 @@
 "title-textfield-placeholder" = "Erinnere mich an ..";
 
 "tutorial-label-simpletask" = "Tippe Return, um eine Erinnerung mit unmittelbarem Alarm zu erstellen.";
-"tutorial-label-advancedtask" = "Konfiguriere Uhrzeit und Datum für eine zeitbasierte Erinnerungen.";
+"tutorial-label-advancedtask" = "Erweiterter Modus:\nKonfiguriere Uhrzeit und Datum, wähle Erinnerungsliste und Wecker-Option.";
 "tutorial-label-settings" = "Nutze die Einstellungen, um zwischen beiden Eingabemasken zu wechseln.";

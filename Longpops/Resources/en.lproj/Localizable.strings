@@ -14,7 +14,7 @@
 "heading-label-about" = "About";
 "heading-label-intro" = "Welcome";
 
-"settings-label-startup-screen" = "Create time-based\nreminders";
+"settings-label-startup-screen" = "Advanced mode";
 
 "permission-button-title" = "Open Settings to enable access\nto Reminders!";
 "intro-permission-button-title" = "Allow access to Reminders";
@@ -33,5 +33,5 @@
 "title-textfield-placeholder" = "Remind me of ..";
 
 "tutorial-label-simpletask" = "Enter a title and hit return to create a reminder, that appears immediatly.";
-"tutorial-label-advancedtask" = "Enter date and time to create a time-based reminder.";
+"tutorial-label-advancedtask" = "Advanced mode:\nEnter date and time, select a reminder list or set an alarm.";
 "tutorial-label-settings" = "You can switch between both modes in settings.";
