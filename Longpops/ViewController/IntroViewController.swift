@@ -218,6 +218,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         let tutorialLabel = UILabel()
         tutorialLabel.text = NSLocalizedString(description, comment: "Tutorial label.")
         tutorialLabel.textColor = .white
+        tutorialLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getIntroLabelSizeForDevice(), weight: .regular)
         tutorialLabel.textAlignment = .left
         tutorialLabel.numberOfLines = 0
         tutorialLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -252,12 +253,12 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
                                                  multiplier: 1.0,
                                                  constant: 0.0))
         
-        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[simpleTaskImage(width)]-(>=5)-[tutorialLabel]-|",
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[simpleTaskImage(width)]-(5)-[tutorialLabel]-|",
                                                               options: [],
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
         
-        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[simpleTaskImage(height)]|",
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[simpleTaskImage(height)]-(>=1)-|",
                                                               options: [],
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
@@ -277,6 +278,7 @@ class IntroViewController: TemplateViewController, UIScrollViewDelegate {
         let permissionExplanationLabel = UILabel()
         permissionExplanationLabel.text = NSLocalizedString("permission-explanation-label", comment: "Permission explanation label.")
         permissionExplanationLabel.textColor = .white
+        permissionExplanationLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getIntroLabelSizeForDevice(), weight: .regular)
         permissionExplanationLabel.textAlignment = .center
         permissionExplanationLabel.numberOfLines = 0
         permissionExplanationLabel.translatesAutoresizingMaskIntoConstraints = false

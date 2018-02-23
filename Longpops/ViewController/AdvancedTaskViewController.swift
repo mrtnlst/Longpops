@@ -717,13 +717,12 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     func saveAdvancedReminder(date: Date) {
         let reminder = EKReminder(eventStore:self.eventStore)
         
-        let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .month, .year]
-        let components = Calendar.current.dateComponents(unitFlags, from: date)
-
-        reminder.title = self.titleTextField.text!
-        reminder.dueDateComponents = components
-        
         if self.saveWithAlarmSwitch.isOn {
+            let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .month, .year]
+            let components = Calendar.current.dateComponents(unitFlags, from: date)
+            
+            reminder.title = self.titleTextField.text!
+            reminder.dueDateComponents = components
             reminder.addAlarm(EKAlarm.init(absoluteDate: date))
         }
         

@@ -6,7 +6,7 @@
   
 */
 
-"description-label-about" = "Longpops brings the concept of sticky notes to iOS.\nIt's meant to be a fast way to create overdue Reminder items, that stay on your lock screen until they are marked as completed.\n\nDeveloped and designed by Martin List.";
+"description-label-about" = "Longpops offers a fast way to create reminder items.\n\nDeveloped and designed by Martin List.";
 "description-label-settings" = "Customize the launch screen.";
 "description-label-intro" = "Longpops offers a fast way to create Reminder items.";
 
@@ -16,13 +16,13 @@
 
 "settings-label-startup-screen" = "Advanced mode";
 
-"permission-button-title" = "Open Settings to enable access\nto Reminders!";
-"intro-permission-button-title" = "Allow access to Reminders";
+"permission-button-title" = "Open Settings to enable\naccess to Reminders!";
+"intro-permission-button-title" = "Allow access to\nReminders";
 "permission-explanation-label" = "Longpops needs your permission to use Reminders, on order to work properly.";
 "intro-button-title" = "Show intro again";
 
 "textfield-label-add-to-list" = "Add to:";
-"textfield-label-add-alarm" = "Add alarm:";
+"textfield-label-add-alarm" = "Add alarm and due date:";
 
 "done-button-input-toolbar" = "Save";
 
@@ -32,6 +32,6 @@
 
 "title-textfield-placeholder" = "Remind me of ..";
 
-"tutorial-label-simpletask" = "Enter a title and hit return to create a reminder, that appears immediatly.";
-"tutorial-label-advancedtask" = "Advanced mode:\nEnter date and time, select a reminder list or set an alarm.";
-"tutorial-label-settings" = "You can switch between both modes in settings.";
+"tutorial-label-simpletask" = "Simple mode:\n\nEnter a title and hit return to create a reminder, that appears immediatly on your lockscreen.";
+"tutorial-label-advancedtask" = "Advanced mode:\n\nIf enabled, you can create reminder items with due date and alarm. You can also specify, in which list the items should be stored.";
+"tutorial-label-settings" = "Switch between simple and advanced mode in settings. You can repeat this tutorial there as well.";

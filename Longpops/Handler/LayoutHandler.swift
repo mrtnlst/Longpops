@@ -90,12 +90,26 @@ class LayoutHandler {
         let type = self.getDeviceSize()
         
         if type == deviceType.iPhoneSE {
-            return 17
+            return 16
         }
         if type == deviceType.iPhone6Plus {
             return 20
         }
 
+        return 18
+    }
+    
+    static func getIntroLabelSizeForDevice() -> CGFloat {
+        
+        let type = self.getDeviceSize()
+        
+        if type == deviceType.iPhoneSE {
+            return 15
+        }
+        if type == deviceType.iPhone6Plus {
+            return 20
+        }
+        
         return 18
     }
     
@@ -138,7 +152,7 @@ class LayoutHandler {
         let type = self.getDeviceSize()
         
         if type == deviceType.iPhoneSE {
-            return (125, 250)
+            return (100, 200)
         }
         if type == deviceType.iPhone6 {
             return (150, 300)
