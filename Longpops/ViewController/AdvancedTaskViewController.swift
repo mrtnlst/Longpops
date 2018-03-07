@@ -103,8 +103,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.inputContainerView.addSubview(self.reminderListPicker)
         
         self.hoursTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.hoursTextField.backgroundColor = .white
-        self.hoursTextField.borderStyle = .roundedRect
         self.hoursTextField.delegate = self
         self.hoursTextField.keyboardType = .numberPad
         self.hoursTextField.keyboardAppearance = .dark
@@ -112,11 +110,12 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.hoursTextField.textAlignment = .center
         self.hoursTextField.inputAccessoryView = inputToolbar
         self.hoursTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
+        self.hoursTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .medium)
+        self.hoursTextField.textColor = .white
+        self.hoursTextField.backgroundColor = .clear
         self.textFieldContainerView.addSubview(self.hoursTextField)
         
         self.minutesTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.minutesTextField.backgroundColor = .white
-        self.minutesTextField.borderStyle = .roundedRect
         self.minutesTextField.delegate = self
         self.minutesTextField.keyboardType = .numberPad
         self.minutesTextField.keyboardAppearance = .dark
@@ -124,11 +123,12 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.minutesTextField.textAlignment = .center
         self.minutesTextField.inputAccessoryView = inputToolbar
         self.minutesTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
+        self.minutesTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .medium)
+        self.minutesTextField.textColor = .white
+        self.minutesTextField.backgroundColor = .clear
         self.textFieldContainerView.addSubview(self.minutesTextField)
         
         self.dayTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.dayTextField.backgroundColor = .white
-        self.dayTextField.borderStyle = .roundedRect
         self.dayTextField.delegate = self
         self.dayTextField.keyboardType = .numberPad
         self.dayTextField.keyboardAppearance = .dark
@@ -136,11 +136,12 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.dayTextField.textAlignment = .center
         self.dayTextField.inputAccessoryView = inputToolbar
         self.dayTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
+        self.dayTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .medium)
+        self.dayTextField.textColor = .white
+        self.dayTextField.backgroundColor = .clear
         self.textFieldContainerView.addSubview(self.dayTextField)
         
         self.monthTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.monthTextField.backgroundColor = .white
-        self.monthTextField.borderStyle = .roundedRect
         self.monthTextField.delegate = self
         self.monthTextField.keyboardType = .numberPad
         self.monthTextField.keyboardAppearance = .dark
@@ -148,18 +149,24 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.monthTextField.textAlignment = .center
         self.monthTextField.inputAccessoryView = inputToolbar
         self.monthTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
+        self.monthTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .medium)
+        self.monthTextField.textColor = .white
+        self.monthTextField.backgroundColor = .clear
         self.textFieldContainerView.addSubview(self.monthTextField)
         
         self.yearTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.yearTextField.backgroundColor = .white
-        self.yearTextField.borderStyle = .roundedRect
         self.yearTextField.delegate = self
         self.yearTextField.keyboardType = .numberPad
         self.yearTextField.keyboardAppearance = .dark
         self.yearTextField.tag = 5
         self.yearTextField.textAlignment = .center
+        self.yearTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .medium)
+        self.yearTextField.textColor = .white
+        self.yearTextField.backgroundColor = .clear
         self.yearTextField.inputAccessoryView = inputToolbar
+        
         self.yearTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
+        
         self.textFieldContainerView.addSubview(self.yearTextField)
         
         self.reminderListTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -634,11 +641,26 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     }
     
     @objc func updateDateTimePlaceHolder() {
-        self.hoursTextField.placeholder = DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0)
-        self.minutesTextField.placeholder = DateTimeHandler.getMinuteString(minute: DateTimeHandler.getCurrentTime().1)
-        self.dayTextField.placeholder = DateTimeHandler.getDayString(day: DateTimeHandler.getCurrentDate().0)
-        self.monthTextField.placeholder = DateTimeHandler.getMonthString(month: DateTimeHandler.getCurrentDate().1)
-        self.yearTextField.placeholder = String(format: "%d", DateTimeHandler.getCurrentDate().2)
+//        self.hoursTextField.placeholder = DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0)
+//        self.minutesTextField.placeholder = DateTimeHandler.getMinuteString(minute: DateTimeHandler.getCurrentTime().1)
+//        self.dayTextField.placeholder = DateTimeHandler.getDayString(day: DateTimeHandler.getCurrentDate().0)
+//        self.monthTextField.placeholder = DateTimeHandler.getMonthString(month: DateTimeHandler.getCurrentDate().1)
+//        self.yearTextField.placeholder = String(format: "%d", DateTimeHandler.getCurrentDate().2)
+        
+        self.hoursTextField.attributedPlaceholder = NSAttributedString(string: DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0),
+                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+        self.minutesTextField.attributedPlaceholder = NSAttributedString(string: DateTimeHandler.getMinuteString(minute: DateTimeHandler.getCurrentTime().1),
+                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+        
+        self.dayTextField.attributedPlaceholder = NSAttributedString(string: DateTimeHandler.getDayString(day: DateTimeHandler.getCurrentDate().0),
+                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+        
+        self.monthTextField.attributedPlaceholder = NSAttributedString(string: DateTimeHandler.getMonthString(month: DateTimeHandler.getCurrentDate().1),
+                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+        
+        self.yearTextField.attributedPlaceholder = NSAttributedString(string: String(format: "%d", DateTimeHandler.getCurrentDate().2),
+                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+        
     }
     
     @objc func willEnterForeground() {

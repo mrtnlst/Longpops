@@ -75,11 +75,14 @@ class TaskViewController: TemplateViewController {
         
         self.titleTextField.translatesAutoresizingMaskIntoConstraints = false
         self.titleTextField.keyboardAppearance = .dark
-        self.titleTextField.backgroundColor = .white
-        self.titleTextField.borderStyle = .roundedRect
-        self.titleTextField.placeholder = NSLocalizedString("title-textfield-placeholder", comment: "Permission button.")
+        self.titleTextField.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("title-textfield-placeholder", comment: "TextField."),
+                                                                      attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
         self.titleTextField.delegate = self
         self.titleTextField.tag = 0
+        self.titleTextField.font = UIFont.systemFont(ofSize: 30.0, weight: .light)
+        self.titleTextField.textColor = .white
+        self.titleTextField.backgroundColor = .clear
+
         self.textFieldContainerView.addSubview(self.titleTextField)
         
         self.createReminderButton.setImage(UIImage(named: "SaveButton"), for: .normal)
