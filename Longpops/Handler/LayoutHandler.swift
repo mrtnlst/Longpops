@@ -172,12 +172,12 @@ class LayoutHandler {
     
     static func getLayoutOrder() -> String {
         
-        var layoutString = "H:|-(textFieldMargin)-[hoursTextField(smallFieldWidth)]-(1)-[colonLabel]-(1)-[minutesTextField(smallFieldWidth)]-(>=1)-[dayTextField(smallFieldWidth)]-(1)-[dotLabel1]-(1)-[monthTextField(smallFieldWidth)]-(1)-[dotLabel2]-(1)-[yearTextField(bigFieldWidth)]-(textFieldMargin)-|"
+        var layoutString = "H:|-(textFieldMargin)-[hoursTextField(smallFieldWidth)][colonLabel][minutesTextField(smallFieldWidth)]-(>=1)-[dayTextField(smallFieldWidth)][dotLabel1][monthTextField(smallFieldWidth)][dotLabel2][yearTextField(bigFieldWidth)]-(textFieldMargin)-|"
         
         let regionCode = Locale.current.regionCode
         
         if regionCode == "US" {
-            layoutString = "H:|-(textFieldMargin)-[hoursTextField(smallFieldWidth)]-(1)-[colonLabel]-(1)-[minutesTextField(smallFieldWidth)]-(>=1)-[monthTextField(smallFieldWidth)]-(1)-[dotLabel1]-(1)-[dayTextField(smallFieldWidth)]-(1)-[dotLabel2]-(1)-[yearTextField(bigFieldWidth)]-(textFieldMargin)-|"
+            layoutString = "H:|-(textFieldMargin)-[hoursTextField(smallFieldWidth)][colonLabel][minutesTextField(smallFieldWidth)]-(>=1)-[monthTextField(smallFieldWidth)][dotLabel1][dayTextField(smallFieldWidth)][dotLabel2][yearTextField(bigFieldWidth)]-(textFieldMargin)-|"
         }
         
         return layoutString

@@ -11,6 +11,7 @@ import EventKit
 
 class TaskViewController: TemplateViewController {
 
+    var navigationItemContainerView: UIView
     var textFieldContainerView: UIView
     var createButtonContainerView: UIView
     var permissionButtonContainerView: UIView
@@ -24,6 +25,7 @@ class TaskViewController: TemplateViewController {
     var eventStore: EKEventStore
     
     override init() {
+        self.navigationItemContainerView = UIView()
         self.textFieldContainerView = UIView()
         self.createButtonContainerView = UIView()
         self.permissionButtonContainerView = UIView()
@@ -61,6 +63,9 @@ class TaskViewController: TemplateViewController {
     override func setupViews() {
         super.setupViews()
         
+        self.navigationItemContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.navigationItemContainerView)
+        
         self.textFieldContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.textFieldContainerView)
         
@@ -69,9 +74,6 @@ class TaskViewController: TemplateViewController {
         
         self.permissionButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.permissionButtonContainerView)
-    
-        self.descriptionLabel.removeFromSuperview()
-        self.descriptionContainerView.removeFromSuperview()
         
         self.titleTextField.translatesAutoresizingMaskIntoConstraints = false
         self.titleTextField.keyboardAppearance = .dark
@@ -103,25 +105,23 @@ class TaskViewController: TemplateViewController {
         self.infoButton.setImage(UIImage(named: "InfoButton"), for: .normal)
         self.infoButton.addTarget(self, action: #selector(TaskViewController.infoButtonPressed), for: .touchUpInside)
         self.infoButton.tintColor = .white
-        self.headingContainerView.addSubview(self.infoButton)
+        self.navigationItemContainerView.addSubview(self.infoButton)
         
         self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
         self.settingsButton.setImage(UIImage(named: "SettingsButton"), for: .normal)
         self.settingsButton.addTarget(self, action: #selector(TaskViewController.settingsButtonPressed), for: .touchUpInside)
         self.settingsButton.tintColor = .white
-        self.headingContainerView.addSubview(self.settingsButton)
+        self.navigationItemContainerView.addSubview(self.settingsButton)
 
     }
     
     override func setupConstraints() {
         
         let viewsDictionary: [String: Any] = [
-            "headingContainerView": self.headingContainerView,
+            "navigationItemContainerView": self.navigationItemContainerView,
             "textFieldContainerView": self.textFieldContainerView,
             "createButtonContainerView": self.createButtonContainerView,
             "permissionButtonContainerView": self.permissionButtonContainerView,
-            "headingLabel": self.headingLabel,
-            "descriptionLabel": self.descriptionLabel,
             "titleTextField": self.titleTextField,
             "createReminderButton": self.createReminderButton,
             "permissionButton": self.permissionButton,
@@ -137,8 +137,8 @@ class TaskViewController: TemplateViewController {
         
         let margins = view.layoutMarginsGuide
         NSLayoutConstraint.activate([
-            self.headingContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            self.headingContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            self.navigationItemContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.navigationItemContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
             self.textFieldContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.textFieldContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
@@ -153,9 +153,9 @@ class TaskViewController: TemplateViewController {
         if #available(iOS 11, *) {
             let guide = view.safeAreaLayoutGuide
             NSLayoutConstraint.activate([
-                self.headingContainerView.topAnchor.constraintEqualToSystemSpacingBelow(guide.topAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                self.navigationItemContainerView.topAnchor.constraintEqualToSystemSpacingBelow(guide.topAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 
-                self.textFieldContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                self.textFieldContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.navigationItemContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 
                 self.createButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 
@@ -165,23 +165,20 @@ class TaskViewController: TemplateViewController {
         
         // MARK: Heading Constraints
         
-        self.headingContainerView.addConstraint(NSLayoutConstraint(item: self.headingLabel,
-                                                                   attribute: .centerX,
-                                                                   relatedBy: .equal,
-                                                                   toItem: self.headingContainerView,
-                                                                   attribute: .centerX,
-                                                                   multiplier: 1.0,
-                                                                   constant: 0.0))
-        
-        self.headingContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[settingsButton(menuButton)]-(>=1)-[headingLabel]-(>=1)-[infoButton(menuButton)]-|",
+        self.navigationItemContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[settingsButton(menuButton)]-[infoButton(menuButton)]-|",
                                                                                 options: .alignAllLastBaseline,
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
         
-        self.headingContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[headingLabel]-|",
+        self.navigationItemContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[settingsButton]-|",
                                                                                 options: [],
                                                                                 metrics: [:],
                                                                                 views: viewsDictionary))
+        
+        self.navigationItemContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[infoButton]-|",
+                                                                                       options: [],
+                                                                                       metrics: [:],
+                                                                                       views: viewsDictionary))
         
         // MARK: Reminder Button Constraints
         

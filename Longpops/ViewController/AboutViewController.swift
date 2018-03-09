@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AboutViewController: TemplateViewController {
+class AboutViewController: TemplatePageViewController {
     
     private var twitterContainerView: UIView
     private var websiteContainerView: UIView

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingsViewController: TemplateViewController {
+class SettingsViewController: TemplatePageViewController {
     
     private var backButtonContainerView: UIView
     private var startupContainerView: UIView

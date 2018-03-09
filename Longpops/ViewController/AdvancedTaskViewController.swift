@@ -86,8 +86,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         
         self.setupInputToolbar()
         
-        self.headingLabel.text = "Longpops"
-        
         self.titleTextField.inputAccessoryView = inputToolbar
         self.titleTextField.autocorrectionType = .no
         
@@ -110,7 +108,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.hoursTextField.textAlignment = .center
         self.hoursTextField.inputAccessoryView = inputToolbar
         self.hoursTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
-        self.hoursTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .medium)
+        self.hoursTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .light)
         self.hoursTextField.textColor = .white
         self.hoursTextField.backgroundColor = .clear
         self.textFieldContainerView.addSubview(self.hoursTextField)
@@ -123,7 +121,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.minutesTextField.textAlignment = .center
         self.minutesTextField.inputAccessoryView = inputToolbar
         self.minutesTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
-        self.minutesTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .medium)
+        self.minutesTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .light)
         self.minutesTextField.textColor = .white
         self.minutesTextField.backgroundColor = .clear
         self.textFieldContainerView.addSubview(self.minutesTextField)
@@ -136,7 +134,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.dayTextField.textAlignment = .center
         self.dayTextField.inputAccessoryView = inputToolbar
         self.dayTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
-        self.dayTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .medium)
+        self.dayTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .light)
         self.dayTextField.textColor = .white
         self.dayTextField.backgroundColor = .clear
         self.textFieldContainerView.addSubview(self.dayTextField)
@@ -149,7 +147,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.monthTextField.textAlignment = .center
         self.monthTextField.inputAccessoryView = inputToolbar
         self.monthTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
-        self.monthTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .medium)
+        self.monthTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .light)
         self.monthTextField.textColor = .white
         self.monthTextField.backgroundColor = .clear
         self.textFieldContainerView.addSubview(self.monthTextField)
@@ -160,7 +158,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.yearTextField.keyboardAppearance = .dark
         self.yearTextField.tag = 5
         self.yearTextField.textAlignment = .center
-        self.yearTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .medium)
+        self.yearTextField.font = UIFont.systemFont(ofSize: 20.0, weight: .light)
         self.yearTextField.textColor = .white
         self.yearTextField.backgroundColor = .clear
         self.yearTextField.inputAccessoryView = inputToolbar

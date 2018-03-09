@@ -18,10 +18,6 @@ class SimpleTaskViewController: TaskViewController {
     
     override func setupViews() {
         super.setupViews()
-        
-        self.headingLabel.text = "Longpops"
-        
-        self.descriptionLabel.text = NSLocalizedString("description-label-simpletask", comment: "Description label")
     }
     
     override func setupConstraints() {

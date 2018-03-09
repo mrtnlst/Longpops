@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import EventKit
 
-class IntroViewController: TemplateViewController, UIScrollViewDelegate {
+class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
 
     private var pageControlContainer: UIView
     private var backButtonContainerView: UIView
