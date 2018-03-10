@@ -25,6 +25,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
     var reminderListPicker: UIPickerView
     var reminderLists: [EKCalendar]
     var inputContainerView: UIView
+    var inputToolbar: UIToolbar
     
     override init() {
         self.backButtonContainerView = UIView()
@@ -40,6 +41,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.reminderListPicker = UIPickerView()
         self.reminderLists = []
         self.inputContainerView = UIView()
+        self.inputToolbar = UIToolbar()
         self.hasSwitchBeenToggled = false
         
         super.init()
@@ -63,6 +65,8 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
     
     override func setupViews() {
         super.setupViews()
+        
+        self.setupInputToolbar()
         
         self.headingLabel.text = NSLocalizedString("heading-label-settings", comment: "Heading label.")
         self.descriptionLabel.text = NSLocalizedString("description-label-settings", comment: "Description label.")
@@ -127,9 +131,9 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.reminderListTextField.tag = 0
         self.reminderListTextField.tintColor = .clear
         self.reminderListTextField.inputView = self.inputContainerView
+        self.reminderListTextField.inputAccessoryView = inputToolbar
         self.reminderListTextField.adjustsFontSizeToFitWidth = false
         self.reminderListTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .regular)
-        self.reminderListTextField.addTarget(self, action: #selector(self.tap), for: .touchUpInside)
         self.reminderListContainerView.addSubview(self.reminderListTextField)
         
         self.reminderListLabel.translatesAutoresizingMaskIntoConstraints = false;
@@ -148,6 +152,24 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
 
         let defaults = UserDefaults.standard
         self.advancedTaskSwitch.isOn = defaults.bool(forKey: "advancedTask")
+    }
+    
+    func setupInputToolbar() {
+        self.inputToolbar.barStyle = .blackTranslucent
+        self.inputToolbar.sizeToFit()
+        
+        let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        let doneButton = UIBarButtonItem(title: NSLocalizedString("done-button-input-toolbar", comment: "Done button title"),
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(SettingsViewController.doneButtonPressed))
+        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .normal)
+        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .highlighted)
+        doneButton.tintColor = UIColor.white
+        
+        self.inputToolbar.setItems([flexibleSpaceButton, doneButton], animated: false)
+        self.inputToolbar.isUserInteractionEnabled = true
     }
     
     func setupGestures() {
@@ -366,8 +388,10 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.inputContainerView.layer.insertSublayer(gradientLayer, at: 0)
     }
     
-    @objc func tap() {
-        self.reminderListTextField.becomeFirstResponder()
+    @objc func doneButtonPressed() {
+        self.reminderListTextField.endEditing(true)
+        
+        ReminderListHandler.saveUserReminderList(list: self.reminderLists[self.reminderListPicker.selectedRow(inComponent: 0)])
     }
     
     func changeRootViewControllerOnDismiss() {
