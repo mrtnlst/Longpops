@@ -75,7 +75,7 @@ class TaskViewController: TemplateViewController {
         self.titleTextField.translatesAutoresizingMaskIntoConstraints = false
         self.titleTextField.keyboardAppearance = .dark
         self.titleTextField.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("title-textfield-placeholder", comment: "TextField."),
-                                                                      attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
         self.titleTextField.delegate = self
         self.titleTextField.tag = 0
         self.titleTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getTitleTextFontSizeForDevice(), weight: .regular)

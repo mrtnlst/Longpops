@@ -37,7 +37,7 @@ class TextInputHandler {
     }
     
     static func jumpToNextTextField(tag: Int) -> Int {
-        if tag > 5 {
+        if tag > 4 {
             return 0
         }
         else if Locale.current.regionCode == "US" && tag == 2 {
@@ -56,7 +56,7 @@ class TextInputHandler {
     
     static func jumpToPreviousTextField(tag: Int) -> Int {
         if tag < 1 {
-            return 6
+            return 5
         }
         else if Locale.current.regionCode == "US" && tag == 5 {
             return tag - 2
