@@ -21,8 +21,6 @@ class AdvancedTaskViewController: TaskViewController {
     var inputToolbar: UIToolbar
     var dateTimer: Timer
     var countdownTimer: Timer
-    var saveWithAlarmSwitch: UISwitch
-    var saveWithAlarmLabel: UILabel
     
     enum jumpDirection {
         case jumpForward
@@ -42,9 +40,6 @@ class AdvancedTaskViewController: TaskViewController {
         self.dateTimer = Timer()
         self.countdownTimer = Timer()
 
-        self.saveWithAlarmSwitch = UISwitch()
-        self.saveWithAlarmLabel = UILabel()
-        
         super.init()
     }
     
@@ -163,22 +158,6 @@ class AdvancedTaskViewController: TaskViewController {
         self.dotLabel2.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         self.textFieldContainerView.addSubview(self.dotLabel2)
         
-        self.saveWithAlarmSwitch.translatesAutoresizingMaskIntoConstraints = false
-        self.saveWithAlarmSwitch.onTintColor = UIColor(red: 97.0/255, green: 208.0/255, blue: 255.0/255, alpha: 1.0)
-        self.saveWithAlarmSwitch.layer.shadowColor = UIColor.black.cgColor
-        self.saveWithAlarmSwitch.layer.shadowOffset = CGSize(width: 0, height: 0)
-        self.saveWithAlarmSwitch.layer.shadowOpacity = 0.1
-//        self.textFieldContainerView.addSubview(self.saveWithAlarmSwitch)
-        
-        self.saveWithAlarmLabel.translatesAutoresizingMaskIntoConstraints = false;
-        self.saveWithAlarmLabel.text = NSLocalizedString("textfield-label-add-alarm", comment: "Add alarm Label")
-        self.saveWithAlarmLabel.textColor = .white
-        self.saveWithAlarmLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .semibold)
-        self.saveWithAlarmLabel.lineBreakMode = .byWordWrapping
-        self.saveWithAlarmLabel.numberOfLines = 0
-        self.saveWithAlarmLabel.textAlignment = .left
-//        self.textFieldContainerView.addSubview(self.saveWithAlarmLabel)
-        
     }
     
     func setupInputToolbar() {
@@ -219,8 +198,6 @@ class AdvancedTaskViewController: TaskViewController {
             "colonLabel": self.colonLabel,
             "dotLabel1": self.dotLabel1,
             "dotLabel2": self.dotLabel2,
-            "saveWithAlarmLabel": self.saveWithAlarmLabel,
-            "saveWithAlarmSwitch": self.saveWithAlarmSwitch,
             ]
         
         let metricsDictionary: [String: Any] = [
@@ -280,19 +257,7 @@ class AdvancedTaskViewController: TaskViewController {
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
-        
-        
-//        // SaveWithAlarm Switch and Label.
-//        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[yearTextField]-[saveWithAlarmSwitch]-|",
-//                                                                                  options: [],
-//                                                                                  metrics: metricsDictionary,
-//                                                                                  views: viewsDictionary))
-//
-//        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(textFieldMargin)-[saveWithAlarmLabel]-[saveWithAlarmSwitch]-(textFieldMargin)-|",
-//                                                                                  options: [],
-//                                                                                  metrics: metricsDictionary,
-//                                                                                  views: viewsDictionary))
-    }
+        }
     
     // MARK: TextField Actions
     
@@ -623,13 +588,16 @@ class AdvancedTaskViewController: TaskViewController {
         let reminder = EKReminder(eventStore:self.eventStore)
         reminder.title = self.titleTextField.text!
 
-//        if self.saveWithAlarmSwitch.isOn {
+        let defaults = UserDefaults.standard
+
+        if defaults.bool(forKey: "saveWithAlarm") {
+        
             let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .month, .year]
             let components = Calendar.current.dateComponents(unitFlags, from: date)
             
             reminder.dueDateComponents = components
             reminder.addAlarm(EKAlarm.init(absoluteDate: date))
-//        }
+        }
         
         reminder.calendar = ReminderListHandler.getUserReminderList(eventStore: self.eventStore).0
         
