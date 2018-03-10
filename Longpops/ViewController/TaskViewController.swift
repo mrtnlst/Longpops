@@ -78,10 +78,9 @@ class TaskViewController: TemplateViewController {
                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
         self.titleTextField.delegate = self
         self.titleTextField.tag = 0
-        self.titleTextField.font = UIFont.systemFont(ofSize: 30.0, weight: .light)
+        self.titleTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getTitleTextFontSizeForDevice(), weight: .regular)
         self.titleTextField.textColor = .white
         self.titleTextField.backgroundColor = .clear
-
         self.textFieldContainerView.addSubview(self.titleTextField)
         
         self.createReminderButton.setImage(UIImage(named: "SaveButton"), for: .normal)

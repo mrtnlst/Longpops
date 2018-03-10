@@ -196,4 +196,12 @@ class LayoutHandler {
         
         return 260
     }
+    
+    static func getTitleTextFontSizeForDevice() -> CGFloat {
+        return 40;
+    }
+    
+    static func getDateTimeTextFontSizeForDevice() -> CGFloat {
+        return 30;
+    }
 }
