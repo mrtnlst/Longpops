@@ -183,18 +183,17 @@ class LayoutHandler {
         return layoutString
     }
     
-    static func getInputViewHeightForDevice(inputToolbarHeight: CGFloat) -> CGFloat {
-        
+    static func getInputViewHeightForDevice() -> CGFloat {
         
         let type = self.getDeviceSize()
         
         if type == deviceType.iPhoneX {
-         return 335 - inputToolbarHeight
+         return 335
         }
         if type == deviceType.iPhone6Plus {
-            return 270 - inputToolbarHeight
+            return 270
         }
         
-        return 260 - inputToolbarHeight
+        return 260
     }
 }

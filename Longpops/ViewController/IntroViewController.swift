@@ -20,7 +20,6 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
     var introViews: [UIView]
     var frame: CGRect
     var pageControl: UIPageControl
-    var eventStore: EKEventStore!
     var numberOfPages: CGFloat
     var swipeDown: UISwipeGestureRecognizer
 
@@ -341,7 +340,7 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
     
     // MARK: Permission Handling
     
-    @objc func checkPermission() {
+    @objc override func checkPermission() {
         self.eventStore = EKEventStore()
         self.eventStore.requestAccess(to: EKEntityType.reminder) { (granted, error) -> Void in
             DispatchQueue.main.async {

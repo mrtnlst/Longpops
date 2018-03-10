@@ -8,24 +8,19 @@
 import UIKit
 import EventKit
 
-class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class AdvancedTaskViewController: TaskViewController {
 
     var hoursTextField: UITextField
     var minutesTextField: UITextField
     var dayTextField: UITextField
     var monthTextField: UITextField
     var yearTextField: UITextField
-    var reminderListTextField: UITextField
     var colonLabel: UILabel
     var dotLabel1: UILabel
     var dotLabel2: UILabel
     var inputToolbar: UIToolbar
     var dateTimer: Timer
     var countdownTimer: Timer
-    var reminderListPicker: UIPickerView
-    var reminderLists: [EKCalendar]
-    var inputContainerView: UIView
-    var addToListLabel: UILabel
     var saveWithAlarmSwitch: UISwitch
     var saveWithAlarmLabel: UILabel
     
@@ -40,17 +35,13 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.minutesTextField = UITextField()
         self.monthTextField = UITextField()
         self.yearTextField = UITextField()
-        self.reminderListTextField = UITextField()
         self.colonLabel = UILabel()
         self.dotLabel1 = UILabel()
         self.dotLabel2 = UILabel()
         self.inputToolbar = UIToolbar()
         self.dateTimer = Timer()
         self.countdownTimer = Timer()
-        self.reminderListPicker = UIPickerView()
-        self.reminderLists = []
-        self.inputContainerView = UIView()
-        self.addToListLabel = UILabel()
+
         self.saveWithAlarmSwitch = UISwitch()
         self.saveWithAlarmLabel = UILabel()
         
@@ -88,17 +79,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         
         self.titleTextField.inputAccessoryView = inputToolbar
         self.titleTextField.autocorrectionType = .no
-        
-        self.reminderListPicker.delegate = self
-        self.reminderListPicker.dataSource = self
-        self.reminderListPicker.translatesAutoresizingMaskIntoConstraints = false
-    
-        self.inputContainerView = UIView(frame: CGRect(x: self.reminderListPicker.frame.origin.x,
-                                                       y: self.reminderListPicker.frame.origin.y,
-                                                       width: UIScreen.main.bounds.width,
-                                                       height: LayoutHandler.getInputViewHeightForDevice(inputToolbarHeight: self.inputToolbar.frame.size.height)))
-        self.inputViewBackground()
-        self.inputContainerView.addSubview(self.reminderListPicker)
         
         self.hoursTextField.translatesAutoresizingMaskIntoConstraints = false
         self.hoursTextField.delegate = self
@@ -162,35 +142,8 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.yearTextField.textColor = .white
         self.yearTextField.backgroundColor = .clear
         self.yearTextField.inputAccessoryView = inputToolbar
-        
         self.yearTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
-        
         self.textFieldContainerView.addSubview(self.yearTextField)
-        
-        self.reminderListTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.reminderListTextField.backgroundColor = .clear
-        self.reminderListTextField.layer.borderColor = UIColor.white.cgColor
-        self.reminderListTextField.layer.borderWidth = 2.0
-        self.reminderListTextField.layer.cornerRadius = 5.0
-        self.reminderListTextField.textColor = .white
-        self.reminderListTextField.borderStyle = .roundedRect
-        self.reminderListTextField.delegate = self
-        self.reminderListTextField.tag = 6
-        self.reminderListTextField.tintColor = .clear
-        self.reminderListTextField.inputView = self.inputContainerView
-        self.reminderListTextField.inputAccessoryView = inputToolbar
-        self.reminderListTextField.adjustsFontSizeToFitWidth = false
-        self.reminderListTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .regular)
-        self.textFieldContainerView.addSubview(self.reminderListTextField)
-        
-        self.addToListLabel.translatesAutoresizingMaskIntoConstraints = false;
-        self.addToListLabel.text = NSLocalizedString("textfield-label-add-to-list", comment: "ReminderList Textfield")
-        self.addToListLabel.textColor = .white
-        self.addToListLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .semibold)
-        self.addToListLabel.lineBreakMode = .byWordWrapping
-        self.addToListLabel.numberOfLines = 0
-        self.addToListLabel.textAlignment = .left
-        self.textFieldContainerView.addSubview(self.addToListLabel)
         
         self.colonLabel.translatesAutoresizingMaskIntoConstraints = false
         self.colonLabel.text = ":"
@@ -215,7 +168,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.saveWithAlarmSwitch.layer.shadowColor = UIColor.black.cgColor
         self.saveWithAlarmSwitch.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.saveWithAlarmSwitch.layer.shadowOpacity = 0.1
-        self.textFieldContainerView.addSubview(self.saveWithAlarmSwitch)
+//        self.textFieldContainerView.addSubview(self.saveWithAlarmSwitch)
         
         self.saveWithAlarmLabel.translatesAutoresizingMaskIntoConstraints = false;
         self.saveWithAlarmLabel.text = NSLocalizedString("textfield-label-add-alarm", comment: "Add alarm Label")
@@ -224,7 +177,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         self.saveWithAlarmLabel.lineBreakMode = .byWordWrapping
         self.saveWithAlarmLabel.numberOfLines = 0
         self.saveWithAlarmLabel.textAlignment = .left
-        self.textFieldContainerView.addSubview(self.saveWithAlarmLabel)
+//        self.textFieldContainerView.addSubview(self.saveWithAlarmLabel)
         
     }
     
@@ -266,9 +219,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
             "colonLabel": self.colonLabel,
             "dotLabel1": self.dotLabel1,
             "dotLabel2": self.dotLabel2,
-            "reminderListTextField": self.reminderListTextField,
-            "reminderListPicker": self.reminderListPicker,
-            "addToListLabel": self.addToListLabel,
             "saveWithAlarmLabel": self.saveWithAlarmLabel,
             "saveWithAlarmSwitch": self.saveWithAlarmSwitch,
             ]
@@ -277,7 +227,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
             "smallFieldWidth": 36,
             "bigFieldWidth": 56,
             "textFieldMargin": LayoutHandler.getMarginForDevice(),
-            "addToLabelWidth": self.addToListLabel.intrinsicContentSize.width,
             ]
         
         // Textfields Constraints
@@ -292,83 +241,57 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
         
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[hoursTextField]-[reminderListTextField]-[saveWithAlarmLabel]-|",
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[hoursTextField]-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
 
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[dayTextField]-[reminderListTextField]-[saveWithAlarmLabel]-|",
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[dayTextField]-|",
                                                                                           options: [],
                                                                                           metrics: metricsDictionary,
                                                                                           views: viewsDictionary))
 
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[monthTextField]-[reminderListTextField]-[saveWithAlarmLabel]-|",
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[monthTextField]-|",
                                                                                           options: [],
                                                                                           metrics: metricsDictionary,
                                                                                           views: viewsDictionary))
 
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[minutesTextField]-[reminderListTextField]-[saveWithAlarmLabel]-|",
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[minutesTextField]-|",
                                                                                           options: [],
                                                                                           metrics: metricsDictionary,
                                                                                           views: viewsDictionary))
         
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[yearTextField]-[reminderListTextField]-[saveWithAlarmLabel]-|",
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[yearTextField]-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
         
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[colonLabel]-[reminderListTextField]-[saveWithAlarmLabel]-|",
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[colonLabel]-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
         
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[dotLabel1]-[reminderListTextField]-[saveWithAlarmLabel]-|",
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[dotLabel1]-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
 
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[dotLabel2]-[reminderListTextField]-[saveWithAlarmLabel]-|",
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[dotLabel2]-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
         
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[hoursTextField]-[addToListLabel]-[saveWithAlarmLabel]-|",
-                                                                                  options: [],
-                                                                                  metrics: metricsDictionary,
-                                                                                  views: viewsDictionary))
         
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(textFieldMargin)-[addToListLabel(addToLabelWidth)]-(5)-[reminderListTextField]-(textFieldMargin)-|",
-                                                                                  options: [],
-                                                                                  metrics: metricsDictionary,
-                                                                                  views: viewsDictionary))
-        
-        // SaveWithAlarm Switch and Label.
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[yearTextField]-[reminderListTextField]-[saveWithAlarmSwitch]-|",
-                                                                                  options: [],
-                                                                                  metrics: metricsDictionary,
-                                                                                  views: viewsDictionary))
-        
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(textFieldMargin)-[saveWithAlarmLabel]-[saveWithAlarmSwitch]-(textFieldMargin)-|",
-                                                                                  options: [],
-                                                                                  metrics: metricsDictionary,
-                                                                                  views: viewsDictionary))
-        
-        // InputContainerView constraints to center UIPicker.
-        self.inputContainerView.addConstraint(NSLayoutConstraint(item: self.reminderListPicker,
-                                                                   attribute: .centerX,
-                                                                   relatedBy: .equal,
-                                                                   toItem: self.inputContainerView,
-                                                                   attribute: .centerX,
-                                                                   multiplier: 1.0,
-                                                                   constant: 0.0))
-        
-        self.inputContainerView.addConstraint(NSLayoutConstraint(item: self.reminderListPicker,
-                                                                 attribute: .centerY,
-                                                                 relatedBy: .equal,
-                                                                 toItem: self.inputContainerView,
-                                                                 attribute: .centerY,
-                                                                 multiplier: 1.0,
-                                                                 constant: 0.0))
+//        // SaveWithAlarm Switch and Label.
+//        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[yearTextField]-[saveWithAlarmSwitch]-|",
+//                                                                                  options: [],
+//                                                                                  metrics: metricsDictionary,
+//                                                                                  views: viewsDictionary))
+//
+//        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(textFieldMargin)-[saveWithAlarmLabel]-[saveWithAlarmSwitch]-(textFieldMargin)-|",
+//                                                                                  options: [],
+//                                                                                  metrics: metricsDictionary,
+//                                                                                  views: viewsDictionary))
     }
     
     // MARK: TextField Actions
@@ -383,8 +306,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         // Check input characters.
         switch textField {
         case self.titleTextField:
-            return true
-        case self.reminderListTextField:
             return true
         case self.yearTextField:
             if TextInputHandler.isStringAnInt(string: string) {
@@ -435,12 +356,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     
     @objc func textFieldDidBeginEditing(_ textField: UITextField) {
         
-        if textField.tag == 6 {
-            self.reminderListTextField.backgroundColor = UIColor.black.withAlphaComponent(0.1)
-            return
-        }
-        self.reminderListTextField.backgroundColor = .clear
-        
         if let textContent = textField.text {
             if TextInputHandler.getNumberOfDigits(string: textContent) > 0 {
                 textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
@@ -449,7 +364,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     }
     
     func disableTextFields() {
-        let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField, self.reminderListTextField]
+        let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
         
         for textField in textFields {
             textField.isEnabled = false
@@ -458,7 +373,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     
     func getActiveTextField() -> UITextField {
         
-        let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField, self.reminderListTextField]
+        let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
         
         var activeTextField = UITextField()
         
@@ -501,7 +416,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         let textField = self.getActiveTextField()
         
         // The titleTextField doesn't need formatting.
-        if textField.tag == 0 || textField.tag == 6 {
+        if textField.tag == 0 {
             self.jumpToTextField(textField, direction: jumpDirection.jumpForward)
             return
         }
@@ -537,7 +452,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         let textField = self.getActiveTextField()
         
         // The titleTextField doesn't need formatting.
-        if textField.tag == 0 || textField.tag == 6 {
+        if textField.tag == 0 {
             self.jumpToTextField(textField, direction: jumpDirection.jumpBackward)
             return
         }
@@ -598,30 +513,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         return true
     }
     
-    // MARK: UIPicker
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.reminderLists.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        
-        // Create white text picker labels.
-        let pickerItem = UILabel()
-        pickerItem.attributedText = NSAttributedString(string: self.reminderLists[row].title,
-                                            attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 20.0),NSAttributedStringKey.foregroundColor:UIColor.white])
-        pickerItem.textAlignment = .center
-        
-        return pickerItem
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.reminderListTextField.text = self.reminderLists[row].title
-    }
     
     // MARK: Timers
     func startCountdownTimer() {
@@ -639,11 +530,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
     }
     
     @objc func updateDateTimePlaceHolder() {
-//        self.hoursTextField.placeholder = DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0)
-//        self.minutesTextField.placeholder = DateTimeHandler.getMinuteString(minute: DateTimeHandler.getCurrentTime().1)
-//        self.dayTextField.placeholder = DateTimeHandler.getDayString(day: DateTimeHandler.getCurrentDate().0)
-//        self.monthTextField.placeholder = DateTimeHandler.getMonthString(month: DateTimeHandler.getCurrentDate().1)
-//        self.yearTextField.placeholder = String(format: "%d", DateTimeHandler.getCurrentDate().2)
         
         self.hoursTextField.attributedPlaceholder = NSAttributedString(string: DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0),
                                                                        attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
@@ -720,7 +606,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
         
         // Create reminder item and save reminder list.
         self.saveAdvancedReminder(date: isDateTimeValid.1)
-        ReminderListHandler.saveUserReminderList(list: self.reminderLists[self.reminderListPicker.selectedRow(inComponent: 0)])
         
         // Reset textFields.
         self.resetTextFields()
@@ -745,8 +630,6 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
             reminder.dueDateComponents = components
             reminder.addAlarm(EKAlarm.init(absoluteDate: date))
         }
-        
-        reminder.calendar = self.reminderLists[self.reminderListPicker.selectedRow(inComponent: 0)]
         
         do {
             try self.eventStore.save(reminder, commit: true)
@@ -785,27 +668,7 @@ class AdvancedTaskViewController: TaskViewController, UIPickerViewDataSource, UI
                     self.disableTextFields()
                 }
             }
-            else {
-                DispatchQueue.main.async {
-                    let userList = ReminderListHandler.getUserReminderList(eventStore: self.eventStore)
-                    self.reminderListTextField.text = userList.0.title
-                    self.reminderListTextField.setNeedsLayout()
-                    self.reminderLists = ReminderListHandler.getDeviceReminderLists(eventStore: self.eventStore)
-                    self.reminderListPicker.selectRow(userList.1, inComponent: 0, animated: false)
-                }
-            }
         }
-    }
-    
-    func inputViewBackground() {
-        let bottomColor = UIColor(red:0.38, green:0.10, blue:0.19, alpha:1.0).cgColor
-        let topColor = UIColor(red:0.38, green:0.15, blue:0.15, alpha:1.0).cgColor
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.inputContainerView.frame
-        gradientLayer.colors = [topColor, bottomColor]
-        gradientLayer.locations = [0.1,1.0]
-        self.inputContainerView.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     override func didReceiveMemoryWarning() {

@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import EventKit
 
-class SettingsViewController: TemplatePageViewController {
+class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource, UIPickerViewDelegate{
     
     private var backButtonContainerView: UIView
     private var startupContainerView: UIView
+    private var reminderListContainerView: UIView
     private var showIntroButtonContainerView: UIView
 
     var backButton: UIButton
@@ -18,15 +20,26 @@ class SettingsViewController: TemplatePageViewController {
     var advancedTaskSwitch: UISwitch
     var advancedTaskLabel: UILabel
     var hasSwitchBeenToggled: Bool
+    var reminderListTextField: UITextField
+    var reminderListLabel: UILabel
+    var reminderListPicker: UIPickerView
+    var reminderLists: [EKCalendar]
+    var inputContainerView: UIView
     
     override init() {
         self.backButtonContainerView = UIView()
         self.startupContainerView = UIView()
+        self.reminderListContainerView = UIView()
         self.showIntroButtonContainerView = UIView()
         self.backButton = UIButton()
         self.showIntroButton = UIButton()
         self.advancedTaskLabel = UILabel()
         self.advancedTaskSwitch = UISwitch()
+        self.reminderListTextField = UITextField()
+        self.reminderListLabel = UILabel()
+        self.reminderListPicker = UIPickerView()
+        self.reminderLists = []
+        self.inputContainerView = UIView()
         self.hasSwitchBeenToggled = false
         
         super.init()
@@ -43,6 +56,11 @@ class SettingsViewController: TemplatePageViewController {
         self.setupGestures()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.checkPermission()
+    }
+    
     override func setupViews() {
         super.setupViews()
         
@@ -54,6 +72,9 @@ class SettingsViewController: TemplatePageViewController {
         
         self.startupContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.startupContainerView)
+       
+        self.reminderListContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.reminderListContainerView)
         
         self.showIntroButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.showIntroButtonContainerView)
@@ -84,6 +105,42 @@ class SettingsViewController: TemplatePageViewController {
         self.advancedTaskSwitch.layer.shadowOpacity = 0.1
         self.startupContainerView.addSubview(self.advancedTaskSwitch)
 
+        self.inputContainerView = UIView(frame: CGRect(x: self.reminderListPicker.frame.origin.x,
+                                                       y: self.reminderListPicker.frame.origin.y,
+                                                       width: UIScreen.main.bounds.width,
+                                                       height: LayoutHandler.getInputViewHeightForDevice()))
+        self.inputViewBackground()
+        self.inputContainerView.addSubview(self.reminderListPicker)
+        
+        self.reminderListPicker.delegate = self
+        self.reminderListPicker.dataSource = self
+        self.reminderListPicker.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.reminderListTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.reminderListTextField.backgroundColor = .clear
+        self.reminderListTextField.layer.borderColor = UIColor.white.cgColor
+        self.reminderListTextField.layer.borderWidth = 2.0
+        self.reminderListTextField.layer.cornerRadius = 5.0
+        self.reminderListTextField.textColor = .white
+        self.reminderListTextField.borderStyle = .roundedRect
+        self.reminderListTextField.delegate = self
+        self.reminderListTextField.tag = 0
+        self.reminderListTextField.tintColor = .clear
+        self.reminderListTextField.inputView = self.inputContainerView
+        self.reminderListTextField.adjustsFontSizeToFitWidth = false
+        self.reminderListTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .regular)
+        self.reminderListTextField.addTarget(self, action: #selector(self.tap), for: .touchUpInside)
+        self.reminderListContainerView.addSubview(self.reminderListTextField)
+        
+        self.reminderListLabel.translatesAutoresizingMaskIntoConstraints = false;
+        self.reminderListLabel.text = NSLocalizedString("textfield-label-add-to-list", comment: "ReminderList Textfield")
+        self.reminderListLabel.textColor = .white
+        self.reminderListLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .medium)
+        self.reminderListLabel.lineBreakMode = .byWordWrapping
+        self.reminderListLabel.numberOfLines = 0
+        self.reminderListLabel.textAlignment = .left
+        self.reminderListContainerView.addSubview(self.reminderListLabel)
+        
         self.showIntroButton = LongpopsButton(title: NSLocalizedString("intro-button-title", comment: "Intro Button."))
         self.showIntroButton.translatesAutoresizingMaskIntoConstraints = false
         self.showIntroButton.addTarget(self, action: #selector(SettingsViewController.showIntroButtonPressed), for: .touchUpInside)
@@ -109,11 +166,15 @@ class SettingsViewController: TemplatePageViewController {
             "advancedTaskLabel": self.advancedTaskLabel,
             "showIntroButton": self.showIntroButton,
             "showIntroButtonContainerView": self.showIntroButtonContainerView,
+            "reminderListLabel": self.reminderListLabel,
+            "reminderListTextField": self.reminderListTextField,
             ]
         
         let metricsDictionary: [String: Any] = [
             "backButtonSize": LayoutHandler.getBackButtonSizeForDevice(),
             "margin": LayoutHandler.getMarginForDevice(),
+            "reminderListLabelWidth": self.reminderListLabel.intrinsicContentSize.width,
+
             ]
         
         let margins = view.layoutMarginsGuide
@@ -124,18 +185,21 @@ class SettingsViewController: TemplatePageViewController {
             self.startupContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.startupContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
+            self.reminderListContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.reminderListContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            
             self.showIntroButtonContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.showIntroButtonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
             ])
         
-        if #available(iOS 11, *) {
-            NSLayoutConstraint.activate([
-                self.startupContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: 1.0),
-                self.showIntroButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.startupContainerView.bottomAnchor, multiplier: 1.0),
-                self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.showIntroButtonContainerView.bottomAnchor, multiplier: 1.0),
-                ])
-        }
+        NSLayoutConstraint.activate([
+            self.startupContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: 1.0),
+            self.reminderListContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.startupContainerView.bottomAnchor, multiplier: 1.0),
+            self.showIntroButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.reminderListContainerView.bottomAnchor, multiplier: 1.0),
+            self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.showIntroButtonContainerView.bottomAnchor, multiplier: 1.0),
+            ])
+
 
         // MARK: Switch Constraints.
         self.startupContainerView.addConstraint(NSLayoutConstraint(item: self.advancedTaskSwitch,
@@ -160,8 +224,25 @@ class SettingsViewController: TemplatePageViewController {
                                                                                options: [],
                                                                                metrics: metricsDictionary,
                                                                                views: viewsDictionary))
+        
+        // MARK: ReminderList Constraints.
+        
+        self.reminderListContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[reminderListLabel(reminderListLabelWidth)]-[reminderListTextField]-(margin)-|",
+                                                                                options: [],
+                                                                                metrics: metricsDictionary,
+                                                                                views: viewsDictionary))
+        
+        self.reminderListContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[reminderListLabel]-|",
+                                                                                options: [],
+                                                                                metrics: metricsDictionary,
+                                                                                views: viewsDictionary))
+        
+        self.reminderListContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[reminderListTextField]-|",
+                                                                                options: [],
+                                                                                metrics: metricsDictionary,
+                                                                                views: viewsDictionary))
        
-        // showIntro Button.
+        // ShowIntro Button.
         
         self.showIntroButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[showIntroButton]-|",
                                                                                 options: [],
@@ -191,6 +272,23 @@ class SettingsViewController: TemplatePageViewController {
                                                                                    options: [],
                                                                                    metrics: metricsDictionary,
                                                                                    views: viewsDictionary))
+        
+        // InputContainerView constraints to center UIPicker.
+        self.inputContainerView.addConstraint(NSLayoutConstraint(item: self.reminderListPicker,
+                                                                 attribute: .centerX,
+                                                                 relatedBy: .equal,
+                                                                 toItem: self.inputContainerView,
+                                                                 attribute: .centerX,
+                                                                 multiplier: 1.0,
+                                                                 constant: 0.0))
+        
+        self.inputContainerView.addConstraint(NSLayoutConstraint(item: self.reminderListPicker,
+                                                                 attribute: .centerY,
+                                                                 relatedBy: .equal,
+                                                                 toItem: self.inputContainerView,
+                                                                 attribute: .centerY,
+                                                                 multiplier: 1.0,
+                                                                 constant: 0.0))
     }
     
     @objc func backButtonPressed() {
@@ -213,8 +311,66 @@ class SettingsViewController: TemplatePageViewController {
             self.changeRootViewControllerOnDismiss()
         }
     }
+    // MARK: UIPicker
     
-    fileprivate func changeRootViewControllerOnDismiss() {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.reminderLists.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        
+        // Create white text picker labels.
+        let pickerItem = UILabel()
+        pickerItem.attributedText = NSAttributedString(string: self.reminderLists[row].title,
+                                                       attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 20.0),NSAttributedStringKey.foregroundColor:UIColor.white])
+        pickerItem.textAlignment = .center
+        
+        return pickerItem
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.reminderListTextField.text = self.reminderLists[row].title
+    }
+    
+    @objc override func checkPermission() {
+        self.eventStore.requestAccess(to: EKEntityType.reminder) { (granted, error) -> Void in
+            if !granted{
+                DispatchQueue.main.async {
+                    self.reminderListTextField.isEnabled = false
+                }
+            }
+            else {
+                DispatchQueue.main.async {
+                    let userList = ReminderListHandler.getUserReminderList(eventStore: self.eventStore)
+                    self.reminderListTextField.text = userList.0.title
+                    self.reminderListTextField.setNeedsLayout()
+                    self.reminderLists = ReminderListHandler.getDeviceReminderLists(eventStore: self.eventStore)
+                    self.reminderListPicker.selectRow(userList.1, inComponent: 0, animated: false)
+                }
+            }
+        }
+    }
+    
+    func inputViewBackground() {
+        let bottomColor = UIColor(red:0.38, green:0.10, blue:0.19, alpha:1.0).cgColor
+        let topColor = UIColor(red:0.38, green:0.15, blue:0.15, alpha:1.0).cgColor
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.inputContainerView.frame
+        gradientLayer.colors = [topColor, bottomColor]
+        gradientLayer.locations = [0.1,1.0]
+        self.inputContainerView.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    @objc func tap() {
+        self.reminderListTextField.becomeFirstResponder()
+    }
+    
+    func changeRootViewControllerOnDismiss() {
         dismiss(animated: true, completion: {
             if self.hasSwitchBeenToggled {
                 if self.advancedTaskSwitch.isOn {

@@ -22,7 +22,6 @@ class TaskViewController: TemplateViewController {
     var permissionButton: UIButton
     var infoButton: UIButton
     var settingsButton: UIButton
-    var eventStore: EKEventStore
     
     override init() {
         self.navigationItemContainerView = UIView()
@@ -36,7 +35,6 @@ class TaskViewController: TemplateViewController {
         self.permissionButton = UIButton(type: .system)
         self.infoButton = UIButton(type: .system)
         self.settingsButton = UIButton(type: .system)
-        self.eventStore = EKEventStore()
         
         super.init()
     }
@@ -48,7 +46,6 @@ class TaskViewController: TemplateViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(TaskViewController.checkPermission), name: NSNotification.Name(rawValue: "dismissed"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -163,9 +160,9 @@ class TaskViewController: TemplateViewController {
                 ])
         }
         
-        // MARK: Heading Constraints
+        // MARK: Navigation item Constraints
         
-        self.navigationItemContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[settingsButton(menuButton)]-[infoButton(menuButton)]-|",
+        self.navigationItemContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[settingsButton(menuButton)]-(>=1)-[infoButton(menuButton)]-|",
                                                                                 options: .alignAllLastBaseline,
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
@@ -299,18 +296,6 @@ class TaskViewController: TemplateViewController {
         }
     }
     
-    @objc func checkPermission() {
-        self.eventStore.requestAccess(to: EKEntityType.reminder) { (granted, error) -> Void in
-            if !granted{
-                DispatchQueue.main.async {
-                    self.createReminderButton.isEnabled = false
-                    self.titleTextField.isEnabled = false
-                    self.permissionButton.isHidden = false
-                }
-            }
-        }
-    }
-    
     // MARK: Create Reminder
     
     func saveNewReminder(stickyText: String) {
@@ -331,6 +316,18 @@ class TaskViewController: TemplateViewController {
         }
         catch let error {
             print("Error creating and saving new reminder : \(error)")
+        }
+    }
+    
+    @objc override func checkPermission() {
+        self.eventStore.requestAccess(to: EKEntityType.reminder) { (granted, error) -> Void in
+            if !granted{
+                DispatchQueue.main.async {
+                    self.createReminderButton.isEnabled = false
+                    self.permissionButton.isHidden = false
+                    self.titleTextField.isEnabled = false
+                }
+            }
         }
     }
 }

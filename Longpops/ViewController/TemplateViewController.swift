@@ -7,15 +7,17 @@
 
 import Foundation
 import UIKit
+import EventKit
 
 class TemplateViewController: UIViewController, UITextFieldDelegate {
     
     var gradientLayer: CAGradientLayer
-    
-   
+    var eventStore: EKEventStore
     
     init() {
         self.gradientLayer = CAGradientLayer()
+        self.eventStore = EKEventStore()
+
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -26,6 +28,8 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createBackgroundGradient()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(TemplateViewController.checkPermission), name: NSNotification.Name(rawValue: "dismissed"), object: nil)
     }
     
     func setupViews() {}
@@ -42,6 +46,7 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
         self.view.layer.insertSublayer(self.gradientLayer, at: 0)
     }
     
+    @objc func checkPermission() {}
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
