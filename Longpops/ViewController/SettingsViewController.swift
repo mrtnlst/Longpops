@@ -147,7 +147,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.saveWithAlarmLabel.text = NSLocalizedString("textfield-label-add-alarm", comment: "Add alarm Label")
         self.saveWithAlarmLabel.textColor = .white
         self.saveWithAlarmLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(),
-                                                         weight: .regular)
+                                                         weight: .medium)
         self.saveWithAlarmLabel.lineBreakMode = .byWordWrapping
         self.saveWithAlarmLabel.numberOfLines = 0
         self.saveWithAlarmLabel.textAlignment = .left
@@ -210,7 +210,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         
         let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
-        let doneButton = UIBarButtonItem(title: NSLocalizedString("done-button-input-toolbar", comment: "Done button title"),
+        let doneButton = UIBarButtonItem(title: NSLocalizedString("done-button-input-toolbar-settings", comment: "Done button title"),
                                          style: .plain,
                                          target: self,
                                          action: #selector(SettingsViewController.doneButtonPressed))

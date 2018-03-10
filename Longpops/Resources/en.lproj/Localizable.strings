@@ -25,6 +25,7 @@
 "textfield-label-add-alarm" = "Add alarm and due date:";
 
 "done-button-input-toolbar" = "Save";
+"done-button-input-toolbar-settings" = "Done";
 
 "alert-title" =  "Ooops … I can't do that!";
 "alert-message" = "Your date lies in the past. Please enter a valid date!";

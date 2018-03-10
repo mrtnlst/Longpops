@@ -25,6 +25,7 @@
 "textfield-label-add-alarm" = "Wecker/Termin hinzufügen:";
 
 "done-button-input-toolbar" = "Speichern";
+"done-button-input-toolbar-settings" = "Fertig";
 
 "alert-title" =  "Ups … das geht nicht!";
 "alert-message" = "Das Datum liegt in der Vergangenheit. Bitte gib ein gültiges Datum ein!";
