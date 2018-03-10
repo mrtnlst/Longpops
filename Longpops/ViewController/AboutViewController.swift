@@ -55,6 +55,7 @@ class AboutViewController: TemplatePageViewController {
     override func setupViews() {
         super.setupViews()
         
+        // ContainerViews.
         self.twitterContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.twitterContainerView)
         
@@ -67,18 +68,16 @@ class AboutViewController: TemplatePageViewController {
         self.versionContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.versionContainerView)
         
+        // HeadingLabel + DescriptionLabel
         self.headingLabel.text = NSLocalizedString("heading-label-about", comment: "Heading label.")
         
         self.descriptionLabel.textAlignment = .left
         self.descriptionLabel.text = NSLocalizedString("description-label-about", comment: "Description label.")
         
+        // Twitter.
         self.twitterImage.image = UIImage(named: "Twitter-Logo")
         self.twitterImage.translatesAutoresizingMaskIntoConstraints = false
         self.twitterContainerView.addSubview(self.twitterImage)
-
-        self.websiteImage.image = UIImage(named: "Browser")
-        self.websiteImage.translatesAutoresizingMaskIntoConstraints = false
-        self.websiteContainerView.addSubview(self.websiteImage)
         
         self.twitterButton.translatesAutoresizingMaskIntoConstraints = false
         self.twitterButton.setTitle("@mrtnlst", for: .normal)
@@ -86,7 +85,12 @@ class AboutViewController: TemplatePageViewController {
         self.twitterButton.titleLabel?.font = UIFont.systemFont(ofSize: LayoutHandler.getLinkButtonSizeForDevice(), weight: .medium)
         self.twitterButton.addTarget(self, action: #selector(AboutViewController.twitterButtonPressed), for: .touchUpInside)
         self.twitterContainerView.addSubview(self.twitterButton)
-
+        
+        // Website.
+        self.websiteImage.image = UIImage(named: "Browser")
+        self.websiteImage.translatesAutoresizingMaskIntoConstraints = false
+        self.websiteContainerView.addSubview(self.websiteImage)
+        
         self.websiteButton.translatesAutoresizingMaskIntoConstraints = false
         self.websiteButton.setTitle(" martinlist.org", for: .normal)
         self.websiteButton.setTitleColor(.white, for: .normal)
@@ -103,6 +107,7 @@ class AboutViewController: TemplatePageViewController {
         self.backButton.addTarget(self, action: #selector(AboutViewController.backButtonPressed), for: .touchUpInside)
         self.backButtonContainerView.addSubview(self.backButton)
         
+        // Version.
         self.versionLabel.translatesAutoresizingMaskIntoConstraints = false
         self.versionLabel.text = "Version 2.0"
         self.versionLabel.textColor = .white
@@ -172,7 +177,7 @@ class AboutViewController: TemplatePageViewController {
             
         }
         
-        // MARK: Twitter Button Constraints
+        // MARK: TwitterContainerView Constraints
 
         self.twitterContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[twitterImage(imageSize)]-[twitterButton]-(>=1)-|",
                                                                                     options: [],
@@ -188,7 +193,7 @@ class AboutViewController: TemplatePageViewController {
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
         
-        // MARK: Website Button Constraints
+        // MARK: WebsiteContainerView Constraints
         
         self.websiteContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[websiteImage(imageSize)]-[websiteButton]-(>=1)-|",
                                                                                 options: [],
@@ -204,7 +209,7 @@ class AboutViewController: TemplatePageViewController {
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
         
-        // MARK: Back Button Constraints
+        // MARK: BackButtonContainerView Constraints
         self.backButtonContainerView.addConstraint(NSLayoutConstraint(item: self.backButton,
                                                                   attribute: .centerX,
                                                                   relatedBy: .equal,
@@ -223,7 +228,7 @@ class AboutViewController: TemplatePageViewController {
                                                                                metrics: metricsDictionary,
                                                                                views: viewsDictionary))
         
-        // MARK: Version Label Constraints
+        // MARK: VersionContainerView Constraints
         self.versionContainerView.addConstraint(NSLayoutConstraint(item: self.versionLabel,
                                                                       attribute: .centerX,
                                                                       relatedBy: .equal,
@@ -243,6 +248,7 @@ class AboutViewController: TemplatePageViewController {
                                                                                    views: viewsDictionary))
     }
     
+    // MARK: Button Actions.
     @objc func twitterButtonPressed() {
         if #available(iOS 10.0, *) {
             let options = [UIApplicationOpenURLOptionUniversalLinksOnly : false]
@@ -267,6 +273,7 @@ class AboutViewController: TemplatePageViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    // MARK: Gestures Handeling.
     @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
         if gesture.direction == UISwipeGestureRecognizerDirection.down {
             dismiss(animated: true, completion: nil)
