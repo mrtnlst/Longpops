@@ -18,7 +18,6 @@ class TaskViewController: TemplateViewController {
     
     var titleTextField: UITextField
     var createReminderButton: CreateReminderButton
-    var createReminderButtonCenterX: NSLayoutConstraint
     var permissionButton: UIButton
     var infoButton: UIButton
     var settingsButton: UIButton
@@ -31,7 +30,6 @@ class TaskViewController: TemplateViewController {
         
         self.titleTextField = UITextField()
         self.createReminderButton = CreateReminderButton()
-        self.createReminderButtonCenterX = NSLayoutConstraint()
         self.permissionButton = UIButton(type: .system)
         self.infoButton = UIButton(type: .system)
         self.settingsButton = UIButton(type: .system)
@@ -173,15 +171,13 @@ class TaskViewController: TemplateViewController {
         
         // MARK: Reminder Button Constraints
         
-        self.createReminderButtonCenterX = NSLayoutConstraint(item: self.createReminderButton,
+        self.createButtonContainerView.addConstraint(NSLayoutConstraint(item: self.createReminderButton,
                                                               attribute: .centerX,
                                                               relatedBy: .equal,
                                                               toItem: self.createButtonContainerView,
                                                               attribute: .centerX,
                                                               multiplier: 1.0,
-                                                              constant: 0.0)
-        
-        self.createButtonContainerView.addConstraint(self.createReminderButtonCenterX)
+                                                              constant: 0.0))
         
         self.createButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[createReminderButton(createReminderButtonWidth)]-(>=1)-|",
                                                                                options: [],
