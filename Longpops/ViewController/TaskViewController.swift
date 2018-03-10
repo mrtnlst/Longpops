@@ -17,7 +17,7 @@ class TaskViewController: TemplateViewController {
     var permissionButtonContainerView: UIView
     
     var titleTextField: UITextField
-    var createReminderButton: UIButton
+    var createReminderButton: CreateReminderButton
     var createReminderButtonCenterX: NSLayoutConstraint
     var permissionButton: UIButton
     var infoButton: UIButton
@@ -30,7 +30,7 @@ class TaskViewController: TemplateViewController {
         self.permissionButtonContainerView = UIView()
         
         self.titleTextField = UITextField()
-        self.createReminderButton = UIButton()
+        self.createReminderButton = CreateReminderButton()
         self.createReminderButtonCenterX = NSLayoutConstraint()
         self.permissionButton = UIButton(type: .system)
         self.infoButton = UIButton(type: .system)
@@ -83,11 +83,6 @@ class TaskViewController: TemplateViewController {
         self.titleTextField.backgroundColor = .clear
         self.textFieldContainerView.addSubview(self.titleTextField)
         
-        self.createReminderButton.setImage(UIImage(named: "SaveButton"), for: .normal)
-        self.createReminderButton.layer.shadowColor = UIColor.black.cgColor
-        self.createReminderButton.layer.shadowOffset = CGSize(width: 0, height: 0)
-        self.createReminderButton.layer.shadowOpacity = 0.2
-        self.createReminderButton.translatesAutoresizingMaskIntoConstraints = false
         self.createReminderButton.addTarget(self, action: #selector(TaskViewController.createReminderButtonPressed), for: .touchUpInside)
         self.createButtonContainerView.addSubview(self.createReminderButton)
         
