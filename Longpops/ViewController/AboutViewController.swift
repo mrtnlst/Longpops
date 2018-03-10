@@ -9,10 +9,11 @@ import UIKit
 
 class AboutViewController: TemplatePageViewController {
     
-    private var twitterContainerView: UIView
-    private var websiteContainerView: UIView
-    private var backButtonContainerView: UIView
-    private var versionContainerView: UIView
+    var twitterContainerView: UIView
+    var websiteContainerView: UIView
+    var backButtonContainerView: UIView
+    var versionContainerView: UIView
+    var descriptionContainerView: UIView
     
     var twitterButton: UIButton
     var twitterImage: UIImageView
@@ -22,12 +23,14 @@ class AboutViewController: TemplatePageViewController {
     var twitterURL: URL
     var websiteURL: URL
     var versionLabel: UILabel
+    var descriptionLabel: UILabel
     
     override init() {
         self.twitterContainerView = UIView()
         self.websiteContainerView = UIView()
         self.backButtonContainerView = UIView()
         self.versionContainerView = UIView()
+        self.descriptionContainerView = UIView()
         
         self.twitterButton = UIButton(type: .system)
         self.twitterImage = UIImageView()
@@ -37,7 +40,8 @@ class AboutViewController: TemplatePageViewController {
         self.twitterURL = URL(string: "https://twitter.com/mrtnlst")!
         self.websiteURL = URL(string: "https://martinlist.org")!
         self.versionLabel = UILabel()
-        
+        self.descriptionLabel = UILabel()
+
         super.init()
     }
     
@@ -56,6 +60,9 @@ class AboutViewController: TemplatePageViewController {
         super.setupViews()
         
         // ContainerViews.
+        self.descriptionContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.descriptionContainerView)
+        
         self.twitterContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.twitterContainerView)
         
@@ -71,8 +78,15 @@ class AboutViewController: TemplatePageViewController {
         // HeadingLabel + DescriptionLabel
         self.headingLabel.text = NSLocalizedString("heading-label-about", comment: "Heading label.")
         
+        self.descriptionLabel.translatesAutoresizingMaskIntoConstraints = false;
+        self.descriptionLabel.textColor = .white
+        self.descriptionLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .regular)
+        self.descriptionLabel.lineBreakMode = .byWordWrapping
+        self.descriptionLabel.numberOfLines = 0
         self.descriptionLabel.textAlignment = .left
         self.descriptionLabel.text = NSLocalizedString("description-label-about", comment: "Description label.")
+        self.descriptionContainerView.addSubview(self.descriptionLabel)
+
         
         // Twitter.
         self.twitterImage.image = UIImage(named: "Twitter-Logo")
@@ -126,13 +140,6 @@ class AboutViewController: TemplatePageViewController {
         super.setupConstraints()
         
         let viewsDictionary: [String: Any] = [
-            "headingContainerView": self.headingContainerView,
-            "descriptionContainerView": self.descriptionContainerView,
-            "twitterContainerView": self.twitterContainerView,
-            "websiteContainerView": self.websiteContainerView,
-            "versionContainerView": self.versionContainerView,
-            "backButtonContainerView": self.backButtonContainerView,
-            "headingLabel": self.headingLabel,
             "descriptionLabel": self.descriptionLabel,
             "versionLabel": self.versionLabel,
             "twitterButton": self.twitterButton,
@@ -150,6 +157,9 @@ class AboutViewController: TemplatePageViewController {
         
         let margins = view.layoutMarginsGuide
         NSLayoutConstraint.activate([
+            self.descriptionContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.descriptionContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            
             self.twitterContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.twitterContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
@@ -166,6 +176,7 @@ class AboutViewController: TemplatePageViewController {
         if #available(iOS 11, *) {
             let guide = view.safeAreaLayoutGuide
             NSLayoutConstraint.activate([
+                self.descriptionContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 self.twitterContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: 1.0),
                 
                 self.websiteContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.twitterContainerView.bottomAnchor, multiplier: 1.0),
@@ -177,8 +188,26 @@ class AboutViewController: TemplatePageViewController {
             
         }
         
+        // MARK: Description Constraints
+        self.descriptionContainerView.addConstraint(NSLayoutConstraint(item: self.descriptionLabel,
+                                                                       attribute: .centerX,
+                                                                       relatedBy: .equal,
+                                                                       toItem: self.descriptionContainerView,
+                                                                       attribute: .centerX,
+                                                                       multiplier: 1.0,
+                                                                       constant: 0.0))
+        
+        self.descriptionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[descriptionLabel]-(margin)-|",
+                                                                                    options: [],
+                                                                                    metrics: metricsDictionary,
+                                                                                    views: viewsDictionary))
+        
+        self.descriptionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[descriptionLabel]-|",
+                                                                                    options: [],
+                                                                                    metrics: [:],
+                                                                                    views: viewsDictionary))
+        
         // MARK: TwitterContainerView Constraints
-
         self.twitterContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[twitterImage(imageSize)]-[twitterButton]-(>=1)-|",
                                                                                     options: [],
                                                                                     metrics: metricsDictionary,
@@ -194,7 +223,6 @@ class AboutViewController: TemplatePageViewController {
                                                                                 views: viewsDictionary))
         
         // MARK: WebsiteContainerView Constraints
-        
         self.websiteContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[websiteImage(imageSize)]-[websiteButton]-(>=1)-|",
                                                                                 options: [],
                                                                                 metrics: metricsDictionary,

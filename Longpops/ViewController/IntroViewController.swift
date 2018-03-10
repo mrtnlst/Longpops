@@ -11,9 +11,10 @@ import EventKit
 
 class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
 
-    private var pageControlContainer: UIView
-    private var backButtonContainerView: UIView
-
+    var pageControlContainer: UIView
+    var backButtonContainerView: UIView
+    var descriptionContainerView: UIView
+    
     var backButton: UIButton
     let scrollView: UIScrollView
     var colors: [UIColor]
@@ -22,10 +23,12 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
     var pageControl: UIPageControl
     var numberOfPages: CGFloat
     var swipeDown: UISwipeGestureRecognizer
+    var descriptionLabel: UILabel
 
     override init() {
         self.pageControlContainer = UIView()
         self.backButtonContainerView = UIView()
+        self.descriptionContainerView = UIView()
         
         self.backButton = UIButton()
         self.scrollView = UIScrollView()
@@ -35,7 +38,8 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         self.pageControl = UIPageControl()
         self.numberOfPages = 3
         self.swipeDown = UISwipeGestureRecognizer()
-        
+        self.descriptionLabel = UILabel()
+
         super.init()
     }
     
@@ -56,6 +60,9 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         super.setupViews()
         
         // ContainerViews.
+        self.descriptionContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.descriptionContainerView)
+        
         self.backButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.backButtonContainerView)
         
@@ -66,7 +73,14 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         
         // HeadingLabel = DescriptionLabel.
         self.headingLabel.text = NSLocalizedString("heading-label-intro", comment: "Intro label heading.")
+        self.descriptionLabel.translatesAutoresizingMaskIntoConstraints = false;
+        self.descriptionLabel.textColor = .white
+        self.descriptionLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .regular)
+        self.descriptionLabel.lineBreakMode = .byWordWrapping
+        self.descriptionLabel.numberOfLines = 0
+        self.descriptionLabel.textAlignment = .left
         self.descriptionLabel.text = NSLocalizedString("description-label-intro", comment: "Intro description label.")
+        self.descriptionContainerView.addSubview(self.descriptionLabel)
         
         // PageControl.
         self.pageControlContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -101,6 +115,7 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         super.setupConstraints()
         
         let viewsDictionary: [String: Any] = [
+            "descriptionLabel": self.descriptionLabel,
             "scrollView": self.scrollView,
             "pageControlContainer": self.pageControlContainer,
             "pageControl": self.pageControl,
@@ -115,6 +130,9 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         
         let margins = view.layoutMarginsGuide
         NSLayoutConstraint.activate([
+            self.descriptionContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.descriptionContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            
             self.pageControlContainer.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.pageControlContainer.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
@@ -123,9 +141,31 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
             ])
         
             NSLayoutConstraint.activate([
+                self.descriptionContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 self.pageControlContainer.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.pageControlContainer.bottomAnchor, multiplier: 1.0),
                 ])
+        
+        // MARK: Description Constraints
+        self.descriptionContainerView.addConstraint(NSLayoutConstraint(item: self.descriptionLabel,
+                                                                       attribute: .centerX,
+                                                                       relatedBy: .equal,
+                                                                       toItem: self.descriptionContainerView,
+                                                                       attribute: .centerX,
+                                                                       multiplier: 1.0,
+                                                                       constant: 0.0))
+        
+        self.descriptionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[descriptionLabel]-(margin)-|",
+                                                                                    options: [],
+                                                                                    metrics: metricsDictionary,
+                                                                                    views: viewsDictionary))
+        
+        self.descriptionContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[descriptionLabel]-|",
+                                                                                    options: [],
+                                                                                    metrics: [:],
+                                                                                    views: viewsDictionary))
+        
+        // MARK: PageControlContainer Constraints
         
         self.pageControlContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[scrollView]-|",
                                                                                     options: [],
@@ -142,7 +182,7 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
                                                                                     metrics: metricsDictionary,
                                                                                     views: viewsDictionary))
         
-        // MARK: Back Button Constraints
+        // MARK: BackButtonContainer Constraints
         self.backButtonContainerView.addConstraint(NSLayoutConstraint(item: self.backButton,
                                                                       attribute: .centerX,
                                                                       relatedBy: .equal,

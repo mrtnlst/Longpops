@@ -75,7 +75,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         
         // ContainerViews.
         self.headingLabel.text = NSLocalizedString("heading-label-settings", comment: "Heading label.")
-        self.descriptionLabel.text = NSLocalizedString("description-label-settings", comment: "Description label.")
         
         self.backButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.backButtonContainerView)
@@ -269,7 +268,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
             ])
         
         NSLayoutConstraint.activate([
-            self.startupContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: 1.0),
+            self.startupContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: 1.0),
             self.saveWithAlarmContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.startupContainerView.bottomAnchor, multiplier: 1.0),
             self.reminderListContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.saveWithAlarmContainerView.bottomAnchor, multiplier: 1.0),
             self.showIntroButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.reminderListContainerView.bottomAnchor, multiplier: 1.0),
