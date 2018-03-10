@@ -15,6 +15,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
     var reminderListContainerView: UIView
     var showIntroButtonContainerView: UIView
     var saveWithAlarmContainerView: UIView
+    var inputContainerView: UIView
 
     var backButton: UIButton
     var showIntroButton: UIButton
@@ -25,7 +26,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
     var reminderListLabel: UILabel
     var reminderListPicker: UIPickerView
     var reminderLists: [EKCalendar]
-    var inputContainerView: UIView
     var inputToolbar: UIToolbar
     var saveWithAlarmSwitch: UISwitch
     var saveWithAlarmLabel: UILabel
@@ -36,6 +36,8 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.reminderListContainerView = UIView()
         self.showIntroButtonContainerView = UIView()
         self.saveWithAlarmContainerView = UIView()
+        self.inputContainerView = UIView()
+
         self.backButton = UIButton()
         self.showIntroButton = UIButton()
         self.advancedTaskLabel = UILabel()
@@ -44,7 +46,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.reminderListLabel = UILabel()
         self.reminderListPicker = UIPickerView()
         self.reminderLists = []
-        self.inputContainerView = UIView()
         self.inputToolbar = UIToolbar()
         self.hasSwitchBeenToggled = false
         self.saveWithAlarmSwitch = UISwitch()
@@ -72,8 +73,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
     override func setupViews() {
         super.setupViews()
         
-        self.setupInputToolbar()
-        
+        // ContainerViews.
         self.headingLabel.text = NSLocalizedString("heading-label-settings", comment: "Heading label.")
         self.descriptionLabel.text = NSLocalizedString("description-label-settings", comment: "Description label.")
         
@@ -92,6 +92,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.saveWithAlarmContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.saveWithAlarmContainerView)
      
+        // BackButton.
         self.backButton.setImage(UIImage(named: "BackButton"), for: .normal)
         self.backButton.layer.shadowColor = UIColor.black.cgColor
         self.backButton.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -102,6 +103,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
                                         for: .touchUpInside)
         self.backButtonContainerView.addSubview(self.backButton)
         
+        // AdvancedTastSwitch + Label.
         self.advancedTaskLabel.translatesAutoresizingMaskIntoConstraints = false;
         self.advancedTaskLabel.text = NSLocalizedString("settings-label-startup-screen", comment: "Settings label.")
         self.advancedTaskLabel.textColor = .white
@@ -126,6 +128,34 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         
         let defaults = UserDefaults.standard
         self.advancedTaskSwitch.isOn = defaults.bool(forKey: "advancedTask")
+        
+        // SaveWithAlarmSwitch + Label.
+        self.saveWithAlarmSwitch.translatesAutoresizingMaskIntoConstraints = false
+        self.saveWithAlarmSwitch.onTintColor = UIColor(red: 97.0/255,
+                                                       green: 208.0/255,
+                                                       blue: 255.0/255,
+                                                       alpha: 1.0)
+        self.saveWithAlarmSwitch.layer.shadowColor = UIColor.black.cgColor
+        self.saveWithAlarmSwitch.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.saveWithAlarmSwitch.layer.shadowOpacity = 0.1
+        self.saveWithAlarmSwitch.addTarget(self, action: #selector(self.saveWithAlarmSwitchToggled),
+                                           for: .valueChanged)
+        self.saveWithAlarmContainerView.addSubview(self.saveWithAlarmSwitch)
+        
+        self.saveWithAlarmSwitch.isOn = defaults.bool(forKey: "saveWithAlarm")
+        
+        self.saveWithAlarmLabel.translatesAutoresizingMaskIntoConstraints = false;
+        self.saveWithAlarmLabel.text = NSLocalizedString("textfield-label-add-alarm", comment: "Add alarm Label")
+        self.saveWithAlarmLabel.textColor = .white
+        self.saveWithAlarmLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(),
+                                                         weight: .regular)
+        self.saveWithAlarmLabel.lineBreakMode = .byWordWrapping
+        self.saveWithAlarmLabel.numberOfLines = 0
+        self.saveWithAlarmLabel.textAlignment = .left
+        self.saveWithAlarmContainerView.addSubview(self.saveWithAlarmLabel)
+
+        // InputToolBar + InputView.
+        self.setupInputToolbar()
 
         self.inputContainerView = UIView(frame: CGRect(x: self.reminderListPicker.frame.origin.x,
                                                        y: self.reminderListPicker.frame.origin.y,
@@ -134,10 +164,12 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.inputViewBackground()
         self.inputContainerView.addSubview(self.reminderListPicker)
         
+        // ReminderListPicker.
         self.reminderListPicker.delegate = self
         self.reminderListPicker.dataSource = self
         self.reminderListPicker.translatesAutoresizingMaskIntoConstraints = false
         
+        // ReminderListTextField + Label.
         self.reminderListTextField.translatesAutoresizingMaskIntoConstraints = false
         self.reminderListTextField.backgroundColor = .clear
         self.reminderListTextField.layer.borderColor = UIColor.white.cgColor
@@ -165,35 +197,12 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.reminderListLabel.textAlignment = .left
         self.reminderListContainerView.addSubview(self.reminderListLabel)
         
+        // ShowIntroButon.
         self.showIntroButton = LongpopsButton(title: NSLocalizedString("intro-button-title", comment: "Intro Button."))
         self.showIntroButton.translatesAutoresizingMaskIntoConstraints = false
         self.showIntroButton.addTarget(self, action: #selector(SettingsViewController.showIntroButtonPressed),
                                              for: .touchUpInside)
         self.showIntroButtonContainerView.addSubview(self.showIntroButton)
-
-        self.saveWithAlarmSwitch.translatesAutoresizingMaskIntoConstraints = false
-        self.saveWithAlarmSwitch.onTintColor = UIColor(red: 97.0/255,
-                                                       green: 208.0/255,
-                                                       blue: 255.0/255,
-                                                       alpha: 1.0)
-        self.saveWithAlarmSwitch.layer.shadowColor = UIColor.black.cgColor
-        self.saveWithAlarmSwitch.layer.shadowOffset = CGSize(width: 0, height: 0)
-        self.saveWithAlarmSwitch.layer.shadowOpacity = 0.1
-        self.saveWithAlarmSwitch.addTarget(self, action: #selector(self.saveWithAlarmSwitchToggled),
-                                                 for: .valueChanged)
-        self.saveWithAlarmContainerView.addSubview(self.saveWithAlarmSwitch)
-
-        self.saveWithAlarmSwitch.isOn = defaults.bool(forKey: "saveWithAlarm")
-        
-        self.saveWithAlarmLabel.translatesAutoresizingMaskIntoConstraints = false;
-        self.saveWithAlarmLabel.text = NSLocalizedString("textfield-label-add-alarm", comment: "Add alarm Label")
-        self.saveWithAlarmLabel.textColor = .white
-        self.saveWithAlarmLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(),
-                                                         weight: .regular)
-        self.saveWithAlarmLabel.lineBreakMode = .byWordWrapping
-        self.saveWithAlarmLabel.numberOfLines = 0
-        self.saveWithAlarmLabel.textAlignment = .left
-        self.saveWithAlarmContainerView.addSubview(self.saveWithAlarmLabel)
     }
     
     func setupInputToolbar() {
@@ -238,7 +247,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
             "backButtonSize": LayoutHandler.getBackButtonSizeForDevice(),
             "margin": LayoutHandler.getMarginForDevice(),
             "reminderListLabelWidth": self.reminderListLabel.intrinsicContentSize.width,
-
             ]
         
         let margins = view.layoutMarginsGuide
@@ -269,7 +277,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
             ])
 
 
-        // MARK: AdvancedTaskSwitch Constraints.
+        // MARK: StartUpContainerView Constraints.
         self.startupContainerView.addConstraint(NSLayoutConstraint(item: self.advancedTaskSwitch,
                                                                       attribute: .centerY,
                                                                       relatedBy: .equal,
@@ -293,7 +301,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
                                                                                metrics: metricsDictionary,
                                                                                views: viewsDictionary))
         
-        // MARK: SaveWithAlarmSwitch Constraints.
+        // MARK: SaveWithAlarmContainerView Constraints.
         self.saveWithAlarmContainerView.addConstraint(NSLayoutConstraint(item: self.saveWithAlarmSwitch,
                                                                    attribute: .centerY,
                                                                    relatedBy: .equal,
@@ -317,8 +325,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
         
-        // MARK: ReminderList Constraints.
-        
+        // MARK: ReminderListContainerView Constraints.
         self.reminderListContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[reminderListLabel(reminderListLabelWidth)]-[reminderListTextField]-(margin)-|",
                                                                                 options: [],
                                                                                 metrics: metricsDictionary,
@@ -334,8 +341,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
        
-        // ShowIntro Button.
-        
+        // ShowIntroButtonContainerView Constraints.
         self.showIntroButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[showIntroButton]-|",
                                                                                 options: [],
                                                                                 metrics: metricsDictionary,
@@ -346,7 +352,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
        
-        // MARK: Back Button Constraints
+        // MARK: BackButtonContainerView Constraints
         self.backButtonContainerView.addConstraint(NSLayoutConstraint(item: self.backButton,
                                                                       attribute: .centerX,
                                                                       relatedBy: .equal,
@@ -383,6 +389,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
                                                                  constant: 0.0))
     }
     
+    // MARK: Button Actions.
     @objc func backButtonPressed() {
         changeRootViewControllerOnDismiss()
     }
@@ -392,6 +399,13 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.present(destinationController, animated: true, completion: nil)
     }
     
+    @objc func doneButtonPressed() {
+        self.reminderListTextField.endEditing(true)
+        
+        ReminderListHandler.saveUserReminderList(list: self.reminderLists[self.reminderListPicker.selectedRow(inComponent: 0)])
+    }
+    
+    // MARK: UISwitch Actions.
     @objc func advancedTaskSwitchToggled() {
         let defaults = UserDefaults.standard
         defaults.set(self.advancedTaskSwitch.isOn, forKey: "advancedTask")
@@ -403,6 +417,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         defaults.set(self.saveWithAlarmSwitch.isOn, forKey: "saveWithAlarm")
     }
     
+    // MARK: Gesture Handeling.
     @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
         if gesture.direction == UISwipeGestureRecognizerDirection.down {
             self.changeRootViewControllerOnDismiss()
@@ -433,6 +448,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.reminderListTextField.text = self.reminderLists[row].title
     }
     
+    // MARK: Helper Methods.
     @objc override func checkPermission() {
         self.eventStore.requestAccess(to: EKEntityType.reminder) { (granted, error) -> Void in
             if !granted{
@@ -461,12 +477,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         gradientLayer.colors = [topColor, bottomColor]
         gradientLayer.locations = [0.1,1.0]
         self.inputContainerView.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
-    @objc func doneButtonPressed() {
-        self.reminderListTextField.endEditing(true)
-        
-        ReminderListHandler.saveUserReminderList(list: self.reminderLists[self.reminderListPicker.selectedRow(inComponent: 0)])
     }
     
     func changeRootViewControllerOnDismiss() {
