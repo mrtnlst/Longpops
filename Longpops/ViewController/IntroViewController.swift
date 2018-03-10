@@ -55,14 +55,22 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
     override func setupViews() {
         super.setupViews()
         
+        // ContainerViews.
+        self.backButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.backButtonContainerView)
+        
+        self.scrollView.delegate = self
+        self.scrollView.translatesAutoresizingMaskIntoConstraints = false
+        self.scrollView.showsHorizontalScrollIndicator = false
+        self.pageControlContainer.addSubview(scrollView)
+        
+        // HeadingLabel = DescriptionLabel.
         self.headingLabel.text = NSLocalizedString("heading-label-intro", comment: "Intro label heading.")
         self.descriptionLabel.text = NSLocalizedString("description-label-intro", comment: "Intro description label.")
         
+        // PageControl.
         self.pageControlContainer.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.pageControlContainer)
-        
-        self.backButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.backButtonContainerView)
         
         self.pageControl.translatesAutoresizingMaskIntoConstraints = false
         self.pageControl.numberOfPages = Int(numberOfPages)
@@ -71,12 +79,8 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         self.pageControl.pageIndicatorTintColor = UIColor.black
         self.pageControl.currentPageIndicatorTintColor = UIColor(red: 97.0/255, green: 208.0/255, blue: 255.0/255, alpha: 1.0)
         self.pageControlContainer.addSubview(pageControl)
-        
-        self.scrollView.delegate = self
-        self.scrollView.translatesAutoresizingMaskIntoConstraints = false
-        self.scrollView.showsHorizontalScrollIndicator = false
-        self.pageControlContainer.addSubview(scrollView)
-       
+
+        // BackButton.
         self.backButton.setImage(UIImage(named: "BackButton"), for: .normal)
         self.backButton.layer.shadowColor = UIColor.black.cgColor
         self.backButton.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -97,21 +101,16 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         super.setupConstraints()
         
         let viewsDictionary: [String: Any] = [
-            "headingContainerView": self.headingContainerView,
-            "descriptionContainerView": self.descriptionContainerView,
-            "headingLabel": self.headingLabel,
-            "descriptionLabel": self.descriptionLabel,
             "scrollView": self.scrollView,
             "pageControlContainer": self.pageControlContainer,
             "pageControl": self.pageControl,
-            "backButtonContainerView": self.backButtonContainerView,
             "backButton": self.backButton,
             ]
         
         let metricsDictionary: [String: Any] = [
             "margin": LayoutHandler.getMarginForDevice(),
-            "backButtonSize": LayoutHandler.getSaveButtonSizeForDevice(),
             "scrollViewHeight": LayoutHandler.getIntroPageScrollViewHeightForDevice(),
+            "backButtonSize": LayoutHandler.getBackButtonSizeForDevice()
             ]
         
         let margins = view.layoutMarginsGuide
@@ -362,8 +361,7 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         }
     }
     
-    // MARK: Button actions.
-    
+    // MARK: Button Actions.
     @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dismissed"), object: nil)
         dismiss(animated: true, completion: nil)
