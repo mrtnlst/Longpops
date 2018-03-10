@@ -159,7 +159,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.inputContainerView = UIView(frame: CGRect(x: self.reminderListPicker.frame.origin.x,
                                                        y: self.reminderListPicker.frame.origin.y,
                                                        width: UIScreen.main.bounds.width,
-                                                       height: LayoutHandler.getInputViewHeightForDevice()))
+                                                       height: LayoutHandler.getInputViewHeightForDevice(inputToolbarHeight:self.inputToolbar.frame.size.height)))
         self.inputViewBackground()
         self.inputContainerView.addSubview(self.reminderListPicker)
         

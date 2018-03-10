@@ -183,18 +183,19 @@ class LayoutHandler {
         return layoutString
     }
     
-    static func getInputViewHeightForDevice() -> CGFloat {
+    static func getInputViewHeightForDevice(inputToolbarHeight: CGFloat) -> CGFloat {
+        
         
         let type = self.getDeviceSize()
         
         if type == deviceType.iPhoneX {
-         return 335
+         return 335 - inputToolbarHeight
         }
         if type == deviceType.iPhone6Plus {
-            return 270
+            return 270 - inputToolbarHeight
         }
         
-        return 260
+        return 260 - inputToolbarHeight
     }
     
     static func getTitleTextFontSizeForDevice() -> CGFloat {
