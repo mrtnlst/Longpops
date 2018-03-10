@@ -15,7 +15,7 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
     var backButtonContainerView: UIView
     var descriptionContainerView: UIView
     
-    var backButton: UIButton
+    var backButton: BackButton
     let scrollView: UIScrollView
     var colors: [UIColor]
     var introViews: [UIView]
@@ -30,7 +30,7 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         self.backButtonContainerView = UIView()
         self.descriptionContainerView = UIView()
         
-        self.backButton = UIButton()
+        self.backButton = BackButton()
         self.scrollView = UIScrollView()
         self.colors = [UIColor.red, UIColor.blue, UIColor.green, UIColor.yellow]
         self.introViews = [UIView]()
@@ -95,12 +95,6 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         self.pageControlContainer.addSubview(pageControl)
 
         // BackButton.
-        self.backButton.setImage(UIImage(named: "BackButton"), for: .normal)
-        self.backButton.layer.shadowColor = UIColor.black.cgColor
-        self.backButton.layer.shadowOffset = CGSize(width: 0, height: 0)
-        self.backButton.layer.shadowOpacity = 0.2
-        self.backButton.alpha = 0.8
-        self.backButton.translatesAutoresizingMaskIntoConstraints = false
         self.backButton.addTarget(self, action: #selector(SettingsViewController.backButtonPressed), for: .touchUpInside)
         self.backButtonContainerView.addSubview(self.backButton)
     }
@@ -322,7 +316,7 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         permissionExplanationLabel.translatesAutoresizingMaskIntoConstraints = false
         permissionContainerView.addSubview(permissionExplanationLabel)
         
-        let askPermissionButton = LongpopsButton(title: NSLocalizedString("intro-permission-button-title",
+        let askPermissionButton = DefaultButton(title: NSLocalizedString("intro-permission-button-title",
                                                  comment: "Permission Button."))
         askPermissionButton.translatesAutoresizingMaskIntoConstraints = false
         askPermissionButton.addTarget(self, action: #selector(IntroViewController.checkPermission), for: .touchUpInside)

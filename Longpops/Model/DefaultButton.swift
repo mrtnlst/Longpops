@@ -1,5 +1,5 @@
 //
-//  LongpopsButton.swift
+//  DefaultButton.swift
 //  Longpops
 //
 //  Created by martin on 05.02.18.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class LongpopsButton: UIButton {
+class DefaultButton: UIButton {
     
     let brightBlue = UIColor(red: 97.0/255, green: 208.0/255, blue: 255.0/255, alpha: 1.0)
     let highlightedBlue = UIColor(red: 67.0/255, green: 109.0/255, blue: 133.0/255, alpha: 1.0)

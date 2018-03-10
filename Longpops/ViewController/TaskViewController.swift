@@ -91,7 +91,7 @@ class TaskViewController: TemplateViewController {
         self.createReminderButton.addTarget(self, action: #selector(TaskViewController.createReminderButtonPressed), for: .touchUpInside)
         self.createButtonContainerView.addSubview(self.createReminderButton)
         
-        self.permissionButton = LongpopsButton.init(title: NSLocalizedString("permission-button-title", comment: "Permission button."))
+        self.permissionButton = DefaultButton.init(title: NSLocalizedString("permission-button-title", comment: "Permission button."))
         self.permissionButton.translatesAutoresizingMaskIntoConstraints = false
         self.permissionButton.addTarget(self, action: #selector(TaskViewController.permissionButtonPressed), for: .touchUpInside)
         self.permissionButton.isHidden = true

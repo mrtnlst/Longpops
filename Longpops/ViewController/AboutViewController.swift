@@ -19,7 +19,7 @@ class AboutViewController: TemplatePageViewController {
     var twitterImage: UIImageView
     var websiteButton: UIButton
     var websiteImage: UIImageView
-    var backButton: UIButton
+    var backButton: BackButton
     var twitterURL: URL
     var websiteURL: URL
     var versionLabel: UILabel
@@ -36,7 +36,7 @@ class AboutViewController: TemplatePageViewController {
         self.twitterImage = UIImageView()
         self.websiteImage = UIImageView()
         self.websiteButton = UIButton(type: .system)
-        self.backButton = UIButton()
+        self.backButton = BackButton()
         self.twitterURL = URL(string: "https://twitter.com/mrtnlst")!
         self.websiteURL = URL(string: "https://martinlist.org")!
         self.versionLabel = UILabel()
@@ -112,12 +112,6 @@ class AboutViewController: TemplatePageViewController {
         self.websiteButton.addTarget(self, action: #selector(AboutViewController.websiteButtonPressed), for: .touchUpInside)
         self.websiteContainerView.addSubview(self.websiteButton)
         
-        self.backButton.setImage(UIImage(named: "BackButton"), for: .normal)
-        self.backButton.layer.shadowColor = UIColor.black.cgColor
-        self.backButton.layer.shadowOffset = CGSize(width: 0, height: 0)
-        self.backButton.layer.shadowOpacity = 0.2
-        self.backButton.alpha = 0.8
-        self.backButton.translatesAutoresizingMaskIntoConstraints = false
         self.backButton.addTarget(self, action: #selector(AboutViewController.backButtonPressed), for: .touchUpInside)
         self.backButtonContainerView.addSubview(self.backButton)
         

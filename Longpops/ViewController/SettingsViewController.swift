@@ -17,7 +17,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
     var saveWithAlarmContainerView: UIView
     var inputContainerView: UIView
 
-    var backButton: UIButton
+    var backButton: BackButton
     var showIntroButton: UIButton
     var advancedTaskSwitch: UISwitch
     var advancedTaskLabel: UILabel
@@ -38,7 +38,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.saveWithAlarmContainerView = UIView()
         self.inputContainerView = UIView()
 
-        self.backButton = UIButton()
+        self.backButton = BackButton()
         self.showIntroButton = UIButton()
         self.advancedTaskLabel = UILabel()
         self.advancedTaskSwitch = UISwitch()
@@ -92,12 +92,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.view.addSubview(self.saveWithAlarmContainerView)
      
         // BackButton.
-        self.backButton.setImage(UIImage(named: "BackButton"), for: .normal)
-        self.backButton.layer.shadowColor = UIColor.black.cgColor
-        self.backButton.layer.shadowOffset = CGSize(width: 0, height: 0)
-        self.backButton.layer.shadowOpacity = 0.2
-        self.backButton.alpha = 0.8
-        self.backButton.translatesAutoresizingMaskIntoConstraints = false
         self.backButton.addTarget(self, action: #selector(SettingsViewController.backButtonPressed),
                                         for: .touchUpInside)
         self.backButtonContainerView.addSubview(self.backButton)
@@ -197,7 +191,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.reminderListContainerView.addSubview(self.reminderListLabel)
         
         // ShowIntroButon.
-        self.showIntroButton = LongpopsButton(title: NSLocalizedString("intro-button-title", comment: "Intro Button."))
+        self.showIntroButton = DefaultButton(title: NSLocalizedString("intro-button-title", comment: "Intro Button."))
         self.showIntroButton.translatesAutoresizingMaskIntoConstraints = false
         self.showIntroButton.addTarget(self, action: #selector(SettingsViewController.showIntroButtonPressed),
                                              for: .touchUpInside)
