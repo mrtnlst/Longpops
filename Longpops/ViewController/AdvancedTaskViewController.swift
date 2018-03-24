@@ -142,19 +142,19 @@ class AdvancedTaskViewController: TaskViewController {
         
         self.colonLabel.translatesAutoresizingMaskIntoConstraints = false
         self.colonLabel.text = ":"
-        self.colonLabel.textColor = .white
+        self.colonLabel.textColor = UIColor.init(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
         self.colonLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .bold)
         self.textFieldContainerView.addSubview(self.colonLabel)
         
         self.dotLabel1.translatesAutoresizingMaskIntoConstraints = false
         self.dotLabel1.text = "."
-        self.dotLabel1.textColor = .white
+        self.dotLabel1.textColor = UIColor.init(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
         self.dotLabel1.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .bold)
         self.textFieldContainerView.addSubview(self.dotLabel1)
         
         self.dotLabel2.translatesAutoresizingMaskIntoConstraints = false
         self.dotLabel2.text = "."
-        self.dotLabel2.textColor = .white
+        self.dotLabel2.textColor = UIColor.init(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
         self.dotLabel2.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .bold)
         self.textFieldContainerView.addSubview(self.dotLabel2)
         
@@ -497,18 +497,38 @@ class AdvancedTaskViewController: TaskViewController {
     @objc func updateDateTimePlaceHolder() {
         
         self.hoursTextField.attributedPlaceholder = NSAttributedString(string: DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0),
-                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(
+                                                                        red: 255/255,
+                                                                        green: 255/255,
+                                                                        blue: 255/255,
+                                                                        alpha: 0.5)])
         self.minutesTextField.attributedPlaceholder = NSAttributedString(string: DateTimeHandler.getMinuteString(minute: DateTimeHandler.getCurrentTime().1),
-                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+                                                                         attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(
+                                                                            red: 255/255,
+                                                                            green: 255/255,
+                                                                            blue: 255/255,
+                                                                            alpha: 0.5)])
         
         self.dayTextField.attributedPlaceholder = NSAttributedString(string: DateTimeHandler.getDayString(day: DateTimeHandler.getCurrentDate().0),
-                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+                                                                     attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(
+                                                                        red: 255/255,
+                                                                        green: 255/255,
+                                                                        blue: 255/255,
+                                                                        alpha: 0.5)])
         
         self.monthTextField.attributedPlaceholder = NSAttributedString(string: DateTimeHandler.getMonthString(month: DateTimeHandler.getCurrentDate().1),
-                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(
+                                                                        red: 255/255,
+                                                                        green: 255/255,
+                                                                        blue: 255/255,
+                                                                        alpha: 0.5)])
         
         self.yearTextField.attributedPlaceholder = NSAttributedString(string: String(format: "%d", DateTimeHandler.getCurrentDate().2),
-                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+                                                                      attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(
+                                                                        red: 255/255,
+                                                                        green: 255/255,
+                                                                        blue: 255/255,
+                                                                        alpha: 0.5)])
         
     }
     
