@@ -12,19 +12,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let defaults = UserDefaults.standard
-        let advancedTask = defaults.bool(forKey: "advancedTask")
-        
-        var mainViewController = UIViewController()
-        if advancedTask {
-            mainViewController = AdvancedTaskViewController()
-        }
-        else {
-            mainViewController = SimpleTaskViewController()
-        }
+        let mainViewController = AdvancedTaskViewController()
         window?.rootViewController = mainViewController
         window?.makeKeyAndVisible()
         return true

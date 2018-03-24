@@ -11,7 +11,6 @@ import EventKit
 class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource, UIPickerViewDelegate{
     
     var backButtonContainerView: UIView
-    var startupContainerView: UIView
     var reminderListContainerView: UIView
     var showIntroButtonContainerView: UIView
     var saveWithAlarmContainerView: UIView
@@ -19,9 +18,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
 
     var backButton: BackButton
     var showIntroButton: UIButton
-    var advancedTaskSwitch: UISwitch
-    var advancedTaskLabel: UILabel
-    var hasSwitchBeenToggled: Bool
     var reminderListTextField: UITextField
     var reminderListLabel: UILabel
     var reminderListPicker: UIPickerView
@@ -32,7 +28,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
     
     override init() {
         self.backButtonContainerView = UIView()
-        self.startupContainerView = UIView()
         self.reminderListContainerView = UIView()
         self.showIntroButtonContainerView = UIView()
         self.saveWithAlarmContainerView = UIView()
@@ -40,14 +35,11 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
 
         self.backButton = BackButton()
         self.showIntroButton = UIButton()
-        self.advancedTaskLabel = UILabel()
-        self.advancedTaskSwitch = UISwitch()
         self.reminderListTextField = UITextField()
         self.reminderListLabel = UILabel()
         self.reminderListPicker = UIPickerView()
         self.reminderLists = []
         self.inputToolbar = UIToolbar()
-        self.hasSwitchBeenToggled = false
         self.saveWithAlarmSwitch = UISwitch()
         self.saveWithAlarmLabel = UILabel()
         
@@ -78,9 +70,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         
         self.backButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.backButtonContainerView)
-        
-        self.startupContainerView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.startupContainerView)
        
         self.reminderListContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.reminderListContainerView)
@@ -96,32 +85,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
                                         for: .touchUpInside)
         self.backButtonContainerView.addSubview(self.backButton)
         
-        // AdvancedTastSwitch + Label.
-        self.advancedTaskLabel.translatesAutoresizingMaskIntoConstraints = false;
-        self.advancedTaskLabel.text = NSLocalizedString("settings-label-startup-screen", comment: "Settings label.")
-        self.advancedTaskLabel.textColor = .white
-        self.advancedTaskLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(),
-                                                        weight: .medium)
-        self.advancedTaskLabel.lineBreakMode = .byWordWrapping
-        self.advancedTaskLabel.numberOfLines = 0
-        self.advancedTaskLabel.textAlignment = .left
-        self.startupContainerView.addSubview(self.advancedTaskLabel)
-        
-        self.advancedTaskSwitch.translatesAutoresizingMaskIntoConstraints = false
-        self.advancedTaskSwitch.onTintColor = UIColor(red: 97.0/255,
-                                                      green: 208.0/255,
-                                                      blue: 255.0/255,
-                                                      alpha: 1.0)
-        self.advancedTaskSwitch.addTarget(self, action: #selector(self.advancedTaskSwitchToggled),
-                                                for: .valueChanged)
-        self.advancedTaskSwitch.layer.shadowColor = UIColor.black.cgColor
-        self.advancedTaskSwitch.layer.shadowOffset = CGSize(width: 0, height: 0)
-        self.advancedTaskSwitch.layer.shadowOpacity = 0.1
-        self.startupContainerView.addSubview(self.advancedTaskSwitch)
-        
-        let defaults = UserDefaults.standard
-        self.advancedTaskSwitch.isOn = defaults.bool(forKey: "advancedTask")
-        
         // SaveWithAlarmSwitch + Label.
         self.saveWithAlarmSwitch.translatesAutoresizingMaskIntoConstraints = false
         self.saveWithAlarmSwitch.onTintColor = UIColor(red: 97.0/255,
@@ -134,7 +97,8 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         self.saveWithAlarmSwitch.addTarget(self, action: #selector(self.saveWithAlarmSwitchToggled),
                                            for: .valueChanged)
         self.saveWithAlarmContainerView.addSubview(self.saveWithAlarmSwitch)
-        
+
+        let defaults = UserDefaults.standard
         self.saveWithAlarmSwitch.isOn = defaults.bool(forKey: "saveWithAlarm")
         
         self.saveWithAlarmLabel.translatesAutoresizingMaskIntoConstraints = false;
@@ -227,8 +191,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         
         let viewsDictionary: [String: Any] = [
             "backButton": self.backButton,
-            "advancedTaskSwitch": self.advancedTaskSwitch,
-            "advancedTaskLabel": self.advancedTaskLabel,
             "showIntroButton": self.showIntroButton,
             "reminderListLabel": self.reminderListLabel,
             "reminderListTextField": self.reminderListTextField,
@@ -247,9 +209,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
             self.backButtonContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.backButtonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
-            self.startupContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            self.startupContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
-            
             self.saveWithAlarmContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             self.saveWithAlarmContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
@@ -262,37 +221,11 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
             ])
         
         NSLayoutConstraint.activate([
-            self.startupContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: 1.0),
-            self.saveWithAlarmContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.startupContainerView.bottomAnchor, multiplier: 1.0),
+            self.saveWithAlarmContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: 1.0),
             self.reminderListContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.saveWithAlarmContainerView.bottomAnchor, multiplier: 1.0),
             self.showIntroButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.reminderListContainerView.bottomAnchor, multiplier: 1.0),
             self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.showIntroButtonContainerView.bottomAnchor, multiplier: 1.0),
             ])
-
-
-        // MARK: StartUpContainerView Constraints.
-        self.startupContainerView.addConstraint(NSLayoutConstraint(item: self.advancedTaskSwitch,
-                                                                      attribute: .centerY,
-                                                                      relatedBy: .equal,
-                                                                      toItem: self.startupContainerView,
-                                                                      attribute: .centerY,
-                                                                      multiplier: 1.0,
-                                                                      constant: 0.0))
-        
-        self.startupContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(margin)-[advancedTaskLabel]-[advancedTaskSwitch]-(margin)-|",
-                                                                                   options: [],
-                                                                                   metrics: metricsDictionary,
-                                                                                   views: viewsDictionary))
-        
-        self.startupContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[advancedTaskLabel]-|",
-                                                                                   options: [],
-                                                                                   metrics: metricsDictionary,
-                                                                                   views: viewsDictionary))
-        
-        self.startupContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[advancedTaskSwitch]-(>=1)-|",
-                                                                               options: [],
-                                                                               metrics: metricsDictionary,
-                                                                               views: viewsDictionary))
         
         // MARK: SaveWithAlarmContainerView Constraints.
         self.saveWithAlarmContainerView.addConstraint(NSLayoutConstraint(item: self.saveWithAlarmSwitch,
@@ -384,7 +317,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
     
     // MARK: Button Actions.
     @objc func backButtonPressed() {
-        changeRootViewControllerOnDismiss()
+        self.dismiss(animated: true, completion:nil)
     }
     
     @objc func showIntroButtonPressed() {
@@ -399,12 +332,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
     }
     
     // MARK: UISwitch Actions.
-    @objc func advancedTaskSwitchToggled() {
-        let defaults = UserDefaults.standard
-        defaults.set(self.advancedTaskSwitch.isOn, forKey: "advancedTask")
-        self.hasSwitchBeenToggled = true
-    }
-    
     @objc func saveWithAlarmSwitchToggled() {
         let defaults = UserDefaults.standard
         defaults.set(self.saveWithAlarmSwitch.isOn, forKey: "saveWithAlarm")
@@ -413,7 +340,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
     // MARK: Gesture Handeling.
     @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
         if gesture.direction == UISwipeGestureRecognizerDirection.down {
-            self.changeRootViewControllerOnDismiss()
+            self.dismiss(animated: true, completion:nil)
         }
     }
     // MARK: UIPicker
@@ -470,18 +397,5 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         gradientLayer.colors = [topColor, bottomColor]
         gradientLayer.locations = [0.1,1.0]
         self.inputContainerView.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
-    func changeRootViewControllerOnDismiss() {
-        dismiss(animated: true, completion: {
-            if self.hasSwitchBeenToggled {
-                if self.advancedTaskSwitch.isOn {
-                    UIApplication.shared.delegate?.window??.rootViewController = AdvancedTaskViewController()
-                }
-                else {
-                    UIApplication.shared.delegate?.window??.rootViewController = SimpleTaskViewController()
-                }
-            }
-        })
     }
 }
