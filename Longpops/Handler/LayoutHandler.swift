@@ -171,13 +171,13 @@ class LayoutHandler {
     }
     
     static func getLayoutOrder() -> String {
-        
-        var layoutString = "H:|-(textFieldMargin)-[hoursTextField(smallFieldWidth)][colonLabel][minutesTextField(smallFieldWidth)]-(>=1)-[dayTextField(smallFieldWidth)][dotLabel1][monthTextField(smallFieldWidth)][dotLabel2][yearTextField(bigFieldWidth)]-(textFieldMargin)-|"
+
+        var layoutString = "H:|-(>=1)-[dayTextField(smallFieldWidth)][dotLabel1][monthTextField(smallFieldWidth)][dotLabel2][yearTextField(bigFieldWidth)]-(textFieldMargin)-|"
         
         let regionCode = Locale.current.regionCode
         
         if regionCode == "US" {
-            layoutString = "H:|-(textFieldMargin)-[hoursTextField(smallFieldWidth)][colonLabel][minutesTextField(smallFieldWidth)]-(>=1)-[monthTextField(smallFieldWidth)][dotLabel1][dayTextField(smallFieldWidth)][dotLabel2][yearTextField(bigFieldWidth)]-(textFieldMargin)-|"
+            layoutString = "H:|-(>=1)-[monthTextField(smallFieldWidth)][dotLabel1][dayTextField(smallFieldWidth)][dotLabel2][yearTextField(bigFieldWidth)]-(textFieldMargin)-|"
         }
         
         return layoutString

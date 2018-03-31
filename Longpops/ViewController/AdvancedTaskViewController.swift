@@ -10,6 +10,9 @@ import EventKit
 
 class AdvancedTaskViewController: TaskViewController {
 
+    var timeContainerView: UIView
+    var dateContainerView: UIView
+    
     var hoursTextField: UITextField
     var minutesTextField: UITextField
     var dayTextField: UITextField
@@ -28,6 +31,8 @@ class AdvancedTaskViewController: TaskViewController {
     }
     
     override init() {
+        self.timeContainerView = UIView()
+        self.dateContainerView = UIView()
         self.hoursTextField = UITextField()
         self.dayTextField = UITextField()
         self.minutesTextField = UITextField()
@@ -75,6 +80,12 @@ class AdvancedTaskViewController: TaskViewController {
         self.titleTextField.inputAccessoryView = inputToolbar
         self.titleTextField.autocorrectionType = .no
         
+        self.timeContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.textFieldContainerView.addSubview(self.timeContainerView)
+        
+        self.dateContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.textFieldContainerView.addSubview(self.dateContainerView)
+        
         self.hoursTextField.translatesAutoresizingMaskIntoConstraints = false
         self.hoursTextField.delegate = self
         self.hoursTextField.keyboardType = .numberPad
@@ -86,7 +97,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.hoursTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .light)
         self.hoursTextField.textColor = .white
         self.hoursTextField.backgroundColor = .clear
-        self.textFieldContainerView.addSubview(self.hoursTextField)
+        self.timeContainerView.addSubview(self.hoursTextField)
         
         self.minutesTextField.translatesAutoresizingMaskIntoConstraints = false
         self.minutesTextField.delegate = self
@@ -99,7 +110,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.minutesTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .light)
         self.minutesTextField.textColor = .white
         self.minutesTextField.backgroundColor = .clear
-        self.textFieldContainerView.addSubview(self.minutesTextField)
+        self.timeContainerView.addSubview(self.minutesTextField)
         
         self.dayTextField.translatesAutoresizingMaskIntoConstraints = false
         self.dayTextField.delegate = self
@@ -112,7 +123,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.dayTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .light)
         self.dayTextField.textColor = .white
         self.dayTextField.backgroundColor = .clear
-        self.textFieldContainerView.addSubview(self.dayTextField)
+        self.dateContainerView.addSubview(self.dayTextField)
         
         self.monthTextField.translatesAutoresizingMaskIntoConstraints = false
         self.monthTextField.delegate = self
@@ -125,7 +136,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.monthTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .light)
         self.monthTextField.textColor = .white
         self.monthTextField.backgroundColor = .clear
-        self.textFieldContainerView.addSubview(self.monthTextField)
+        self.dateContainerView.addSubview(self.monthTextField)
         
         self.yearTextField.translatesAutoresizingMaskIntoConstraints = false
         self.yearTextField.delegate = self
@@ -138,25 +149,25 @@ class AdvancedTaskViewController: TaskViewController {
         self.yearTextField.backgroundColor = .clear
         self.yearTextField.inputAccessoryView = inputToolbar
         self.yearTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
-        self.textFieldContainerView.addSubview(self.yearTextField)
+        self.dateContainerView.addSubview(self.yearTextField)
         
         self.colonLabel.translatesAutoresizingMaskIntoConstraints = false
         self.colonLabel.text = ":"
         self.colonLabel.textColor = UIColor.init(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
         self.colonLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .bold)
-        self.textFieldContainerView.addSubview(self.colonLabel)
+        self.timeContainerView.addSubview(self.colonLabel)
         
         self.dotLabel1.translatesAutoresizingMaskIntoConstraints = false
         self.dotLabel1.text = "."
         self.dotLabel1.textColor = UIColor.init(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
         self.dotLabel1.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .bold)
-        self.textFieldContainerView.addSubview(self.dotLabel1)
+        self.dateContainerView.addSubview(self.dotLabel1)
         
         self.dotLabel2.translatesAutoresizingMaskIntoConstraints = false
         self.dotLabel2.text = "."
         self.dotLabel2.textColor = UIColor.init(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
         self.dotLabel2.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .bold)
-        self.textFieldContainerView.addSubview(self.dotLabel2)
+        self.dateContainerView.addSubview(self.dotLabel2)
         
     }
     
@@ -198,6 +209,8 @@ class AdvancedTaskViewController: TaskViewController {
             "colonLabel": self.colonLabel,
             "dotLabel1": self.dotLabel1,
             "dotLabel2": self.dotLabel2,
+            "dateContainerView": self.dateContainerView,
+            "timeContainerView": self.timeContainerView,
             ]
         
         let metricsDictionary: [String: Any] = [
@@ -206,54 +219,84 @@ class AdvancedTaskViewController: TaskViewController {
             "textFieldMargin": LayoutHandler.getMarginForDevice(),
             ]
         
-        // Textfields Constraints
+        // TextFieldContainer 
         
         self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(textFieldMargin)-[titleTextField]-(textFieldMargin)-|",
+                                                                                      options: [],
+                                                                                      metrics: metricsDictionary,
+                                                                                      views: viewsDictionary))
+        
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField][timeContainerView][dateContainerView]-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
         
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: LayoutHandler.getLayoutOrder(),
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[timeContainerView]-|",
+                                                                                  options: [],
+                                                                                  metrics: metricsDictionary,
+                                                                                  views: viewsDictionary))
+       
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[dateContainerView]-|",
+                                                                                  options: [],
+                                                                                  metrics: metricsDictionary,
+                                                                                  views: viewsDictionary))
+    
+        // TimeContainerView
+        
+        self.timeContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[hoursTextField(smallFieldWidth)][colonLabel][minutesTextField(smallFieldWidth)]-(textFieldMargin)-|",
+                                                                          options: [],
+                                                                          metrics: metricsDictionary,
+                                                                          views: viewsDictionary))
+    
+
+        
+        self.timeContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[minutesTextField]-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
         
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[hoursTextField]-|",
+        self.timeContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[hoursTextField]-|",
+                                                                                  options: [],
+                                                                                  metrics: metricsDictionary,
+                                                                                  views: viewsDictionary))
+        
+        self.timeContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[colonLabel]-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
 
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[dayTextField]-|",
+        // DateContainerView
+        
+        self.dateContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: LayoutHandler.getLayoutOrder(),
+                                                                             options: [],
+                                                                             metrics: metricsDictionary,
+                                                                             views: viewsDictionary))
+    
+        self.dateContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[dayTextField]-|",
                                                                                           options: [],
                                                                                           metrics: metricsDictionary,
                                                                                           views: viewsDictionary))
 
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[monthTextField]-|",
+        self.dateContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[monthTextField]-|",
                                                                                           options: [],
                                                                                           metrics: metricsDictionary,
                                                                                           views: viewsDictionary))
 
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[minutesTextField]-|",
-                                                                                          options: [],
-                                                                                          metrics: metricsDictionary,
-                                                                                          views: viewsDictionary))
-        
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[yearTextField]-|",
-                                                                                  options: [],
-                                                                                  metrics: metricsDictionary,
-                                                                                  views: viewsDictionary))
-        
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[colonLabel]-|",
-                                                                                  options: [],
-                                                                                  metrics: metricsDictionary,
-                                                                                  views: viewsDictionary))
-        
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[dotLabel1]-|",
+
+
+        self.dateContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[yearTextField]-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
 
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[dotLabel2]-|",
+
+
+        self.dateContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[dotLabel1]-|",
+                                                                                  options: [],
+                                                                                  metrics: metricsDictionary,
+                                                                                  views: viewsDictionary))
+
+        self.dateContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[dotLabel2]-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
