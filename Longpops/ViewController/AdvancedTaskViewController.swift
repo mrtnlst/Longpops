@@ -190,7 +190,7 @@ class AdvancedTaskViewController: TaskViewController {
     func setupInputToolbar() {
         self.inputToolbar.barStyle = .blackTranslucent
         self.inputToolbar.sizeToFit()
-        
+    
         let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let fixedSpaceButton = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         
@@ -198,9 +198,10 @@ class AdvancedTaskViewController: TaskViewController {
                                          style: .plain,
                                          target: self,
                                          action: #selector(AdvancedTaskViewController.createReminderButtonPressed))
-        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .normal)
-        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .highlighted)
+        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24.0, weight: .regular)], for: .normal)
+        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24.0, weight: .regular)], for: .highlighted)
         doneButton.tintColor = UIColor.white
+        doneButton.setTitlePositionAdjustment(UIOffset.init(horizontal: 0, vertical: -20.0), for: .default)
         
         let forwardButton  = UIBarButtonItem(image: UIImage(named: "ForwardButton"), style: .plain, target: self, action: #selector(self.keyboardForwardButton))
         forwardButton.tintColor = UIColor.white
