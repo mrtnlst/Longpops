@@ -24,7 +24,9 @@ class AdvancedTaskViewController: TaskViewController {
     var inputToolbar: UIToolbar
     var dateTimer: Timer
     var countdownTimer: Timer
-    
+    var timeButton: UIButton
+    var calendarButton: UIButton
+
     enum jumpDirection {
         case jumpForward
         case jumpBackward
@@ -44,6 +46,8 @@ class AdvancedTaskViewController: TaskViewController {
         self.inputToolbar = UIToolbar()
         self.dateTimer = Timer()
         self.countdownTimer = Timer()
+        self.timeButton = UIButton()
+        self.calendarButton = UIButton()
 
         super.init()
     }
@@ -83,8 +87,20 @@ class AdvancedTaskViewController: TaskViewController {
         self.timeContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.textFieldContainerView.addSubview(self.timeContainerView)
         
+        self.timeButton.translatesAutoresizingMaskIntoConstraints = false
+        self.timeButton.setImage(UIImage(named: "Time"), for: .normal)
+        self.timeButton.addTarget(self, action: #selector(AdvancedTaskViewController.timeButtonPressed), for: .touchUpInside)
+        self.timeButton.tintColor = .white
+        self.timeContainerView.addSubview(self.timeButton)
+        
         self.dateContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.textFieldContainerView.addSubview(self.dateContainerView)
+        
+        self.calendarButton.translatesAutoresizingMaskIntoConstraints = false
+        self.calendarButton.setImage(UIImage(named: "Calendar"), for: .normal)
+        self.calendarButton.addTarget(self, action: #selector(AdvancedTaskViewController.calendarButtonPressed), for: .touchUpInside)
+        self.calendarButton.tintColor = .white
+        self.dateContainerView.addSubview(self.calendarButton)
         
         self.hoursTextField.translatesAutoresizingMaskIntoConstraints = false
         self.hoursTextField.delegate = self
@@ -211,12 +227,15 @@ class AdvancedTaskViewController: TaskViewController {
             "dotLabel2": self.dotLabel2,
             "dateContainerView": self.dateContainerView,
             "timeContainerView": self.timeContainerView,
+            "timeButton": self.timeButton,
+            "calendarButton": self.calendarButton,
             ]
         
         let metricsDictionary: [String: Any] = [
             "smallFieldWidth": 38,
             "bigFieldWidth": 74,
             "textFieldMargin": LayoutHandler.getMarginForDevice(),
+            "imageSize": 25,
             ]
         
         // TextFieldContainer 
@@ -243,12 +262,15 @@ class AdvancedTaskViewController: TaskViewController {
     
         // TimeContainerView
         
-        self.timeContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[hoursTextField(smallFieldWidth)][colonLabel][minutesTextField(smallFieldWidth)]-(textFieldMargin)-|",
+        self.timeContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[hoursTextField(smallFieldWidth)][colonLabel][minutesTextField(smallFieldWidth)]-(textFieldMargin)-[timeButton(imageSize)]|",
                                                                           options: [],
                                                                           metrics: metricsDictionary,
                                                                           views: viewsDictionary))
     
-
+        self.timeContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[timeButton(imageSize)]-|",
+                                                                             options: [],
+                                                                             metrics: metricsDictionary,
+                                                                             views: viewsDictionary))
         
         self.timeContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[minutesTextField]-|",
                                                                                   options: [],
@@ -282,7 +304,10 @@ class AdvancedTaskViewController: TaskViewController {
                                                                                           metrics: metricsDictionary,
                                                                                           views: viewsDictionary))
 
-
+        self.dateContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[calendarButton(imageSize)]-|",
+                                                                             options: [],
+                                                                             metrics: metricsDictionary,
+                                                                             views: viewsDictionary))
 
         self.dateContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[yearTextField]-|",
                                                                                   options: [],
@@ -521,8 +546,18 @@ class AdvancedTaskViewController: TaskViewController {
         return true
     }
     
+    // MARK: UIButton Actions
+    
+    @objc func timeButtonPressed() {
+        self.hoursTextField.becomeFirstResponder()
+    }
+    
+    @objc func calendarButtonPressed() {
+        self.dayTextField.becomeFirstResponder()
+    }
     
     // MARK: Timers
+    
     func startCountdownTimer() {
         
         // Caclulate seconds to full minute.
