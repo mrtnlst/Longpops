@@ -26,6 +26,7 @@ class AdvancedTaskViewController: TaskViewController {
     var countdownTimer: Timer
     var timeButton: UIButton
     var calendarButton: UIButton
+    var savedImage: UIImageView
 
     enum jumpDirection {
         case jumpForward
@@ -48,6 +49,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.countdownTimer = Timer()
         self.timeButton = UIButton()
         self.calendarButton = UIButton()
+        self.savedImage = UIImageView()
 
         super.init()
     }
@@ -185,6 +187,10 @@ class AdvancedTaskViewController: TaskViewController {
         self.dotLabel2.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .bold)
         self.dateContainerView.addSubview(self.dotLabel2)
         
+        self.savedImage.image = UIImage(named: "SuccessButton")
+        self.savedImage.translatesAutoresizingMaskIntoConstraints = false
+        self.savedImage.alpha = 0
+        self.dateContainerView.addSubview(self.savedImage)
     }
     
     func setupInputToolbar() {
@@ -197,7 +203,7 @@ class AdvancedTaskViewController: TaskViewController {
         let doneButton = UIBarButtonItem(title: NSLocalizedString("done-button-input-toolbar", comment: "Done button title"),
                                          style: .plain,
                                          target: self,
-                                         action: #selector(AdvancedTaskViewController.createReminderButtonPressed))
+                                         action: #selector(AdvancedTaskViewController.saveButtonPressed))
         doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24.0, weight: .regular)], for: .normal)
         doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24.0, weight: .regular)], for: .highlighted)
         doneButton.tintColor = UIColor.white
@@ -230,6 +236,7 @@ class AdvancedTaskViewController: TaskViewController {
             "timeContainerView": self.timeContainerView,
             "timeButton": self.timeButton,
             "calendarButton": self.calendarButton,
+            "savedImage": self.savedImage,
             ]
         
         let metricsDictionary: [String: Any] = [
@@ -295,6 +302,11 @@ class AdvancedTaskViewController: TaskViewController {
                                                                              metrics: metricsDictionary,
                                                                              views: viewsDictionary))
     
+        self.dateContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[savedImage(imageSize)]-|",
+                                                                             options: [],
+                                                                             metrics: metricsDictionary,
+                                                                             views: viewsDictionary))
+
         self.dateContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[dayTextField]-|",
                                                                                           options: [],
                                                                                           metrics: metricsDictionary,
@@ -539,7 +551,7 @@ class AdvancedTaskViewController: TaskViewController {
         self.giveHapticFeedbackOnJump()
     }
     
-    override func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         // Hitting return in titleTextField should jump first time textField.
         self.hoursTextField.becomeFirstResponder()
@@ -625,7 +637,7 @@ class AdvancedTaskViewController: TaskViewController {
     
     // Save Reminder
     
-    override func createReminderButtonPressed() {
+    @objc func saveButtonPressed() {
         
         // Format last active textField if necessary.
         let activeTextField = self.getActiveTextField()
@@ -677,7 +689,7 @@ class AdvancedTaskViewController: TaskViewController {
         
         // Save animation.
         self.disableButtonInteractionWhileAnimating()
-        AnimationHandler.beginSuccessAnimation(createReminderButton: self.createReminderButton, forwardEnableUserInteraction: { () -> Void in
+        AnimationHandler.beginSuccessAnimation(savedImage: self.savedImage, forwardEnableUserInteraction: { () -> Void in
             self.enableButtonInteractionAfterAnimating()
         })
         self.giveHapticFeedbackOnSave()
@@ -711,13 +723,11 @@ class AdvancedTaskViewController: TaskViewController {
     
     // MARK: Helper Methods
     
-    override func disableButtonInteractionWhileAnimating() {
-        super.disableButtonInteractionWhileAnimating()
+    func disableButtonInteractionWhileAnimating() {
         self.inputToolbar.isUserInteractionEnabled = false
     }
     
-    override func enableButtonInteractionAfterAnimating() {
-        super.enableButtonInteractionAfterAnimating()
+    func enableButtonInteractionAfterAnimating() {
         self.inputToolbar.isUserInteractionEnabled = true
     }
     
@@ -732,7 +742,6 @@ class AdvancedTaskViewController: TaskViewController {
         self.eventStore.requestAccess(to: EKEntityType.reminder) { (granted, error) -> Void in
             if !granted{
                 DispatchQueue.main.async {
-                    self.createReminderButton.isEnabled = false
                     self.permissionButton.isHidden = false
                     self.disableTextFields()
                 }

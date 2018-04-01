@@ -10,48 +10,35 @@ import UIKit
 
 class AnimationHandler {
     
-    static func beginSuccessAnimation(createReminderButton: UIButton, forwardEnableUserInteraction: @escaping () -> ()) {
+    static func beginSuccessAnimation(savedImage: UIImageView, forwardEnableUserInteraction: @escaping () -> ()) {
         
+        UIView.transition(with: savedImage as UIView,
+                          duration: 1.0,
+                          options: .transitionCrossDissolve,
+                          animations: {savedImage.alpha = 1.0},
+                          completion: {(true) in
+                            UIView.animate(withDuration: 0.75,
+                                           delay: 0,
+                                           options: .curveEaseInOut,
+                                           animations: {
+                                UIView.transition(with: savedImage as UIView,
+                                                  duration: 0.75,
+                                                  options: .transitionCrossDissolve,
+                                                  animations: {savedImage.alpha = 0.0},
+                                                  completion: nil)
+                            }, completion: {(true) in
+                                forwardEnableUserInteraction()})
+        })
+
         UIView.animate(withDuration: 0.5) {
-            createReminderButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+            savedImage.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         }
         
         UIView.animate(withDuration: 0.5,
                        delay: 0.25,
                        options: .curveEaseInOut,
-                       animations: {createReminderButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)},
+                       animations: {savedImage.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)},
                        completion: nil)
         
-        UIView.transition(with: createReminderButton as UIView,
-                          duration: 0.75,
-                          options: .transitionCrossDissolve,
-                          animations: {createReminderButton.setImage(UIImage(named: "SuccessButton"), for: .normal)},
-                          completion:  {(true) in
-                            self.endSuccessAnimation(createReminderButton: createReminderButton, enableButtonInteraction: { () -> Void in
-                                forwardEnableUserInteraction()
-                            })
-        })
-    }
-    
-    static func endSuccessAnimation(createReminderButton: UIButton, enableButtonInteraction: @escaping () -> ()) {
-        
-        UIView.animate(withDuration: 0.75, delay: 0.5, options: .curveEaseInOut, animations: {
-            UIView.transition(with: createReminderButton as UIView,
-                              duration: 0.75,
-                              options: .transitionCrossDissolve,
-                              animations: {createReminderButton.setImage(UIImage(named: "SaveButton"), for: .normal)},
-                              completion: nil)
-        }, completion: nil)
-        
-        UIView.animate(withDuration: 0.5,
-                       animations: {createReminderButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)},
-                       completion: nil)
-        
-        UIView.animate(withDuration: 0.5,
-                       delay: 0.25,
-                       options: .curveEaseInOut,
-                       animations: {createReminderButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)},
-                       completion: {(true) in enableButtonInteraction()
-        })
     }
 }

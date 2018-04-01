@@ -172,12 +172,12 @@ class LayoutHandler {
     
     static func getLayoutOrder() -> String {
 
-        var layoutString = "H:|-(>=1)-[dayTextField(smallFieldWidth)][dotLabel1][monthTextField(smallFieldWidth)][dotLabel2][yearTextField(bigFieldWidth)]-(textFieldMargin)-[calendarButton(imageSize)]|"
+        var layoutString = "H:|-[savedImage(imageSize)]-(>=1)-[dayTextField(smallFieldWidth)][dotLabel1][monthTextField(smallFieldWidth)][dotLabel2][yearTextField(bigFieldWidth)]-(textFieldMargin)-[calendarButton(imageSize)]|"
         
         let regionCode = Locale.current.regionCode
         
         if regionCode == "US" {
-            layoutString = "H:|-(>=1)-[monthTextField(smallFieldWidth)][dotLabel1][dayTextField(smallFieldWidth)][dotLabel2][yearTextField(bigFieldWidth)]-(textFieldMargin)-[calendarButton(imageSize)]|"
+            layoutString = "H:|-[savedImage(imageSize)]-(>=1)-[monthTextField(smallFieldWidth)][dotLabel1][dayTextField(smallFieldWidth)][dotLabel2][yearTextField(bigFieldWidth)]-(textFieldMargin)-[calendarButton(imageSize)]|"
         }
         
         return layoutString
