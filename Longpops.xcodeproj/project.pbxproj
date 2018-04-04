@@ -25,6 +25,7 @@
 		5BC04B1620533FCF006B705D /* TemplatePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC04B1520533FCF006B705D /* TemplatePageViewController.swift */; };
 		5BE6EF30200B676700AE14F2 /* TemplateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE6EF2F200B676700AE14F2 /* TemplateViewController.swift */; };
 		5BE859C92030624900D1C8EC /* AnimationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE859C82030624900D1C8EC /* AnimationHandler.swift */; };
+		5BFB4C922074B910009A3620 /* InputToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB4C912074B910009A3620 /* InputToolbar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		5BC04B1520533FCF006B705D /* TemplatePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatePageViewController.swift; sourceTree = "<group>"; };
 		5BE6EF2F200B676700AE14F2 /* TemplateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateViewController.swift; sourceTree = "<group>"; };
 		5BE859C82030624900D1C8EC /* AnimationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHandler.swift; sourceTree = "<group>"; };
+		5BFB4C912074B910009A3620 /* InputToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputToolbar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		5B4C821E2028C63B008A4C96 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5BFB4C912074B910009A3620 /* InputToolbar.swift */,
 				5B4C821C2028C633008A4C96 /* DefaultButton.swift */,
 				5B84F8D020541270000A46E7 /* BackButton.swift */,
 			);
@@ -208,6 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BFB4C922074B910009A3620 /* InputToolbar.swift in Sources */,
 				5BB187E41FBCD2E300AB3ABA /* AboutViewController.swift in Sources */,
 				5B4C821D2028C633008A4C96 /* DefaultButton.swift in Sources */,
 				5B61547620237BC100F65E5B /* LayoutHandler.swift in Sources */,
