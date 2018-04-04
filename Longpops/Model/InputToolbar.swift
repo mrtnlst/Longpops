@@ -27,13 +27,22 @@ class InputToolbar: UIToolbar {
         doneButton.tintColor = UIColor.white
         doneButton.setTitlePositionAdjustment(UIOffset.init(horizontal: 0, vertical: -20.0), for: .default)
         
+        let nowButton = UIBarButtonItem(title: NSLocalizedString("now-button-input-toolbar", comment: "Now button title"),
+                                         style: .plain,
+                                         target: AdvancedTaskViewController(),
+                                         action: #selector(AdvancedTaskViewController.updateEditedTextFieldsWithCurrentDateTime))
+        nowButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24.0, weight: .regular)], for: .normal)
+        nowButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24.0, weight: .regular)], for: .highlighted)
+        nowButton.tintColor = UIColor.white
+        nowButton.setTitlePositionAdjustment(UIOffset.init(horizontal: 0, vertical: -20.0), for: .default)
+        
         let forwardButton  = UIBarButtonItem(image: UIImage(named: "ForwardButton"), style: .plain, target: AdvancedTaskViewController(), action: #selector(AdvancedTaskViewController.keyboardForwardButton))
         forwardButton.tintColor = UIColor.white
         
         let backwardButton  = UIBarButtonItem(image: UIImage(named: "BackwardButton"), style: .plain, target: AdvancedTaskViewController(), action: #selector(AdvancedTaskViewController.keyboardBackwardButton))
         backwardButton.tintColor = UIColor.white
         
-        self.setItems([fixedSpaceButton, fixedSpaceButton, flexibleSpaceButton, backwardButton, forwardButton, doneButton], animated: false)
+        self.setItems([nowButton, fixedSpaceButton, fixedSpaceButton, flexibleSpaceButton, backwardButton, forwardButton, doneButton], animated: false)
         self.isUserInteractionEnabled = true
     }
     

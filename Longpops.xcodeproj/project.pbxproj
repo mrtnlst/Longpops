@@ -13,6 +13,7 @@
 		5B61547620237BC100F65E5B /* LayoutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B61547520237BC100F65E5B /* LayoutHandler.swift */; };
 		5B84F8D120541270000A46E7 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B84F8D020541270000A46E7 /* BackButton.swift */; };
 		5B85E0EF203AE359002AC7E2 /* ReminderListHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B85E0EE203AE359002AC7E2 /* ReminderListHandler.swift */; };
+		5B8FC0E82074F9B90066ACEF /* AlertHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8FC0E72074F9B90066ACEF /* AlertHandler.swift */; };
 		5BB187D21FB87A6000AB3ABA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB187D11FB87A6000AB3ABA /* AppDelegate.swift */; };
 		5BB187D91FB87A6000AB3ABA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BB187D81FB87A6000AB3ABA /* Assets.xcassets */; };
 		5BB187DC1FB87A6000AB3ABA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BB187DA1FB87A6000AB3ABA /* LaunchScreen.storyboard */; };
@@ -36,6 +37,7 @@
 		5B61547520237BC100F65E5B /* LayoutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LayoutHandler.swift; path = Longpops/Handler/LayoutHandler.swift; sourceTree = SOURCE_ROOT; };
 		5B84F8D020541270000A46E7 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		5B85E0EE203AE359002AC7E2 /* ReminderListHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListHandler.swift; sourceTree = "<group>"; };
+		5B8FC0E72074F9B90066ACEF /* AlertHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHandler.swift; sourceTree = "<group>"; };
 		5BB187CE1FB87A6000AB3ABA /* Longpops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Longpops.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BB187D11FB87A6000AB3ABA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BB187D81FB87A6000AB3ABA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				5BE859C82030624900D1C8EC /* AnimationHandler.swift */,
+				5B8FC0E72074F9B90066ACEF /* AlertHandler.swift */,
 				5BB7A76B201518CE00EF2A54 /* TextInputHandler.swift */,
 				5BB7A76D2016527200EF2A54 /* DateTimeHandler.swift */,
 				5B61547520237BC100F65E5B /* LayoutHandler.swift */,
@@ -218,6 +221,7 @@
 				5BB7A76E2016527200EF2A54 /* DateTimeHandler.swift in Sources */,
 				5BB7A7642013C6F400EF2A54 /* TaskViewController.swift in Sources */,
 				5BE6EF30200B676700AE14F2 /* TemplateViewController.swift in Sources */,
+				5B8FC0E82074F9B90066ACEF /* AlertHandler.swift in Sources */,
 				5BB7A76C201518CE00EF2A54 /* TextInputHandler.swift in Sources */,
 				5B84F8D120541270000A46E7 /* BackButton.swift in Sources */,
 				5BB7A76A2014BEDB00EF2A54 /* AdvancedTaskViewController.swift in Sources */,

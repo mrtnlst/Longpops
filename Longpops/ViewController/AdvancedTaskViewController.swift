@@ -406,6 +406,18 @@ class AdvancedTaskViewController: TaskViewController {
         return activeTextField
     }
     
+    @objc func updateEditedTextFieldsWithCurrentDateTime() {
+        let textFields = [self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
+        
+        for textField in textFields {
+            if textField.text != "" {
+                textField.text = ""
+            }
+        }
+        
+        self.updateDateTimePlaceHolder()
+    }
+    
     func getTextFieldValues() -> [Int]{
         var values = [Int]()
         let textFields = [self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
@@ -446,6 +458,14 @@ class AdvancedTaskViewController: TaskViewController {
             self.jumpToTextField(textField, direction: jumpDirection.jumpForward)
             return
         }
+        
+        // Check whether yeat format is valid.
+        if textField.tag == 5 {
+            if !TextInputHandler.isYearComponentCorrect(yearTextField: textField) {
+                 textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                return
+            }
+        }
 
         // Format textFields if necessary.
         if !TextInputHandler.isDateComponentCorrect(textField: textField) {
@@ -481,6 +501,14 @@ class AdvancedTaskViewController: TaskViewController {
         if TextInputHandler.isTextFieldEmtpy(textField: textField) {
             self.jumpToTextField(textField, direction: jumpDirection.jumpBackward)
             return
+        }
+        
+        // Check whether yeat format is valid.
+        if textField.tag == 5 {
+            if !TextInputHandler.isYearComponentCorrect(yearTextField: textField) {
+                textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                return
+            }
         }
         
         // Format textFields if necessary.
@@ -622,6 +650,17 @@ class AdvancedTaskViewController: TaskViewController {
                     activeTextField.becomeFirstResponder()
                     return
                 }
+                if activeTextField.tag == 5 {
+                    if !TextInputHandler.isYearComponentCorrect(yearTextField: activeTextField) {
+                        // Create an alert.
+                        let alert = AlertHandler.createErrorAlert()
+                        
+                        // Send user back to hourTextField.
+                        self.yearTextField.becomeFirstResponder()
+                        self.present(alert, animated: true, completion: nil)
+                        return
+                    }
+                }
                 activeTextField.text = TextInputHandler.formatTextField(activeTextField)
             }
         }
@@ -642,11 +681,7 @@ class AdvancedTaskViewController: TaskViewController {
         if  !isDateTimeValid.0 {
             
             // Create an alert.
-            let alert = UIAlertController(title: NSLocalizedString("alert-title", comment: "Alert title."), message: NSLocalizedString("alert-message", comment: "Alert message."), preferredStyle: .alert)
-            
-            let continueAction = UIAlertAction(title: NSLocalizedString("alert-button", comment: "Alert button."), style: .default)
-            
-            alert.addAction(continueAction)
+            let alert = AlertHandler.createErrorAlert()
             
             // Send user back to hourTextField.
             self.hoursTextField.becomeFirstResponder()

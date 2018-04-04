@@ -113,6 +113,15 @@ class TextInputHandler {
         return true
     }
     
+    static func isYearComponentCorrect(yearTextField: UITextField) -> Bool {
+        if let input = Int(yearTextField.text!) {
+            if input < DateTimeHandler.getCurrentDate().2 {
+                return false
+            }
+        }
+        return true
+    }
+    
     static func formatTextField(_ textField: UITextField) -> String {
         
         if let number = textField.text {

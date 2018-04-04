@@ -25,6 +25,7 @@
 "textfield-label-add-alarm" = "Add alarm and due date:";
 
 "done-button-input-toolbar" = "Save";
+"now-button-input-toolbar" = "Now";
 "done-button-input-toolbar-settings" = "Done";
 
 "alert-title" =  "Ooops … I can't do that!";
