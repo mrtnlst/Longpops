@@ -42,7 +42,7 @@ class InputToolbar: UIToolbar {
         let backwardButton  = UIBarButtonItem(image: UIImage(named: "BackwardButton"), style: .plain, target: AdvancedTaskViewController(), action: #selector(AdvancedTaskViewController.keyboardBackwardButton))
         backwardButton.tintColor = UIColor.white
         
-        self.setItems([nowButton, fixedSpaceButton, fixedSpaceButton, flexibleSpaceButton, backwardButton, forwardButton, doneButton], animated: false)
+        self.setItems([nowButton, flexibleSpaceButton, fixedSpaceButton, backwardButton, forwardButton, doneButton], animated: false)
         self.isUserInteractionEnabled = true
     }
     
