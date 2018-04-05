@@ -28,8 +28,6 @@ class TemplateViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createBackgroundGradient()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(TemplateViewController.checkPermission), name: NSNotification.Name(rawValue: "dismissed"), object: nil)
     }
     
     func setupViews() {}

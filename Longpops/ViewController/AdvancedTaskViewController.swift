@@ -83,6 +83,8 @@ class AdvancedTaskViewController: TemplateViewController {
                                                name: .UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackground),
                                                name: .UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AdvancedTaskViewController.checkPermission),
+                                               name: NSNotification.Name(rawValue: "dismissed"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

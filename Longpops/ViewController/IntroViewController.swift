@@ -54,6 +54,9 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         self.setupViews()
         self.setupConstraints()
         self.setupPageControl()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(IntroViewController.checkPermission),
+                                               name: NSNotification.Name(rawValue: "dismissed"), object: nil)
     }
     
     override func setupViews() {
