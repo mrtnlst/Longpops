@@ -18,7 +18,6 @@
 		5BB187D91FB87A6000AB3ABA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BB187D81FB87A6000AB3ABA /* Assets.xcassets */; };
 		5BB187DC1FB87A6000AB3ABA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BB187DA1FB87A6000AB3ABA /* LaunchScreen.storyboard */; };
 		5BB187E41FBCD2E300AB3ABA /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB187E31FBCD2E300AB3ABA /* AboutViewController.swift */; };
-		5BB7A7642013C6F400EF2A54 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB7A7632013C6F400EF2A54 /* TaskViewController.swift */; };
 		5BB7A7662013E25C00EF2A54 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB7A7652013E25C00EF2A54 /* SettingsViewController.swift */; };
 		5BB7A76A2014BEDB00EF2A54 /* AdvancedTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB7A7692014BEDB00EF2A54 /* AdvancedTaskViewController.swift */; };
 		5BB7A76C201518CE00EF2A54 /* TextInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB7A76B201518CE00EF2A54 /* TextInputHandler.swift */; };
@@ -44,7 +43,6 @@
 		5BB187DB1FB87A6000AB3ABA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5BB187DD1FB87A6000AB3ABA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BB187E31FBCD2E300AB3ABA /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
-		5BB7A7632013C6F400EF2A54 /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		5BB7A7652013E25C00EF2A54 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5BB7A7692014BEDB00EF2A54 /* AdvancedTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedTaskViewController.swift; sourceTree = "<group>"; };
 		5BB7A76B201518CE00EF2A54 /* TextInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextInputHandler.swift; path = Longpops/Handler/TextInputHandler.swift; sourceTree = SOURCE_ROOT; };
@@ -125,7 +123,6 @@
 				5B4C821820275D84008A4C96 /* IntroViewController.swift */,
 				5BE6EF2F200B676700AE14F2 /* TemplateViewController.swift */,
 				5BC04B1520533FCF006B705D /* TemplatePageViewController.swift */,
-				5BB7A7632013C6F400EF2A54 /* TaskViewController.swift */,
 				5BB7A7692014BEDB00EF2A54 /* AdvancedTaskViewController.swift */,
 			);
 			path = ViewController;
@@ -219,7 +216,6 @@
 				5B4C821D2028C633008A4C96 /* DefaultButton.swift in Sources */,
 				5B61547620237BC100F65E5B /* LayoutHandler.swift in Sources */,
 				5BB7A76E2016527200EF2A54 /* DateTimeHandler.swift in Sources */,
-				5BB7A7642013C6F400EF2A54 /* TaskViewController.swift in Sources */,
 				5BE6EF30200B676700AE14F2 /* TemplateViewController.swift in Sources */,
 				5B8FC0E82074F9B90066ACEF /* AlertHandler.swift in Sources */,
 				5BB7A76C201518CE00EF2A54 /* TextInputHandler.swift in Sources */,

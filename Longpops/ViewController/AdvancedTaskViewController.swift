@@ -8,11 +8,18 @@
 import UIKit
 import EventKit
 
-class AdvancedTaskViewController: TaskViewController {
+class AdvancedTaskViewController: TemplateViewController {
 
+    var navigationItemContainerView: UIView
+    var textFieldContainerView: UIView
+    var permissionButtonContainerView: UIView
     var timeContainerView: UIView
     var dateContainerView: UIView
     
+    var titleTextField: UITextField
+    var permissionButton: UIButton
+    var infoButton: UIButton
+    var settingsButton: UIButton
     var hoursTextField: UITextField
     var minutesTextField: UITextField
     var dayTextField: UITextField
@@ -34,8 +41,12 @@ class AdvancedTaskViewController: TaskViewController {
     }
     
     override init() {
+        self.navigationItemContainerView = UIView()
+        self.textFieldContainerView = UIView()
+        self.permissionButtonContainerView = UIView()
         self.timeContainerView = UIView()
         self.dateContainerView = UIView()
+        
         self.hoursTextField = UITextField()
         self.dayTextField = UITextField()
         self.minutesTextField = UITextField()
@@ -50,6 +61,10 @@ class AdvancedTaskViewController: TaskViewController {
         self.timeButton = UIButton()
         self.calendarButton = UIButton()
         self.savedImage = UIImageView()
+        self.titleTextField = UITextField()
+        self.permissionButton = UIButton(type: .system)
+        self.infoButton = UIButton(type: .system)
+        self.settingsButton = UIButton(type: .system)
 
         super.init()
     }
@@ -60,8 +75,10 @@ class AdvancedTaskViewController: TaskViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.setupViews()
         self.setupConstraints()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForeground),
                                                name: .UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackground),
@@ -70,6 +87,8 @@ class AdvancedTaskViewController: TaskViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.titleTextField.becomeFirstResponder()
         self.updateDateTimePlaceHolder()
         self.startCountdownTimer()
         
@@ -78,6 +97,11 @@ class AdvancedTaskViewController: TaskViewController {
         if !defaults.bool(forKey: "saveWithAlarm") {
             self.disableDateTimeTextFields()
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.checkForIntro()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -91,6 +115,50 @@ class AdvancedTaskViewController: TaskViewController {
         
         self.inputToolbar = InputToolbar()
         
+        self.navigationItemContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.navigationItemContainerView)
+        
+        self.textFieldContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.textFieldContainerView)
+        
+        self.permissionButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.permissionButtonContainerView)
+        
+        self.permissionButton = DefaultButton.init(title: NSLocalizedString("permission-button-title", comment: "Permission button."))
+        self.permissionButton.translatesAutoresizingMaskIntoConstraints = false
+        self.permissionButton.addTarget(self, action: #selector(AdvancedTaskViewController.permissionButtonPressed), for: .touchUpInside)
+        self.permissionButton.isHidden = true
+        self.permissionButtonContainerView.addSubview(self.permissionButton)
+        
+        self.infoButton.translatesAutoresizingMaskIntoConstraints = false
+        self.infoButton.setImage(UIImage(named: "InfoButton"), for: .normal)
+        self.infoButton.addTarget(self, action: #selector(AdvancedTaskViewController.infoButtonPressed), for: .touchUpInside)
+        self.infoButton.tintColor = .white
+        self.navigationItemContainerView.addSubview(self.infoButton)
+        
+        self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
+        self.settingsButton.setImage(UIImage(named: "SettingsButton"), for: .normal)
+        self.settingsButton.addTarget(self, action: #selector(AdvancedTaskViewController.settingsButtonPressed), for: .touchUpInside)
+        self.settingsButton.tintColor = .white
+        self.navigationItemContainerView.addSubview(self.settingsButton)
+        
+        self.titleTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.titleTextField.keyboardAppearance = .dark
+        self.titleTextField.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("title-textfield-placeholder",
+                                                                                                 comment: "TextField."),
+                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(
+                                                                        red: 255/255,
+                                                                        green: 255/255,
+                                                                        blue: 255/255,
+                                                                        alpha: 0.5)])
+        self.titleTextField.delegate = self
+        self.titleTextField.tag = 0
+        self.titleTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getTitleTextFontSizeForDevice(), weight: .regular)
+        self.titleTextField.textColor = .white
+        self.titleTextField.backgroundColor = .clear
+        self.textFieldContainerView.addSubview(self.titleTextField)
+        self.titleTextField.adjustsFontSizeToFitWidth = true
+        self.titleTextField.minimumFontSize = 20
         self.titleTextField.inputAccessoryView = inputToolbar
         self.titleTextField.autocorrectionType = .no
         
@@ -219,6 +287,12 @@ class AdvancedTaskViewController: TaskViewController {
             "timeButton": self.timeButton,
             "calendarButton": self.calendarButton,
             "savedImage": self.savedImage,
+            "navigationItemContainerView": self.navigationItemContainerView,
+            "textFieldContainerView": self.textFieldContainerView,
+            "permissionButtonContainerView": self.permissionButtonContainerView,
+            "permissionButton": self.permissionButton,
+            "infoButton": self.infoButton,
+            "settingsButton": self.settingsButton,
             ]
         
         let metricsDictionary: [String: Any] = [
@@ -228,6 +302,57 @@ class AdvancedTaskViewController: TaskViewController {
             "imageSize": LayoutHandler.getSavedImageSize(),
             ]
         
+        let margins = view.layoutMarginsGuide
+        NSLayoutConstraint.activate([
+            self.navigationItemContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.navigationItemContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            
+            self.textFieldContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.textFieldContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            
+            self.permissionButtonContainerView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            self.permissionButtonContainerView.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
+        ])
+        
+
+        let guide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            self.navigationItemContainerView.topAnchor.constraintEqualToSystemSpacingBelow(guide.topAnchor, multiplier: 0),
+            
+            self.textFieldContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.navigationItemContainerView.bottomAnchor, multiplier: 0),
+            
+            self.permissionButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.bottomAnchor, multiplier: 0),
+            ])
+        
+        // Navigation item Constraints
+        
+        self.navigationItemContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[settingsButton(imageSize)]-(>=1)-[infoButton(imageSize)]-|",
+                                                                                       options: .alignAllLastBaseline,
+                                                                                       metrics: metricsDictionary,
+                                                                                       views: viewsDictionary))
+        
+        self.navigationItemContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[settingsButton(imageSize)]-|",
+                                                                                       options: [],
+                                                                                       metrics: metricsDictionary,
+                                                                                       views: viewsDictionary))
+        
+        self.navigationItemContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[infoButton(imageSize)]-|",
+                                                                                       options: [],
+                                                                                       metrics: metricsDictionary,
+                                                                                       views: viewsDictionary))
+        
+        // Permission Button Constraints
+        
+        self.permissionButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[permissionButton]-|",
+                                                                                         options: [],
+                                                                                         metrics: metricsDictionary,
+                                                                                         views: viewsDictionary))
+        
+        self.permissionButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[permissionButton]-|",
+                                                                                         options: [],
+                                                                                         metrics: metricsDictionary,
+                                                                                         views: viewsDictionary))
+        
         // TextFieldContainer 
         
         self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(textFieldMargin)-[titleTextField]-(textFieldMargin)-|",
@@ -235,7 +360,7 @@ class AdvancedTaskViewController: TaskViewController {
                                                                                       metrics: metricsDictionary,
                                                                                       views: viewsDictionary))
         
-        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField][timeContainerView][dateContainerView]-|",
+        self.textFieldContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[titleTextField]-[timeContainerView]-[dateContainerView]-|",
                                                                                   options: [],
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
@@ -587,6 +712,35 @@ class AdvancedTaskViewController: TaskViewController {
         self.dayTextField.becomeFirstResponder()
     }
     
+    @objc func permissionButtonPressed() {
+        let scheme:String = UIApplicationOpenSettingsURLString
+        if let url = URL(string: scheme) {
+            if #available(iOS 10.0, *) {
+                DispatchQueue.main.async {
+                    UIApplication.shared.open(url, options: [:],
+                                              completionHandler: {(success) in
+                                                print("Open \(scheme): \(success)")})
+                }
+            }
+            else {
+                DispatchQueue.main.async {
+                    let success = UIApplication.shared.openURL(url)
+                    print("Open \(scheme): \(success)")
+                }
+            }
+        }
+    }
+    
+    @objc func infoButtonPressed() {
+        let aboutViewController = AboutViewController()
+        self.present(aboutViewController, animated: true, completion: nil)
+    }
+    
+    @objc func settingsButtonPressed() {
+        let settingsViewController = SettingsViewController()
+        self.present(settingsViewController, animated: true, completion: nil)
+    }
+    
     // MARK: Timers
     
     func startCountdownTimer() {
@@ -746,6 +900,21 @@ class AdvancedTaskViewController: TaskViewController {
         }
     }
     
+    // MARK: Show Intro
+    
+    func checkForIntro() {
+        let defaults = UserDefaults.standard
+        let showIntro = defaults.bool(forKey: "showIntro2.1")
+        
+        if !showIntro {
+            let destinationController = IntroViewController()
+            self.present(destinationController, animated: true, completion: nil)
+        }
+        else {
+            self.checkPermission()
+        }
+    }
+    
     // MARK: Helper Methods
     
     func disableButtonInteractionWhileAnimating() {
@@ -759,6 +928,13 @@ class AdvancedTaskViewController: TaskViewController {
     func giveHapticFeedbackOnJump() {
         if #available(iOS 10.0, *) {
             let impact = UIImpactFeedbackGenerator(style: .light)
+            impact.impactOccurred()
+        }
+    }
+    
+    func giveHapticFeedbackOnSave() {
+        if #available(iOS 10.0, *) {
+            let impact = UIImpactFeedbackGenerator(style: .medium)
             impact.impactOccurred()
         }
     }

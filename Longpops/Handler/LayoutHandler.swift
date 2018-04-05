@@ -40,10 +40,10 @@ class LayoutHandler {
            return 0.0
         }
         if type == deviceType.iPhone6 {
-            return 1.0
+            return 2.0
         }
         
-        return 2.0
+        return 3.0
     }
     
     static func getSaveButtonSizeForDevice() -> Int {
