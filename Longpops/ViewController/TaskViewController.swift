@@ -79,6 +79,8 @@ class TaskViewController: TemplateViewController {
         self.titleTextField.textColor = .white
         self.titleTextField.backgroundColor = .clear
         self.textFieldContainerView.addSubview(self.titleTextField)
+        self.titleTextField.adjustsFontSizeToFitWidth = true
+        self.titleTextField.minimumFontSize = 20
         
         self.permissionButton = DefaultButton.init(title: NSLocalizedString("permission-button-title", comment: "Permission button."))
         self.permissionButton.translatesAutoresizingMaskIntoConstraints = false
