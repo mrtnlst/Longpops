@@ -62,14 +62,22 @@ class AdvancedTaskViewController: TaskViewController {
         super.viewDidLoad()
         self.setupViews()
         self.setupConstraints()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackground), name: .UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForeground),
+                                               name: .UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackground),
+                                               name: .UIApplicationDidEnterBackground, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateDateTimePlaceHolder()
         self.startCountdownTimer()
+        
+        let defaults = UserDefaults.standard
+        
+        if !defaults.bool(forKey: "saveWithAlarm") {
+            self.disableDateTimeTextFields()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -385,6 +393,14 @@ class AdvancedTaskViewController: TaskViewController {
     
     func disableTextFields() {
         let textFields = [self.titleTextField, self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
+        
+        for textField in textFields {
+            textField.isEnabled = false
+        }
+    }
+    
+    func disableDateTimeTextFields() {
+        let textFields = [self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
         
         for textField in textFields {
             textField.isEnabled = false
