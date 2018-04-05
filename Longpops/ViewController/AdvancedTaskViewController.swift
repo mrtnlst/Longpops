@@ -58,8 +58,8 @@ class AdvancedTaskViewController: TemplateViewController {
         self.inputToolbar = UIToolbar()
         self.dateTimer = Timer()
         self.countdownTimer = Timer()
-        self.timeButton = UIButton()
-        self.calendarButton = UIButton()
+        self.timeButton = UIButton(type: .system)
+        self.calendarButton = UIButton(type: .system)
         self.savedImage = UIImageView()
         self.titleTextField = UITextField()
         self.permissionButton = UIButton(type: .system)
@@ -891,6 +891,8 @@ class AdvancedTaskViewController: TemplateViewController {
                 DispatchQueue.main.async {
                     self.permissionButton.isHidden = false
                     self.disableTextFields()
+                    self.timeButton.isEnabled = false
+                    self.calendarButton.isEnabled = false
                 }
             }
         }

@@ -130,8 +130,8 @@
 				5BB187E31FBCD2E300AB3ABA /* AboutViewController.swift */,
 				5BB7A7652013E25C00EF2A54 /* SettingsViewController.swift */,
 				5B4C821820275D84008A4C96 /* IntroViewController.swift */,
-				5BE6EF2F200B676700AE14F2 /* TemplateViewController.swift */,
 				5BC04B1520533FCF006B705D /* TemplatePageViewController.swift */,
+				5BE6EF2F200B676700AE14F2 /* TemplateViewController.swift */,
 				5BB7A7692014BEDB00EF2A54 /* AdvancedTaskViewController.swift */,
 			);
 			path = ViewController;
