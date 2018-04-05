@@ -381,7 +381,9 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         self.eventStore.requestAccess(to: EKEntityType.reminder) { (granted, error) -> Void in
             DispatchQueue.main.async {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dismissed"), object: nil)
-                self.dismiss(animated: true, completion: nil)
+                if !self.isBeingDismissed {
+                    self.dismiss(animated: true, completion: nil)
+                }
             }
         }
     }
@@ -399,14 +401,13 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
     }
     
     // MARK: Button Actions.
+    
     @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dismissed"), object: nil)
-        dismiss(animated: true, completion: nil)
+        self.dismissIntroViewController()
     }
     
     @objc func backButtonPressed() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dismissed"), object: nil)
-        dismiss(animated: true, completion: nil)
+        self.dismissIntroViewController()
     }
     
     // MARK : PageControl Actions
@@ -419,6 +420,20 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
 
         let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
         pageControl.currentPage = Int(pageNumber)
+    }
+    
+    // MARK: Helper Methods
+    func dismissIntroViewController() {
+        let defaults = UserDefaults.standard
+        let showIntro = defaults.bool(forKey: "showIntro2.1")
+        
+        if !showIntro {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dismissed"), object: nil)
+        }
+        
+        if !self.isBeingDismissed {
+            dismiss(animated: true, completion: nil)
+        }
     }
 }
 

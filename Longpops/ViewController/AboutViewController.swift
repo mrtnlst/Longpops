@@ -292,13 +292,17 @@ class AboutViewController: TemplatePageViewController {
     }
     
     @objc func backButtonPressed() {
-        dismiss(animated: true, completion: nil)
+        if !self.isBeingDismissed {
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     // MARK: Gestures Handeling.
     @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
         if gesture.direction == UISwipeGestureRecognizerDirection.down {
-            dismiss(animated: true, completion: nil)
+            if !self.isBeingDismissed {
+                dismiss(animated: true, completion: nil)
+            }
         }
     }
 }

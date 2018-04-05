@@ -316,7 +316,9 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
     
     // MARK: Button Actions.
     @objc func backButtonPressed() {
-        self.dismiss(animated: true, completion:nil)
+        if !self.isBeingDismissed {
+            self.dismiss(animated: true, completion:nil)
+        }
     }
     
     @objc func showIntroButtonPressed() {
@@ -339,7 +341,9 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
     // MARK: Gesture Handeling.
     @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
         if gesture.direction == UISwipeGestureRecognizerDirection.down {
-            self.dismiss(animated: true, completion:nil)
+            if !self.isBeingDismissed {
+                self.dismiss(animated: true, completion:nil)
+            }
         }
     }
     // MARK: UIPicker
