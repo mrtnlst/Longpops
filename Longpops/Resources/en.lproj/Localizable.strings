@@ -32,7 +32,7 @@
 "alert-message" = "Your date lies in the past. Please enter a valid date!";
 "alert-button" = "Let me try again";
 
-"title-textfield-placeholder" = "Remind me of ..";
+"title-textfield-placeholder" = "Remind me of …";
 
 "tutorial-label-simpletask" = "Enter a title and hit save to create a reminder. Modify date and time in the textfields below.";
 "tutorial-label-advancedtask" = "Use the arrows on the keyboard to switch between the textfields.";

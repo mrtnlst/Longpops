@@ -32,7 +32,7 @@
 "alert-message" = "Das Datum liegt in der Vergangenheit. Bitte gib ein gültiges Datum ein!";
 "alert-button" = "Ich probier's noch mal.";
 
-"title-textfield-placeholder" = "Erinnere mich an ..";
+"title-textfield-placeholder" = "Erinnere mich an …";
 
 "tutorial-label-simpletask" = "Tippe auf Speichern, um eine Erinnerung zu erstellen. Ändere Datum/Zeit in den Feldern darunter.";
 "tutorial-label-advancedtask" = "Nutze die Pfeiltasten, um schnell zwischen Textfeldern zu wechseln.";
