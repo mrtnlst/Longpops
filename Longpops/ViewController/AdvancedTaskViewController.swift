@@ -268,7 +268,7 @@ class AdvancedTaskViewController: TemplateViewController {
             self.permissionButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.bottomAnchor, multiplier: 0),
             ])
         
-        // Navigation item Constraints
+        // NavigationContainer
         
         self.navigationItemContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[settingsButton(imageSize)]-(>=1)-[infoButton(imageSize)]-|",
                                                                                        options: .alignAllLastBaseline,
@@ -285,7 +285,7 @@ class AdvancedTaskViewController: TemplateViewController {
                                                                                        metrics: metricsDictionary,
                                                                                        views: viewsDictionary))
         
-        // Permission Button Constraints
+        // PermissionContainer
         
         self.permissionButtonContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[permissionButton]-|",
                                                                                          options: [],
@@ -319,7 +319,7 @@ class AdvancedTaskViewController: TemplateViewController {
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
     
-        // TimeContainerView
+        // TimeContainer
         
         self.timeContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=1)-[hoursTextField(smallFieldWidth)][colonLabel][minutesTextField(smallFieldWidth)]-(textFieldMargin)-[timeButton(imageSize)]|",
                                                                           options: [],
@@ -346,7 +346,7 @@ class AdvancedTaskViewController: TemplateViewController {
                                                                                   metrics: metricsDictionary,
                                                                                   views: viewsDictionary))
 
-        // DateContainerView
+        // DateContainer
         
         self.dateContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: LayoutHandler.getLayoutOrder(),
                                                                              options: [],
