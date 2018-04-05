@@ -117,7 +117,7 @@ class AboutViewController: TemplatePageViewController {
         
         // Version.
         self.versionLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.versionLabel.text = "Version 2.1"
+        self.versionLabel.text = "Version 2.2"
         self.versionLabel.textColor = .white
         self.versionLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         self.versionLabel.textAlignment = .center
