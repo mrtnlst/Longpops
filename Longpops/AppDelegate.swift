@@ -17,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mainViewController = AdvancedTaskViewController()
         window?.rootViewController = mainViewController
         window?.makeKeyAndVisible()
+        
+        UserDefaults.standard.register(defaults: ["saveWithAlarm": true])
         return true
     }
 
