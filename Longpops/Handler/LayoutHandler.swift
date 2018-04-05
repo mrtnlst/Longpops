@@ -152,7 +152,7 @@ class LayoutHandler {
         let type = self.getDeviceSize()
         
         if type == deviceType.iPhoneSE {
-            return (100, 200)
+            return (125, 250)
         }
         if type == deviceType.iPhone6 {
             return (150, 300)
@@ -184,8 +184,7 @@ class LayoutHandler {
     }
     
     static func getInputViewHeightForDevice(inputToolbarHeight: CGFloat) -> CGFloat {
-        
-        
+    
         let type = self.getDeviceSize()
         
         if type == deviceType.iPhoneX {
@@ -199,10 +198,55 @@ class LayoutHandler {
     }
     
     static func getTitleTextFontSizeForDevice() -> CGFloat {
+        
+        let type = self.getDeviceSize()
+        
+        if type == deviceType.iPhoneSE {
+            return 33
+        }
+        if type == deviceType.iPhone6Plus {
+            return 45
+        }
         return 40;
     }
     
     static func getDateTimeTextFontSizeForDevice() -> CGFloat {
+        
+        let type = self.getDeviceSize()
+        
+        if type == deviceType.iPhone6Plus {
+            return 40
+        }
         return 30;
+    }
+    
+    static func getSmallLabelWidth() -> CGFloat {
+        
+        let type = self.getDeviceSize()
+        
+        if type == deviceType.iPhone6Plus {
+            return 50
+        }
+        return 38;
+    }
+
+    static func getBigLabelWidth() -> CGFloat {
+        
+        let type = self.getDeviceSize()
+
+        if type == deviceType.iPhone6Plus {
+            return 95
+        }
+        return 74;
+    }
+    
+    static func getSavedImageSize() -> CGFloat {
+        
+        let type = self.getDeviceSize()
+
+        if type == deviceType.iPhone6Plus {
+            return 35
+        }
+        return 25;
     }
 }

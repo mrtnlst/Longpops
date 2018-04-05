@@ -34,6 +34,6 @@
 
 "title-textfield-placeholder" = "Erinnere mich an ..";
 
-"tutorial-label-simpletask" = "Einfacher Modus:\n\nTippe Return, um eine Erinnerung mit unmittelbarem Alarm zu erstellen.";
-"tutorial-label-advancedtask" = "Erweiterter Modus:\n\nKonfiguriere Termin und Wecker, sowie die Liste, in welcher die Erinnerung gespeichert werden soll. Wecker und Termin können deaktiviert werden.";
-"tutorial-label-settings" = "Nutze die Einstellungen, um zwischen beiden Eingabemasken zu wechseln, oder das Tutorial zu wiederholen.";
+"tutorial-label-simpletask" = "Tippe auf Speichern, um eine Erinnerung zu erstellen. Ändere Datum/Zeit in den Feldern darunter.";
+"tutorial-label-advancedtask" = "Nutze die Pfeiltasten, um schnell zwischen Textfeldern zu wechseln.";
+"tutorial-label-settings" = "Nutze die Einstellungen, um eine Erinnerungsliste zu wählen, oder den Wecker zu deaktvieren.";

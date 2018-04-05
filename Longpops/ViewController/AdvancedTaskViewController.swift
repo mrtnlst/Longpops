@@ -214,10 +214,10 @@ class AdvancedTaskViewController: TaskViewController {
             ]
         
         let metricsDictionary: [String: Any] = [
-            "smallFieldWidth": 38,
-            "bigFieldWidth": 74,
+            "smallFieldWidth": LayoutHandler.getSmallLabelWidth(),
+            "bigFieldWidth": LayoutHandler.getBigLabelWidth(),
             "textFieldMargin": LayoutHandler.getMarginForDevice(),
-            "imageSize": 25,
+            "imageSize": LayoutHandler.getSavedImageSize(),
             ]
         
         // TextFieldContainer 

@@ -113,7 +113,7 @@ class TaskViewController: TemplateViewController {
             ]
         
         let metricsDictionary: [String: Any] = [
-            "menuButton": 25,
+            "menuButton": LayoutHandler.getSavedImageSize(),
         ]
         
         let margins = view.layoutMarginsGuide
@@ -146,14 +146,14 @@ class TaskViewController: TemplateViewController {
                                                                                 metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
         
-        self.navigationItemContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[settingsButton]-|",
+        self.navigationItemContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[settingsButton(menuButton)]-|",
                                                                                 options: [],
-                                                                                metrics: [:],
+                                                                                metrics: metricsDictionary,
                                                                                 views: viewsDictionary))
         
-        self.navigationItemContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[infoButton]-|",
+        self.navigationItemContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[infoButton(menuButton)]-|",
                                                                                        options: [],
-                                                                                       metrics: [:],
+                                                                                       metrics: metricsDictionary,
                                                                                        views: viewsDictionary))
         
         // MARK: Permission Button Constraints
@@ -211,7 +211,7 @@ class TaskViewController: TemplateViewController {
     
     func checkForIntro() {
         let defaults = UserDefaults.standard
-        let showIntro = defaults.bool(forKey: "showIntro")
+        let showIntro = defaults.bool(forKey: "showIntro2.1")
         
         if !showIntro {
             let destinationController = IntroViewController()

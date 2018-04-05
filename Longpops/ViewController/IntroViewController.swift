@@ -78,7 +78,7 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         self.descriptionLabel.font = UIFont.systemFont(ofSize: LayoutHandler.getRegularLabelSizeForDevice(), weight: .regular)
         self.descriptionLabel.lineBreakMode = .byWordWrapping
         self.descriptionLabel.numberOfLines = 0
-        self.descriptionLabel.textAlignment = .left
+        self.descriptionLabel.textAlignment = .center
         self.descriptionLabel.text = NSLocalizedString("description-label-intro", comment: "Intro description label.")
         self.descriptionContainerView.addSubview(self.descriptionLabel)
         
@@ -290,7 +290,7 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
         
-        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=1)-[simpleTaskImage(height)]-(>=1)-|",
+        subView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[simpleTaskImage(height)]|",
                                                               options: [],
                                                               metrics: metricsDictionary,
                                                               views: viewsDictionary))
@@ -385,12 +385,12 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
     
     func checkForIntro() {
         let defaults = UserDefaults.standard
-        let showIntro = defaults.bool(forKey: "showIntro")
+        let showIntro = defaults.bool(forKey: "showIntro2.1")
         
         if !showIntro {
             self.backButton.isHidden = true
             self.swipeDown.isEnabled = false
-            defaults.set(true, forKey: "showIntro")
+            defaults.set(true, forKey: "showIntro2.1")
             self.numberOfPages = 4
         }
     }
