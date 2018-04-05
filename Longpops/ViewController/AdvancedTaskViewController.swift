@@ -125,7 +125,6 @@ class AdvancedTaskViewController: TemplateViewController {
         self.view.addSubview(self.permissionButtonContainerView)
         
         self.permissionButton = DefaultButton.init(title: NSLocalizedString("permission-button-title", comment: "Permission button."))
-        self.permissionButton.translatesAutoresizingMaskIntoConstraints = false
         self.permissionButton.addTarget(self, action: #selector(AdvancedTaskViewController.permissionButtonPressed), for: .touchUpInside)
         self.permissionButton.isHidden = true
         self.permissionButtonContainerView.addSubview(self.permissionButton)
@@ -142,25 +141,10 @@ class AdvancedTaskViewController: TemplateViewController {
         self.settingsButton.tintColor = .white
         self.navigationItemContainerView.addSubview(self.settingsButton)
         
-        self.titleTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.titleTextField.keyboardAppearance = .dark
-        self.titleTextField.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("title-textfield-placeholder",
-                                                                                                 comment: "TextField."),
-                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(
-                                                                        red: 255/255,
-                                                                        green: 255/255,
-                                                                        blue: 255/255,
-                                                                        alpha: 0.5)])
+        self.titleTextField = TitleTextField(tag: 0)
         self.titleTextField.delegate = self
-        self.titleTextField.tag = 0
-        self.titleTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getTitleTextFontSizeForDevice(), weight: .regular)
-        self.titleTextField.textColor = .white
-        self.titleTextField.backgroundColor = .clear
-        self.textFieldContainerView.addSubview(self.titleTextField)
-        self.titleTextField.adjustsFontSizeToFitWidth = true
-        self.titleTextField.minimumFontSize = 20
         self.titleTextField.inputAccessoryView = inputToolbar
-        self.titleTextField.autocorrectionType = .no
+        self.textFieldContainerView.addSubview(self.titleTextField)
         
         self.timeContainerView.translatesAutoresizingMaskIntoConstraints = false
         self.textFieldContainerView.addSubview(self.timeContainerView)
@@ -180,69 +164,29 @@ class AdvancedTaskViewController: TemplateViewController {
         self.calendarButton.tintColor = .white
         self.dateContainerView.addSubview(self.calendarButton)
         
-        self.hoursTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.hoursTextField = DateTimeTextField(tag: 1)
         self.hoursTextField.delegate = self
-        self.hoursTextField.keyboardType = .numberPad
-        self.hoursTextField.keyboardAppearance = .dark
-        self.hoursTextField.tag = 1
-        self.hoursTextField.textAlignment = .center
         self.hoursTextField.inputAccessoryView = inputToolbar
-        self.hoursTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
-        self.hoursTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .light)
-        self.hoursTextField.textColor = .white
-        self.hoursTextField.backgroundColor = .clear
         self.timeContainerView.addSubview(self.hoursTextField)
         
-        self.minutesTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.minutesTextField = DateTimeTextField(tag: 2)
         self.minutesTextField.delegate = self
-        self.minutesTextField.keyboardType = .numberPad
-        self.minutesTextField.keyboardAppearance = .dark
-        self.minutesTextField.tag = 2
-        self.minutesTextField.textAlignment = .center
         self.minutesTextField.inputAccessoryView = inputToolbar
-        self.minutesTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
-        self.minutesTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .light)
-        self.minutesTextField.textColor = .white
-        self.minutesTextField.backgroundColor = .clear
         self.timeContainerView.addSubview(self.minutesTextField)
         
-        self.dayTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.dayTextField = DateTimeTextField(tag: 3)
         self.dayTextField.delegate = self
-        self.dayTextField.keyboardType = .numberPad
-        self.dayTextField.keyboardAppearance = .dark
-        self.dayTextField.tag = 3
-        self.dayTextField.textAlignment = .center
         self.dayTextField.inputAccessoryView = inputToolbar
-        self.dayTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
-        self.dayTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .light)
-        self.dayTextField.textColor = .white
-        self.dayTextField.backgroundColor = .clear
         self.dateContainerView.addSubview(self.dayTextField)
         
-        self.monthTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.monthTextField = DateTimeTextField(tag: 4)
         self.monthTextField.delegate = self
-        self.monthTextField.keyboardType = .numberPad
-        self.monthTextField.keyboardAppearance = .dark
-        self.monthTextField.tag = 4
-        self.monthTextField.textAlignment = .center
         self.monthTextField.inputAccessoryView = inputToolbar
-        self.monthTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
-        self.monthTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .light)
-        self.monthTextField.textColor = .white
-        self.monthTextField.backgroundColor = .clear
         self.dateContainerView.addSubview(self.monthTextField)
         
-        self.yearTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.yearTextField = DateTimeTextField(tag: 5)
         self.yearTextField.delegate = self
-        self.yearTextField.keyboardType = .numberPad
-        self.yearTextField.keyboardAppearance = .dark
-        self.yearTextField.tag = 5
-        self.yearTextField.textAlignment = .center
-        self.yearTextField.font = UIFont.systemFont(ofSize: LayoutHandler.getDateTimeTextFontSizeForDevice(), weight: .light)
-        self.yearTextField.textColor = .white
-        self.yearTextField.backgroundColor = .clear
         self.yearTextField.inputAccessoryView = inputToolbar
-        self.yearTextField.addTarget(self, action: #selector(self.textFieldEditingDidChange(textField:)), for: .editingChanged)
         self.dateContainerView.addSubview(self.yearTextField)
         
         self.colonLabel.translatesAutoresizingMaskIntoConstraints = false

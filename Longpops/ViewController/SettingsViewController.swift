@@ -156,7 +156,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         
         // ShowIntroButon.
         self.showIntroButton = DefaultButton(title: NSLocalizedString("intro-button-title", comment: "Intro Button."))
-        self.showIntroButton.translatesAutoresizingMaskIntoConstraints = false
         self.showIntroButton.addTarget(self, action: #selector(SettingsViewController.showIntroButtonPressed),
                                              for: .touchUpInside)
         self.showIntroButtonContainerView.addSubview(self.showIntroButton)

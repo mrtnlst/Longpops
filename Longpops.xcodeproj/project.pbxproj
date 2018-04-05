@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5B18861B201E3BEE00CC7669 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B18861D201E3BEE00CC7669 /* Localizable.strings */; };
+		5B34DFF32076995300661C25 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B34DFF22076995300661C25 /* TextField.swift */; };
+		5B34DFF520769AF500661C25 /* TitleTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B34DFF420769AF500661C25 /* TitleTextField.swift */; };
+		5B34DFF720769C4900661C25 /* DateTimeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B34DFF620769C4900661C25 /* DateTimeTextField.swift */; };
 		5B4C821920275D84008A4C96 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4C821820275D84008A4C96 /* IntroViewController.swift */; };
 		5B4C821D2028C633008A4C96 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4C821C2028C633008A4C96 /* DefaultButton.swift */; };
 		5B61547620237BC100F65E5B /* LayoutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B61547520237BC100F65E5B /* LayoutHandler.swift */; };
@@ -31,6 +34,9 @@
 /* Begin PBXFileReference section */
 		5B18861C201E3BEE00CC7669 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5B18861F201E3C3100CC7669 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5B34DFF22076995300661C25 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		5B34DFF420769AF500661C25 /* TitleTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTextField.swift; sourceTree = "<group>"; };
+		5B34DFF620769C4900661C25 /* DateTimeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeTextField.swift; sourceTree = "<group>"; };
 		5B4C821820275D84008A4C96 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		5B4C821C2028C633008A4C96 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DefaultButton.swift; path = Longpops/Model/DefaultButton.swift; sourceTree = SOURCE_ROOT; };
 		5B61547520237BC100F65E5B /* LayoutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LayoutHandler.swift; path = Longpops/Handler/LayoutHandler.swift; sourceTree = SOURCE_ROOT; };
@@ -80,6 +86,9 @@
 		5B4C821E2028C63B008A4C96 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5B34DFF620769C4900661C25 /* DateTimeTextField.swift */,
+				5B34DFF420769AF500661C25 /* TitleTextField.swift */,
+				5B34DFF22076995300661C25 /* TextField.swift */,
 				5BFB4C912074B910009A3620 /* InputToolbar.swift */,
 				5B4C821C2028C633008A4C96 /* DefaultButton.swift */,
 				5B84F8D020541270000A46E7 /* BackButton.swift */,
@@ -211,12 +220,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B34DFF520769AF500661C25 /* TitleTextField.swift in Sources */,
 				5BFB4C922074B910009A3620 /* InputToolbar.swift in Sources */,
 				5BB187E41FBCD2E300AB3ABA /* AboutViewController.swift in Sources */,
 				5B4C821D2028C633008A4C96 /* DefaultButton.swift in Sources */,
 				5B61547620237BC100F65E5B /* LayoutHandler.swift in Sources */,
 				5BB7A76E2016527200EF2A54 /* DateTimeHandler.swift in Sources */,
+				5B34DFF720769C4900661C25 /* DateTimeTextField.swift in Sources */,
 				5BE6EF30200B676700AE14F2 /* TemplateViewController.swift in Sources */,
+				5B34DFF32076995300661C25 /* TextField.swift in Sources */,
 				5B8FC0E82074F9B90066ACEF /* AlertHandler.swift in Sources */,
 				5BB7A76C201518CE00EF2A54 /* TextInputHandler.swift in Sources */,
 				5B84F8D120541270000A46E7 /* BackButton.swift in Sources */,
