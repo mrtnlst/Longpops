@@ -99,6 +99,9 @@ class AdvancedTaskViewController: TemplateViewController {
         if !defaults.bool(forKey: "saveWithAlarm") {
             self.disableDateTimeTextFields()
         }
+        else {
+            self.enableDateTimeTextFields()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -475,6 +478,14 @@ class AdvancedTaskViewController: TemplateViewController {
         
         for textField in textFields {
             textField.isEnabled = false
+        }
+    }
+    
+    func enableDateTimeTextFields() {
+        let textFields = [self.hoursTextField, self.minutesTextField, self.dayTextField, self.monthTextField, self.yearTextField]
+        
+        for textField in textFields {
+            textField.isEnabled = true
         }
     }
     

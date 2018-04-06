@@ -385,7 +385,6 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
                     self.reminderListTextField.text = userList.0.title
                     self.reminderListTextField.setNeedsLayout()
                     self.reminderLists = ReminderListHandler.getDeviceReminderLists(eventStore: self.eventStore)
-                    print("siufdbaiubf")
                 }
             }
         }
