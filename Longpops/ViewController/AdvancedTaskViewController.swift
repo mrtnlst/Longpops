@@ -149,6 +149,7 @@ class AdvancedTaskViewController: TemplateViewController {
         self.titleTextField = TitleTextField(tag: 0)
         self.titleTextField.delegate = self
         self.titleTextField.inputAccessoryView = inputToolbar
+        self.titleTextField.spellCheckingType = .yes
         self.textFieldContainerView.addSubview(self.titleTextField)
         
         self.timeContainerView.translatesAutoresizingMaskIntoConstraints = false
