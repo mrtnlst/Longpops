@@ -78,7 +78,7 @@ class AdvancedTaskViewController: TemplateViewController {
         
         self.setupViews()
         self.setupConstraints()
-        
+     
         NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackground),
@@ -93,18 +93,18 @@ class AdvancedTaskViewController: TemplateViewController {
         self.titleTextField.becomeFirstResponder()
         self.updateDateTimePlaceHolder()
         self.startCountdownTimer()
-                
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.checkForIntro()
+        
         if UserDefaults.standard.bool(forKey: "saveWithAlarm") {
             self.enableDateTimeTextFields()
         }
         else {
             self.disableDateTimeTextFields()
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.checkForIntro()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
