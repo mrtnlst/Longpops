@@ -14,7 +14,7 @@ class TitleTextField: TextField {
         self.tag = 0
         self.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("title-textfield-placeholder",
                                                                                                  comment: "TextField."),
-                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(
+                                                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(
                                                                         red: 255/255,
                                                                         green: 255/255,
                                                                         blue: 255/255,

@@ -80,9 +80,9 @@ class AdvancedTaskViewController: TemplateViewController {
         self.setupConstraints()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForeground),
-                                               name: .UIApplicationWillEnterForeground, object: nil)
+                                               name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackground),
-                                               name: .UIApplicationDidEnterBackground, object: nil)
+                                               name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(AdvancedTaskViewController.checkPermission),
                                                name: NSNotification.Name(rawValue: "dismissed"), object: nil)
     }
@@ -93,14 +93,12 @@ class AdvancedTaskViewController: TemplateViewController {
         self.titleTextField.becomeFirstResponder()
         self.updateDateTimePlaceHolder()
         self.startCountdownTimer()
-        
-        let defaults = UserDefaults.standard
-        
-        if !defaults.bool(forKey: "saveWithAlarm") {
-            self.disableDateTimeTextFields()
+                
+        if UserDefaults.standard.bool(forKey: "saveWithAlarm") {
+            self.enableDateTimeTextFields()
         }
         else {
-            self.enableDateTimeTextFields()
+            self.disableDateTimeTextFields()
         }
     }
     
@@ -267,11 +265,11 @@ class AdvancedTaskViewController: TemplateViewController {
 
         let guide = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            self.navigationItemContainerView.topAnchor.constraintEqualToSystemSpacingBelow(guide.topAnchor, multiplier: 0),
+            self.navigationItemContainerView.topAnchor.constraint(equalToSystemSpacingBelow: guide.topAnchor, multiplier: 0),
             
-            self.textFieldContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.navigationItemContainerView.bottomAnchor, multiplier: 0),
+            self.textFieldContainerView.topAnchor.constraint(equalToSystemSpacingBelow: self.navigationItemContainerView.bottomAnchor, multiplier: 0),
             
-            self.permissionButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.textFieldContainerView.bottomAnchor, multiplier: 0),
+            self.permissionButtonContainerView.topAnchor.constraint(equalToSystemSpacingBelow: self.textFieldContainerView.bottomAnchor, multiplier: 0),
             ])
         
         // NavigationContainer
@@ -671,11 +669,11 @@ class AdvancedTaskViewController: TemplateViewController {
     }
     
     @objc func permissionButtonPressed() {
-        let scheme:String = UIApplicationOpenSettingsURLString
+        let scheme:String = UIApplication.openSettingsURLString
         if let url = URL(string: scheme) {
             if #available(iOS 10.0, *) {
                 DispatchQueue.main.async {
-                    UIApplication.shared.open(url, options: [:],
+                    UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]),
                                               completionHandler: {(success) in
                                                 print("Open \(scheme): \(success)")})
                 }
@@ -718,34 +716,34 @@ class AdvancedTaskViewController: TemplateViewController {
     @objc func updateDateTimePlaceHolder() {
         
         self.hoursTextField.attributedPlaceholder = NSAttributedString(string: DateTimeHandler.getHourString(hour: DateTimeHandler.getCurrentTime().0),
-                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(
+                                                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(
                                                                         red: 255/255,
                                                                         green: 255/255,
                                                                         blue: 255/255,
                                                                         alpha: 0.5)])
         self.minutesTextField.attributedPlaceholder = NSAttributedString(string: DateTimeHandler.getMinuteString(minute: DateTimeHandler.getCurrentTime().1),
-                                                                         attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(
+                                                                         attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(
                                                                             red: 255/255,
                                                                             green: 255/255,
                                                                             blue: 255/255,
                                                                             alpha: 0.5)])
         
         self.dayTextField.attributedPlaceholder = NSAttributedString(string: DateTimeHandler.getDayString(day: DateTimeHandler.getCurrentDate().0),
-                                                                     attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(
+                                                                     attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(
                                                                         red: 255/255,
                                                                         green: 255/255,
                                                                         blue: 255/255,
                                                                         alpha: 0.5)])
         
         self.monthTextField.attributedPlaceholder = NSAttributedString(string: DateTimeHandler.getMonthString(month: DateTimeHandler.getCurrentDate().1),
-                                                                       attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(
+                                                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(
                                                                         red: 255/255,
                                                                         green: 255/255,
                                                                         blue: 255/255,
                                                                         alpha: 0.5)])
         
         self.yearTextField.attributedPlaceholder = NSAttributedString(string: String(format: "%d", DateTimeHandler.getCurrentDate().2),
-                                                                      attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(
+                                                                      attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(
                                                                         red: 255/255,
                                                                         green: 255/255,
                                                                         blue: 255/255,
@@ -913,4 +911,9 @@ class AdvancedTaskViewController: TemplateViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

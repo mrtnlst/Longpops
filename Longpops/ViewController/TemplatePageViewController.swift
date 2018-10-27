@@ -59,7 +59,7 @@ class TemplatePageViewController: TemplateViewController {
         if #available(iOS 11, *) {
             let guide = view.safeAreaLayoutGuide
             NSLayoutConstraint.activate([
-                self.headingContainerView.topAnchor.constraintEqualToSystemSpacingBelow(guide.topAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                self.headingContainerView.topAnchor.constraint(equalToSystemSpacingBelow: guide.topAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
                 ])
             
         }

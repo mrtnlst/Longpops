@@ -22,8 +22,8 @@ class InputToolbar: UIToolbar {
                                          style: .plain,
                                          target: AdvancedTaskViewController(),
                                          action: #selector(AdvancedTaskViewController.saveButtonPressed))
-        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24.0, weight: .regular)], for: .normal)
-        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24.0, weight: .regular)], for: .highlighted)
+        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24.0, weight: .regular)], for: .normal)
+        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24.0, weight: .regular)], for: .highlighted)
         doneButton.tintColor = UIColor.white
         doneButton.setTitlePositionAdjustment(UIOffset.init(horizontal: 0, vertical: -20.0), for: .default)
         
@@ -31,8 +31,8 @@ class InputToolbar: UIToolbar {
                                          style: .plain,
                                          target: AdvancedTaskViewController(),
                                          action: #selector(AdvancedTaskViewController.updateEditedTextFieldsWithCurrentDateTime))
-        nowButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24.0, weight: .regular)], for: .normal)
-        nowButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24.0, weight: .regular)], for: .highlighted)
+        nowButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24.0, weight: .regular)], for: .normal)
+        nowButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24.0, weight: .regular)], for: .highlighted)
         nowButton.tintColor = UIColor.white
         nowButton.setTitlePositionAdjustment(UIOffset.init(horizontal: 0, vertical: -20.0), for: .default)
         

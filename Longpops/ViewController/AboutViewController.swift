@@ -170,14 +170,14 @@ class AboutViewController: TemplatePageViewController {
         if #available(iOS 11, *) {
             let guide = view.safeAreaLayoutGuide
             NSLayoutConstraint.activate([
-                self.descriptionContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
-                self.twitterContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: 1.0),
+                self.descriptionContainerView.topAnchor.constraint(equalToSystemSpacingBelow: self.headingContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                self.twitterContainerView.topAnchor.constraint(equalToSystemSpacingBelow: self.descriptionContainerView.bottomAnchor, multiplier: 1.0),
                 
-                self.websiteContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.twitterContainerView.bottomAnchor, multiplier: 1.0),
+                self.websiteContainerView.topAnchor.constraint(equalToSystemSpacingBelow: self.twitterContainerView.bottomAnchor, multiplier: 1.0),
 
-                self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.websiteContainerView.bottomAnchor, multiplier: 1.0),
+                self.backButtonContainerView.topAnchor.constraint(equalToSystemSpacingBelow: self.websiteContainerView.bottomAnchor, multiplier: 1.0),
                 
-                self.versionContainerView.bottomAnchor.constraintEqualToSystemSpacingBelow(guide.bottomAnchor, multiplier: 0.5),
+                self.versionContainerView.bottomAnchor.constraint(equalToSystemSpacingBelow: guide.bottomAnchor, multiplier: 0.5),
                 ])
             
         }
@@ -273,8 +273,8 @@ class AboutViewController: TemplatePageViewController {
     // MARK: Button Actions.
     @objc func twitterButtonPressed() {
         if #available(iOS 10.0, *) {
-            let options = [UIApplicationOpenURLOptionUniversalLinksOnly : false]
-            UIApplication.shared.open(self.twitterURL, options: options, completionHandler: nil)
+            let options = [convertFromUIApplicationOpenExternalURLOptionsKey(UIApplication.OpenExternalURLOptionsKey.universalLinksOnly) : false]
+            UIApplication.shared.open(self.twitterURL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary(options), completionHandler: nil)
         }
         else {
             _ = UIApplication.shared.openURL(self.twitterURL)
@@ -283,8 +283,8 @@ class AboutViewController: TemplatePageViewController {
     
     @objc func websiteButtonPressed() {
         if #available(iOS 10.0, *) {
-        let options = [UIApplicationOpenURLOptionUniversalLinksOnly : false]
-            UIApplication.shared.open(self.websiteURL, options: options, completionHandler: nil)
+        let options = [convertFromUIApplicationOpenExternalURLOptionsKey(UIApplication.OpenExternalURLOptionsKey.universalLinksOnly) : false]
+            UIApplication.shared.open(self.websiteURL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary(options), completionHandler: nil)
         }
         else {
             _ = UIApplication.shared.openURL(self.websiteURL)
@@ -299,10 +299,20 @@ class AboutViewController: TemplatePageViewController {
     
     // MARK: Gestures Handeling.
     @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
-        if gesture.direction == UISwipeGestureRecognizerDirection.down {
+        if gesture.direction == UISwipeGestureRecognizer.Direction.down {
             if !self.isBeingDismissed {
                 dismiss(animated: true, completion: nil)
             }
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIApplicationOpenExternalURLOptionsKey(_ input: UIApplication.OpenExternalURLOptionsKey) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

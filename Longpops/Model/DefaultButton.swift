@@ -20,7 +20,7 @@ class DefaultButton: UIButton {
         // Setting button color and shape.
         self.backgroundColor = UIColor(red: 97.0/255, green: 208.0/255, blue: 255.0/255, alpha: 1.0)
         self.layer.cornerRadius = 5
-        self.contentEdgeInsets = UIEdgeInsetsMake(5.0, 10.0, 5.0, 10.0)
+        self.contentEdgeInsets = UIEdgeInsets.init(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
         
         // Setting button title.
         self.setTitle(title, for: .normal)

@@ -171,8 +171,8 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
                                          style: .plain,
                                          target: self,
                                          action: #selector(SettingsViewController.doneButtonPressed))
-        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .normal)
-        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .highlighted)
+        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .normal)
+        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20.0, weight: .bold)], for: .highlighted)
         doneButton.tintColor = UIColor.white
         
         self.inputToolbar.setItems([flexibleSpaceButton, doneButton], animated: false)
@@ -220,10 +220,10 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
             ])
         
         NSLayoutConstraint.activate([
-            self.saveWithAlarmContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
-            self.reminderListContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.saveWithAlarmContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
-            self.showIntroButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.reminderListContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
-            self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.showIntroButtonContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+            self.saveWithAlarmContainerView.topAnchor.constraint(equalToSystemSpacingBelow: self.headingContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+            self.reminderListContainerView.topAnchor.constraint(equalToSystemSpacingBelow: self.saveWithAlarmContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+            self.showIntroButtonContainerView.topAnchor.constraint(equalToSystemSpacingBelow: self.reminderListContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+            self.backButtonContainerView.topAnchor.constraint(equalToSystemSpacingBelow: self.showIntroButtonContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
             ])
         
         // MARK: SaveWithAlarmContainerView Constraints.
@@ -340,7 +340,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
     
     // MARK: Gesture Handeling.
     @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
-        if gesture.direction == UISwipeGestureRecognizerDirection.down {
+        if gesture.direction == UISwipeGestureRecognizer.Direction.down {
             if !self.isBeingDismissed {
                 self.dismiss(animated: true, completion:nil)
             }
@@ -361,7 +361,7 @@ class SettingsViewController: TemplatePageViewController, UIPickerViewDataSource
         // Create white text picker labels.
         let pickerItem = UILabel()
         pickerItem.attributedText = NSAttributedString(string: self.reminderLists[row].title,
-                                                       attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 20.0),NSAttributedStringKey.foregroundColor:UIColor.white])
+                                                       attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 20.0),NSAttributedString.Key.foregroundColor:UIColor.white])
         pickerItem.textAlignment = .center
         
         return pickerItem

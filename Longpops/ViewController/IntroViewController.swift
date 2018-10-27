@@ -138,9 +138,9 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
             ])
         
             NSLayoutConstraint.activate([
-                self.descriptionContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.headingContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
-                self.pageControlContainer.topAnchor.constraintEqualToSystemSpacingBelow(self.descriptionContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
-                self.backButtonContainerView.topAnchor.constraintEqualToSystemSpacingBelow(self.pageControlContainer.bottomAnchor, multiplier: 1.0),
+                self.descriptionContainerView.topAnchor.constraint(equalToSystemSpacingBelow: self.headingContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                self.pageControlContainer.topAnchor.constraint(equalToSystemSpacingBelow: self.descriptionContainerView.bottomAnchor, multiplier: LayoutHandler.getMultiplierForDevice()),
+                self.backButtonContainerView.topAnchor.constraint(equalToSystemSpacingBelow: self.pageControlContainer.bottomAnchor, multiplier: 1.0),
                 ])
         
         // MARK: Description Constraints
@@ -228,7 +228,7 @@ class IntroViewController: TemplatePageViewController, UIScrollViewDelegate {
         }
         self.scrollView.isPagingEnabled = true
         self.scrollView.contentSize = CGSize(width: (self.scrollView.frame.size.width - margin) * numberOfPages, height: self.scrollView.frame.size.height)
-        self.pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControlEvents.valueChanged)
+        self.pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControl.Event.valueChanged)
     }
     
     func createSimpleTaskView(subView: UIView) {
