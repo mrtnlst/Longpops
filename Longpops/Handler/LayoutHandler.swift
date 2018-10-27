@@ -15,6 +15,7 @@ class LayoutHandler {
         case iPhone6
         case iPhone6Plus
         case iPhoneX
+        case iPhoneXS
     }
     
     static func getDeviceSize() -> deviceType{
@@ -27,6 +28,9 @@ class LayoutHandler {
         }
         if UIScreen.main.bounds.size.height == 812 {
             return deviceType.iPhoneX
+        }
+        if UIScreen.main.bounds.size.height == 896 {
+            return deviceType.iPhoneXS
         }
         
         return deviceType.iPhone6
@@ -42,8 +46,11 @@ class LayoutHandler {
         if type == deviceType.iPhone6 {
             return 2.0
         }
+        if type == deviceType.iPhone6Plus {
+            return 3.0
+        }
         
-        return 3.0
+        return 4.0
     }
     
     static func getSaveButtonSizeForDevice() -> Int {
@@ -131,6 +138,10 @@ class LayoutHandler {
         if type == deviceType.iPhone6Plus {
             return 40
         }
+        if type == deviceType.iPhoneXS {
+            return 40
+        }
+    
         return 32
     }
     
